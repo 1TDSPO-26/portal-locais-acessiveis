@@ -2,7 +2,9 @@
 
 export default function App() {
   return (
-    <div>App</div>
+    <div>
+      <h1>oi</h1>
+    </div>
   )
 }
 
