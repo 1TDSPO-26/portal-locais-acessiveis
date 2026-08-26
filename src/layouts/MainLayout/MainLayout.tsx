@@ -1,16 +1,24 @@
-import React from 'react'
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
 
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import type { ReactNode } from 'react';
 
-export default function MainLayout() {
-  return (
-    <div>
-        <Header />
-
-        <div>MainLayout</div>
-
-        <Footer />
-    </div>
-  )
+// Define a interface para as Props do Layout
+interface MainLayoutProps {
+  children: ReactNode;
 }
+
+export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  return (
+    <div >
+      <Header />
+      
+  
+      <main >
+        {children}
+      </main>
+      
+      <Footer />
+    </div>
+  );
+};
