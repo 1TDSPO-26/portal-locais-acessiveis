@@ -1,10 +1,9 @@
-
+import { MainLayout } from "./layouts/MainLayout/MainLayout";
 
 export default function App() {
   return (
-    <div>
+    <MainLayout>
       <h1>oi</h1>
-    </div>
-  )
+    </MainLayout>
+  );
 }
-

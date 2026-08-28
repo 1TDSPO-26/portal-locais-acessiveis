@@ -1,7 +1,6 @@
-
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import type { ReactNode } from 'react';
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import type { ReactNode } from "react";
 
 // Define a interface para as Props do Layout
 interface MainLayoutProps {
@@ -10,14 +9,11 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div >
+    <div>
       <Header />
-      
-  
-      <main >
-        {children}
-      </main>
-      
+
+      <main>{children}</main>
+
       <Footer />
     </div>
   );
