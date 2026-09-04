@@ -111,3 +111,10 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex flex-row items-center justify-center gap-2 rounded-lg bg-[#005FCC] py-2.5 px-4
+      hover:bg-blue-700;
+  }
+}
