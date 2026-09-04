@@ -4,8 +4,8 @@ import Header from "../../components/Header/Header";
 
 export default function Sobre() {
   return (
-    <main>
-        <h1>Sobre</h1>
-    </main>
+    <div>
+      <Conteudo />
+    </div>
   );
 }
