@@ -7,11 +7,13 @@ export default function Cards() {
           <div key={index} className="card">
             <h3>{pessoa.nome}</h3>
             {pessoa.rm && <p>{pessoa.rm}</p>}
-            
+            <a
               href={`https://github.com/${pessoa.github}`}
               target="_blank"
               rel="noopener noreferrer"
+            >
               @{pessoa.github}
+            </a>
           </div>
         ))}
       </div>
@@ -46,7 +48,11 @@ const integrantes: Integrante[] = [
   { rm: "571599", nome: "Kauan Mattos", github: "KauanMattos" },
   { rm: "572369", nome: "KauaznX", github: "KauaznX" },
   { rm: "", nome: "Lucas Almeida", github: "LucasAlmeidaOliveira" },
-  { rm: "568216", nome: "Maria Eduarda Escandor", github: "mariabatistaescandor-gif" },
+  {
+    rm: "568216",
+    nome: "Maria Eduarda Escandor",
+    github: "mariabatistaescandor-gif",
+  },
   { rm: "572425", nome: "Maria Eduarda Lima", github: "mariaeduardaalima" },
   { rm: "571365", nome: "Mateus Isaque", github: "Mateus-Isaque" },
   { rm: "573416", nome: "Matheus Leite", github: "matheusleite21" },
