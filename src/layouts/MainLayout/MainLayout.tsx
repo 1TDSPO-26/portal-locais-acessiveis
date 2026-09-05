@@ -1,15 +1,20 @@
-import { Outlet } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import type { ReactNode } from "react";
 
-export function MainLayout() {
+// Define a interface para as Props do Layout
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div>
       <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
+
+      <main>{children}</main>
+
       <Footer />
     </div>
   );
-}
+};
