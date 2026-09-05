@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     {path:"/locais", element:<Locais/>},
     {path:"/cadastrar", element:<Cadastro/>},
     {path:"/sobre", element:<Sobre/>},
-    {path:"/notfound", element:<NotFound/>}
+    {path:"/*", element:<NotFound/>}
   ]}
 ]);
 
