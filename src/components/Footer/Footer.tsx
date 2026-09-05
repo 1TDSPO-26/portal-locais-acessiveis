@@ -22,14 +22,14 @@ export default function Footer() {
           </span>
           ACESSA +
         </div>
-        <p className="text-sm leading-5 opacity-75">
+        <p className="text-sm leading-5 opacity-75 align-left">
           Informação para planejar visitas com mais autonomia.
         </p>
       </div>
 
       <div className="flex items-start gap-16">
         <nav aria-label="Navegação do rodapé">
-          <h2 className="text-sm font-medium leading-5">Navegação</h2>
+          <h2 className="text-sm font-medium leading-5 text-white">Navegação</h2>
           <ul className="mt-3 space-y-2">
             {navItems.map((item) => (
               <li key={item.to}>
