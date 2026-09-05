@@ -1,4 +1,6 @@
 import { integrantes } from "../../types/integrantes";
+import ilustracao from "../../img/imagem-pessoa-cadeirante.png";
+
 export default function Sobre() {
   return (
     <div className="w-full min-h-screen px-5 pt-10 pb-11 flex flex-col gap-6 md:px-[72px] md:pt-16 md:pb-16 md:gap-11">
@@ -15,7 +17,11 @@ export default function Sobre() {
             </p>
           </div>
           <div className="flex h-[260px] w-full max-w-[420px] items-center justify-center rounded-[20px]">
-            <span className="text-xs">Ilustração do projeto</span>
+            <img
+              src={ilustracao}
+              alt="Pessoa cadeirante"
+              className="h-full w-full rounded-[20px] object-cover"
+            />
           </div>
         </section>
 
