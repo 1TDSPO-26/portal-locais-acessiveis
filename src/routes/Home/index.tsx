@@ -88,6 +88,25 @@ export default function Home() {
           className="aspect-[536/437] w-full rounded-[24px] object-cover"
         />
       </div>
+    
+      <section>
+        <h1
+            className="m-0! max-w-[520px] text-[34px]! font-bold! leading-[41px]! tracking-[-0.8px] text-[#0F172A]! md:text-[40px]! md:leading-[48px]!"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Locais em destaque
+          </h1>
+        <div>
+          
+        </div>
+        <Link
+              to="/locais"
+              className="flex h-[44px] w-[130px] shrink-0 items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Explorar locais
+            </Link>
+      </section>
     </section>
   );
 }
