@@ -19,14 +19,16 @@ export default function Cadastro() {
           name="endereco"
           required
         />
-
+        {/* Dropdown */}
         <label htmlFor="tipoLocal">Tipo de local</label>
+
         <select
           id="tipoLocal"
           name="tipoLocal"
           required
+          className="border p-2 focus-visible:outline-2 focus-visible:outline-blue-600"
         >
-          <option value="">Selecione</option>
+          <option value="">Selecione o tipo de local</option>
           <option value="restaurante">Restaurante</option>
           <option value="hospital">Hospital</option>
           <option value="escola">Escola</option>
