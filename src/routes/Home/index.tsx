@@ -4,6 +4,7 @@ import heroHome from "../../assets/images/hero-home.png";
 
 export default function Home() {
   return (
+    <>
     <section className="w-full bg-white px-8 py-16 text-left md:px-8">
       <div className="mx-auto grid w-full items-center gap-10 md:grid-cols-2 md:gap-16">
         <div className="flex w-full flex-col gap-[22px]">
@@ -89,24 +90,28 @@ export default function Home() {
         />
       </div>
     
-      <section>
-        <h1
-            className="m-0! max-w-[520px] text-[34px]! font-bold! leading-[41px]! tracking-[-0.8px] text-[#0F172A]! md:text-[40px]! md:leading-[48px]!"
+      
+    </section>
+    <section className="w-full bg-[#f8fafc] px-8 py-16 text-left md:px-8">
+        <div className="flex items-center justify-between">
+          <h2
+            className="m-0 text-[24px] !font-semibold leading-[32px] tracking-[-0.2px] !text-[#0F172A]"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Locais em destaque
-          </h1>
-        <div>
-          
-        </div>
-        <Link
+          </h2>
+          <Link
               to="/locais"
-              className="flex h-[44px] w-[130px] shrink-0 items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+              className="flex items-center gap-1 text-[14px] font-medium leading-[20px] tracking-[0px] text-[#0052B4]"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Explorar locais
+              Ver todos →
             </Link>
+        </div>
+        <div>
+          {/* Area reservada ao LocalCard */}
+        </div>
       </section>
-    </section>
+    </>
   );
 }
