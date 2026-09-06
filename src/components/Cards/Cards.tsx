@@ -21,14 +21,14 @@ export default function Cards() {
         Equipe do projeto
       </h2>
 
-      <div className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
         {integrantes.map((integrante) => {
           const [nome, cargo] = integrante.nome.split(" - ");
 
           return (
             <div
               key={integrante.github}
-              className="flex flex-col items-center gap-2 rounded-[12px] border-2 border-[#CBD5E1] p-4 text-center"
+              className="flex flex-col items-center gap-2 rounded-[12px] border-2 border-[#CBD5E1] p-4 text-center w-full"
             >
               <img
                 src={`https://github.com/${integrante.github}.png`}
