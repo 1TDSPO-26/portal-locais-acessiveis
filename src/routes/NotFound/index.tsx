@@ -1,7 +1,7 @@
 export default function NotFound() {
   return (
         
-        <main>
+     
             <section className="flex min-h-[70svh] items-start justify-center bg-white px-4 pt-8 text-left sm:px-6 sm:pt-12">
                 <div className="w-full max-w-[620px] rounded-2xl bg-[#EFF6FF] px-8 py-10 sm:px-11 sm:py-12">
                     <h1 className="mb-3 text-4xl font-bold leading-none !text-[#0052B4] sm:text-5xl">404</h1>
@@ -12,6 +12,6 @@ export default function NotFound() {
                     </button>
                 </div>
             </section>
-        </main>
+  
   )
 }
