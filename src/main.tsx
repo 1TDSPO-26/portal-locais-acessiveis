@@ -17,8 +17,10 @@ const router = createBrowserRouter([
     {path:"/locais", element:<Locais/>},
     {path:"/cadastrar", element:<Cadastro/>},
     {path:"/sobre", element:<Sobre/>},
-    {path:"/*", element:<NotFound/>}
-  ]}
+  
+  ]},
+  {path:"/*", element:<NotFound/>}
+  
 ]);
 
 createRoot(document.getElementById('root')!).render(
