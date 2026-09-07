@@ -32,7 +32,8 @@ export default function Cards() {
             >
               <img
                 src={`https://github.com/${integrante.github}.png`}
-                alt={`Foto de ${nome}`}
+                alt={`Foto de ${nome}, participante do projeto`}
+                title={`Foto de ${nome}, participante do projeto`}
                 className="h-16 w-16 rounded-full object-cover"
               />
 
@@ -50,10 +51,11 @@ export default function Cards() {
                 href={`https://github.com/${integrante.github}`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`GitHub de ${nome}`}
+                aria-label={`Acessar o perfil de ${nome} no GitHub`}
                 className="mt-1 text-[#475569] transition-colors hover:text-[#0F172A]"
               >
                 <GithubIcon />
+                <span className="sr-only">Acessar o perfil de {nome} no GitHub</span>
               </a>
             </div>
           );

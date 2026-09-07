@@ -20,6 +20,7 @@ export default function Sobre() {
             <img
               src={ilustracao}
               alt="Pessoa cadeirante"
+              title="Pessoa cadeirante"
               className="h-full w-full rounded-[20px] object-cover"
             />
           </div>
