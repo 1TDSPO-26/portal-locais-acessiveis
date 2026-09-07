@@ -68,7 +68,7 @@ export default function Home() {
             <div className="flex w-full flex-col gap-3 sm:flex-row">
               <Link
                 to="/locais"
-                className="flex h-[44px] w-full items-center justify-center whitespace-nowrap rounded-[8px] bg-[#005FCC] px-4 text-[14px] font-medium leading-[20px] text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] sm:w-[130px]"
+                className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Explorar locais
@@ -148,7 +148,7 @@ export default function Home() {
 
           <Link
             to="/cadastrar"
-            className="flex h-[44px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-[8px] bg-[#005FCC] px-4 text-[14px] font-medium leading-[20px] text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] md:w-[131px]"
+            className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Adicionar local
