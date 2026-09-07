@@ -1,10 +1,11 @@
 interface SeletorTipoLocalProps {
     value: string
     onChange: (valor: string) => void
+    error?: string
 }
 
-export default function SeletorTipoLocal({ value, onChange }: SeletorTipoLocalProps) {
-    return (
+export default function SeletorTipoLocal({ value, onChange, error }: SeletorTipoLocalProps){
+    return(
         <div className="flex flex-col gap-2">
             <label htmlFor="tipoLocal">Tipo de local</label>
             <select
@@ -12,8 +13,7 @@ export default function SeletorTipoLocal({ value, onChange }: SeletorTipoLocalPr
                 name="tipoLocal"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                required
-                className="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${error ? "border-red-500" : "border-slate-300"}`}
             >
                 <option value="">Selecione</option>
                 <option value="restaurante">Restaurante</option>
@@ -21,6 +21,7 @@ export default function SeletorTipoLocal({ value, onChange }: SeletorTipoLocalPr
                 <option value="escola">Escola</option>
                 <option value="outro">Outro</option>
             </select>
+            {error && <p className="text-sm text-red-600">{error}</p>}
         </div>
     )
 }

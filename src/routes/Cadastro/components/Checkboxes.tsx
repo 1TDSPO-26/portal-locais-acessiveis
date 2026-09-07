@@ -3,25 +3,18 @@ interface CheckboxProps {
     valor: string
     checked: boolean
     onChange: (valor: string) => void
-    error?: boolean
-    disabled?: boolean
 }
 
-function Checkbox({ label, valor, checked, onChange, error = false, disabled = false }: CheckboxProps){
+function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
     const id = "recurso-" + valor
 
-    let className = "flex items-center gap-2"
-    if (error) className += " text-red-600"
-    if (disabled) className += " opacity-50"
-
     return(
-        <div className={className}>
+        <div className="flex items-center gap-2">
             <input
                 type="checkbox"
                 id={id}
                 checked={checked}
                 onChange={() => onChange(valor)}
-                disabled={disabled}
                 className="focus-visible:ring-2 focus-visible:ring-cyan-500/40"
             />
             <label htmlFor={id}>{label}</label>
@@ -32,6 +25,7 @@ function Checkbox({ label, valor, checked, onChange, error = false, disabled = f
 interface ChecklistProps {
     selecionados: string[]
     onToggle: (valor: string) => void
+    error?: string
 }
 
 const opcoes = [
@@ -42,7 +36,7 @@ const opcoes = [
     { valor: "elevador", label: "Elevador quando necessário" },
 ]
 
-export default function Checkboxes({ selecionados, onToggle }: ChecklistProps){
+export default function Checkboxes({ selecionados, onToggle, error }: ChecklistProps){
     return(
         <section className="flex flex-col gap-3">
             <h2 className="text-lg font-semibold text-slate-900">Recursos de acessibilidade</h2>
@@ -59,6 +53,8 @@ export default function Checkboxes({ selecionados, onToggle }: ChecklistProps){
                     />
                 ))}
             </div>
+
+            {error && <p className="text-sm text-red-600">{error}</p>}
         </section>
     )
 }
