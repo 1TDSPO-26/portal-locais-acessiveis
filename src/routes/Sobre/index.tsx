@@ -13,11 +13,10 @@ export default function Sobre() {
               Sobre o projeto
             </h1>
             <p className="text-left w-full max-w-[560px] text-[18px] font-normal leading-[28px] text-[#475569]">
-              O Acessa+ organiza informações sobre acessibilidade de locais e
-              serviços para apoiar decisões com mais autonomia.
+              O Acessa+ organiza informações sobre acessibilidade para apoiar decisões com mais autonomia.
             </p>
           </div>
-          <div className="flex h-[200px] md:h-[260px] w-full items-center justify-center rounded-[20px]">
+          <div className="flex h-[250px] md:h-[260px] w-full items-center justify-center rounded-[20px]">
             <img
               src={ilustracao}
               alt="Pessoa cadeirante"
@@ -34,8 +33,7 @@ export default function Sobre() {
               Nosso objetivo
             </h2>
             <p className="text-[14px] font-normal leading-[20px] text-[#475569] mt-2">
-              Facilitar o acesso a informações claras sobre entrada, circulação,
-              banheiro, estacionamento e atendimento.
+              Facilitar o acesso a informações claras sobre condições de acessibilidade.
             </p>
           </div>
 
@@ -46,8 +44,7 @@ export default function Sobre() {
               Como funciona
             </h2>
             <p className="text-[14px] font-normal leading-[20px] text-[#475569]">
-              Pessoas consultam os locais e, conforme o projeto evolui, podem
-              contribuir com novas informações.
+              Consulte locais e, conforme o projeto evolui, contribua com informações.
             </p>
           </div>
 
@@ -58,8 +55,7 @@ export default function Sobre() {
               Para quem é
             </h2>
             <p className="text-[14px] font-normal leading-[20px] text-[#475569] mt-2">
-              Pessoas com diferentes necessidades, familiares, cuidadores,
-              pessoas idosas e cidadãos interessados.
+              Pessoas com diferentes necessidades e cidadãos interessados.
             </p>
           </div>
         </section>
@@ -68,11 +64,10 @@ export default function Sobre() {
           <h2
             className="text-[24px] font-semibold leading-[32px] tracking-[-0.2px] text-[#0F172A]"
           >
-            Princípios do portal
+            Princípios
           </h2>
           <p className="text-[16px] font-normal leading-[24px] text-[#475569]">
-            Informação objetiva · autonomia do usuário · acessibilidade digital ·
-            transparência sobre limites dos dados.
+            Autonomia · clareza · acessibilidade digital · transparência.
           </p>
         </section>
 
