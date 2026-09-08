@@ -1,0 +1,60 @@
+interface CheckboxProps {
+    label: string
+    valor: string
+    checked: boolean
+    onChange: (valor: string) => void
+}
+
+function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
+    const id = "recurso-" + valor
+
+    return(
+        <div className="flex min-h-11 min-w-0 items-start gap-3">
+            <input
+                type="checkbox"
+                id={id}
+                checked={checked}
+                onChange={() => onChange(valor)}
+                className="mt-3 size-5 shrink-0 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+            />
+            <label htmlFor={id} className="min-w-0 flex-1 cursor-pointer py-2 wrap-break-word">{label}</label>
+        </div>
+    )
+}
+
+interface ChecklistProps {
+    selecionados: string[]
+    onToggle: (valor: string) => void
+    error?: string
+}
+
+const opcoes = [
+    { valor: "rampa", label: "Entrada com rampa ou acesso em nível" },
+    { valor: "banheiro", label: "Banheiro acessível" },
+    { valor: "vaga", label: "Vaga reservada" },
+    { valor: "circulacao", label: "Espaço interno para circulação" },
+    { valor: "elevador", label: "Elevador quando necessário" },
+]
+
+export default function Checkboxes({ selecionados, onToggle, error }: ChecklistProps){
+    return(
+        <section className="flex flex-col gap-3">
+            <h2 className="text-lg font-semibold text-slate-900">Recursos de acessibilidade</h2>
+            <p className="text-sm text-slate-600">Marque apenas o que você consegue confirmar.</p>
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-x-6">
+                {opcoes.map((opcao) => (
+                    <Checkbox
+                        key={opcao.valor}
+                        label={opcao.label}
+                        valor={opcao.valor}
+                        checked={selecionados.includes(opcao.valor)}
+                        onChange={onToggle}
+                    />
+                ))}
+            </div>
+
+            {error && <p className="text-sm text-red-600">{error}</p>}
+        </section>
+    )
+}
