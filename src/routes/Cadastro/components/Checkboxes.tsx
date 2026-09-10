@@ -9,15 +9,15 @@ function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
     const id = "recurso-" + valor
 
     return(
-        <div className="flex min-h-11 min-w-0 items-start gap-3">
+        <div className="flex items-center gap-2">
             <input
                 type="checkbox"
                 id={id}
                 checked={checked}
                 onChange={() => onChange(valor)}
-                className="mt-3 size-5 shrink-0 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className="h-4 w-4 rounded border-slate-300 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
             />
-            <label htmlFor={id} className="min-w-0 flex-1 cursor-pointer py-2 wrap-break-word">{label}</label>
+            <label htmlFor={id} className="text-sm text-slate-700">{label}</label>
         </div>
     )
 }
@@ -38,23 +38,17 @@ const opcoes = [
 
 export default function Checkboxes({ selecionados, onToggle, error }: ChecklistProps){
     return(
-        <section className="flex flex-col gap-3">
-            <h2 className="text-lg font-semibold text-slate-900">Recursos de acessibilidade</h2>
-            <p className="text-sm text-slate-600">Marque apenas o que você consegue confirmar.</p>
-
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-x-6">
-                {opcoes.map((opcao) => (
-                    <Checkbox
-                        key={opcao.valor}
-                        label={opcao.label}
-                        valor={opcao.valor}
-                        checked={selecionados.includes(opcao.valor)}
-                        onChange={onToggle}
-                    />
-                ))}
-            </div>
-
+        <div className="flex flex-col gap-3">
+            {opcoes.map((opcao) => (
+                <Checkbox
+                    key={opcao.valor}
+                    label={opcao.label}
+                    valor={opcao.valor}
+                    checked={selecionados.includes(opcao.valor)}
+                    onChange={onToggle}
+                />
+            ))}
             {error && <p className="text-sm text-red-600">{error}</p>}
-        </section>
+        </div>
     )
 }

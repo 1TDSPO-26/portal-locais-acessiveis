@@ -25,8 +25,8 @@ export default function Cadastro(){
         const novosErros: Record<string, string> = {}
 
         if (!nome.trim()) novosErros.nome = "Informe o nome do local"
-        if (!endereco.trim()) novosErros.endereco = "Informe o endereço"
         if (!tipo) novosErros.tipo = "Selecione o tipo de local"
+        if (!endereco.trim()) novosErros.endereco = "Informe o endereço"
         if (recursos.length === 0) novosErros.recursos = "Marque pelo menos um recurso"
 
         return novosErros
@@ -39,52 +39,80 @@ export default function Cadastro(){
         setErros(novosErros)
 
         if (Object.keys(novosErros).length === 0) {
-            console.log("Dados enviados:", { nome, endereco, tipo, recursos, observacoes })
+            console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
             alert("Cadastro enviado com sucesso!")
         }
     }
 
     return(
-        <section className="mx-auto w-full max-w-2xl px-4 py-6 sm:px-6 sm:py-10">
-            <h1 className="text-2xl font-bold sm:text-3xl text-slate-900">Cadastro</h1>
+        <main className="mx-auto max-w-4xl px-4 py-10">
+            <h1 className="text-3xl font-bold text-slate-900">
+                Adicionar informações de um local
+            </h1>
+            <p className="mt-2 text-sm text-slate-500">
+                Compartilhe o que você sabe. Se não tiver certeza sobre algum recurso,
+                deixe claro que a informação não foi confirmada.
+            </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 flex min-w-0 flex-col gap-5 sm:mt-8 sm:gap-6">
+            <form
+                onSubmit={handleSubmit}
+                className="mt-8 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+            >
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="nomeLocal">Nome do local</label>
+                    <label htmlFor="nomeLocal" className="text-sm font-semibold text-slate-800">
+                        Nome do local
+                    </label>
                     <input
                         type="text"
                         id="nomeLocal"
                         name="nomeLocal"
+                        placeholder="Digite o nome do local"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
-                        className={`min-h-11 w-full min-w-0 rounded-lg border px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.nome ? "border-red-500" : "border-slate-300"}`}
+                        className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.nome ? "border-red-500" : "border-slate-300"}`}
                     />
                     {erros.nome && <p className="text-sm text-red-600">{erros.nome}</p>}
                 </div>
 
+                <SeletorTipoLocal value={tipo} onChange={setTipo} error={erros.tipo} />
+
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="endereco">Endereço</label>
+                    <label htmlFor="endereco" className="text-sm font-semibold text-slate-800">
+                        Endereço
+                    </label>
                     <input
                         type="text"
                         id="endereco"
                         name="endereco"
+                        placeholder="Rua, número, cidade e estado"
                         value={endereco}
                         onChange={(e) => setEndereco(e.target.value)}
-                        className={`min-h-11 w-full min-w-0 rounded-lg border px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.endereco ? "border-red-500" : "border-slate-300"}`}
+                        className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.endereco ? "border-red-500" : "border-slate-300"}`}
                     />
                     {erros.endereco && <p className="text-sm text-red-600">{erros.endereco}</p>}
                 </div>
 
-                <SeletorTipoLocal value={tipo} onChange={setTipo} error={erros.tipo} />
-
-                <Checkboxes selecionados={recursos} onToggle={alternaRecurso} error={erros.recursos} />
+                <div>
+                    <h2 className="text-base font-semibold text-slate-900">Recursos de acessibilidade</h2>
+                    <p className="mt-1 text-sm text-slate-500">Marque apenas o que você consegue confirmar.</p>
+                    <div className="mt-3">
+                        <Checkboxes selecionados={recursos} onToggle={alternaRecurso} error={erros.recursos} />
+                    </div>
+                </div>
 
                 <Observacoes value={observacoes} onChange={setObservacoes} />
 
-                <button type="submit" className="min-h-11 w-full rounded-lg bg-cyan-600 px-6 py-3 text-base font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 sm:w-auto sm:self-end sm:text-sm">
-                    Enviar
+                <button
+                    type="submit"
+                    className="w-fit rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                >
+                    Enviar informações
                 </button>
             </form>
-        </section>
+
+            <p className="mt-4 text-xs text-slate-400">
+                As informações enviadas não representam certificação oficial de acessibilidade.
+            </p>
+        </main>
     )
 }
