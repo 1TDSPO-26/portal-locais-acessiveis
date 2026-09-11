@@ -3,7 +3,7 @@ import SeletorTipoLocal from "./components/SeletorTipoLocal"
 import Checkboxes from "./components/Checkboxes"
 import Observacoes from "./components/Observacoes"
 
-export default function Cadastro(){
+export default function Cadastro() {
 
     const [nome, setNome] = useState<string>("")
     const [endereco, setEndereco] = useState<string>("")
@@ -13,7 +13,7 @@ export default function Cadastro(){
 
     const [erros, setErros] = useState<Record<string, string>>({})
 
-    function alternaRecurso(valor: string){
+    function alternaRecurso(valor: string) {
         if (recursos.includes(valor)) {
             setRecursos(recursos.filter((item) => item !== valor))
         } else {
@@ -33,18 +33,24 @@ export default function Cadastro(){
     }
 
     function handleSubmit(e: React.FormEvent){
-        e.preventDefault()
+    e.preventDefault()
 
-        const novosErros = validar()
-        setErros(novosErros)
+    const novosErros = validar()
+    setErros(novosErros)
 
-        if (Object.keys(novosErros).length === 0) {
-            console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
-            alert("Cadastro enviado com sucesso!")
-        }
+    if (Object.keys(novosErros).length === 0) {
+        console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
+        alert("Cadastro enviado com sucesso!")
+
+        setNome("")
+        setEndereco("")
+        setTipo("")
+        setRecursos([])
+        setObservacoes("")
     }
+}
 
-    return(
+    return (
         <main className="mx-auto max-w-4xl px-4 py-10">
             <h1 className="text-3xl font-bold text-slate-900">
                 Adicionar informações de um local
@@ -69,9 +75,11 @@ export default function Cadastro(){
                         placeholder="Digite o nome do local"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
+                        aria-invalid={!!erros.nome}
+                        aria-describedby={erros.nome ? "nomeLocal-erro" : undefined}
                         className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.nome ? "border-red-500" : "border-slate-300"}`}
                     />
-                    {erros.nome && <p className="text-sm text-red-600">{erros.nome}</p>}
+                    {erros.nome && <p id="nomeLocal-erro" role="alert" className="text-sm text-red-600">{erros.nome}</p>}
                 </div>
 
                 <SeletorTipoLocal value={tipo} onChange={setTipo} error={erros.tipo} />
@@ -87,18 +95,20 @@ export default function Cadastro(){
                         placeholder="Rua, número, cidade e estado"
                         value={endereco}
                         onChange={(e) => setEndereco(e.target.value)}
+                        aria-invalid={!!erros.endereco}
+                        aria-describedby={erros.endereco ? "endereco-erro" : undefined}
                         className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.endereco ? "border-red-500" : "border-slate-300"}`}
                     />
-                    {erros.endereco && <p className="text-sm text-red-600">{erros.endereco}</p>}
+                    {erros.endereco && <p id="endereco-erro" role="alert" className="text-sm text-red-600">{erros.endereco}</p>}
                 </div>
 
-                <div>
-                    <h2 className="text-base font-semibold text-slate-900">Recursos de acessibilidade</h2>
+                <fieldset aria-describedby={erros.recursos ? "recursos-erro" : undefined}>
+                    <legend className="text-base font-semibold text-slate-900">Recursos de acessibilidade</legend>
                     <p className="mt-1 text-sm text-slate-500">Marque apenas o que você consegue confirmar.</p>
                     <div className="mt-3">
                         <Checkboxes selecionados={recursos} onToggle={alternaRecurso} error={erros.recursos} />
                     </div>
-                </div>
+                </fieldset>
 
                 <Observacoes value={observacoes} onChange={setObservacoes} />
 

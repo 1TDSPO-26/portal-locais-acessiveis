@@ -48,7 +48,7 @@ export default function Checkboxes({ selecionados, onToggle, error }: ChecklistP
                     onChange={onToggle}
                 />
             ))}
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p id="recursos-erro" role="alert" className="text-sm text-red-600">{error}</p>}
         </div>
     )
 }
