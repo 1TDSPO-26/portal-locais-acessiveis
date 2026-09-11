@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 
+import Button from "../../components/Button/Button";
 import heroHome from "../../assets/images/hero-home.png";
 
 export default function Home() {
@@ -66,13 +67,7 @@ export default function Home() {
             </div>
 
             <div className="flex w-full flex-col gap-3 sm:flex-row">
-              <Link
-                to="/locais"
-                className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
-                style={{ fontFamily: "Inter, sans-serif" }}
-              >
-                Explorar locais
-              </Link>
+              <Button to="/locais">Explorar locais</Button>
 
               {/* Mobile: Saiba mais */}
               <Link
@@ -146,13 +141,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Link
-            to="/cadastrar"
-            className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
-            style={{ fontFamily: "Inter, sans-serif" }}
-          >
-            Adicionar local
-          </Link>
+          <Button to="/cadastrar">Adicionar local</Button>
         </div>
       </section>
     </>
