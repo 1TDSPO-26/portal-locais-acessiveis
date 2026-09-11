@@ -1,7 +1,7 @@
 import { useState } from "react"
-import SeletorTipoLocal from "./components/SeletorTipoLocal"
-import Checkboxes from "./components/Checkboxes"
-import Observacoes from "./components/Observacoes"
+import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
+import Checkboxes from "../../components/Checkboxes/Checkboxes"
+import Observacoes from "../../components/Observacoes/Observacoes"
 
 export default function Cadastro() {
 
