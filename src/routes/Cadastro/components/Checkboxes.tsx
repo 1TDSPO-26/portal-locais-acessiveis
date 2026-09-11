@@ -15,9 +15,9 @@ function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
                 id={id}
                 checked={checked}
                 onChange={() => onChange(valor)}
-                className="focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className="h-4 w-4 rounded border-slate-300 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
             />
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id} className="text-sm text-slate-700">{label}</label>
         </div>
     )
 }
@@ -38,23 +38,17 @@ const opcoes = [
 
 export default function Checkboxes({ selecionados, onToggle, error }: ChecklistProps){
     return(
-        <section className="flex flex-col gap-3">
-            <h2 className="text-lg font-semibold text-slate-900">Recursos de acessibilidade</h2>
-            <p className="text-sm text-slate-600">Marque apenas o que você consegue confirmar.</p>
-
-            <div className="flex flex-col gap-2">
-                {opcoes.map((opcao) => (
-                    <Checkbox
-                        key={opcao.valor}
-                        label={opcao.label}
-                        valor={opcao.valor}
-                        checked={selecionados.includes(opcao.valor)}
-                        onChange={onToggle}
-                    />
-                ))}
-            </div>
-
-            {error && <p className="text-sm text-red-600">{error}</p>}
-        </section>
+        <div className="flex flex-col gap-3">
+            {opcoes.map((opcao) => (
+                <Checkbox
+                    key={opcao.valor}
+                    label={opcao.label}
+                    valor={opcao.valor}
+                    checked={selecionados.includes(opcao.valor)}
+                    onChange={onToggle}
+                />
+            ))}
+            {error && <p id="recursos-erro" role="alert" className="text-sm text-red-600">{error}</p>}
+        </div>
     )
 }
