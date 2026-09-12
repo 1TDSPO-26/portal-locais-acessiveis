@@ -38,7 +38,7 @@ const opcoes = [
 
 export default function Checkboxes({ selecionados, onToggle, error }: ChecklistProps){
     return(
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-6">
             {opcoes.map((opcao) => (
                 <Checkbox
                     key={opcao.valor}
