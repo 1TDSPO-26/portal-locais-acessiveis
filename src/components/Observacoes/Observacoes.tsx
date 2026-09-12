@@ -16,7 +16,7 @@ export default function Observacoes({ value, onChange }: ObservacoesProps){
                 placeholder="Inclua detalhes úteis sobre o acesso"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-full min-w-0 resize-y rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className="w-full min-w-0 resize-none rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40"
             />
         </div>
     )
