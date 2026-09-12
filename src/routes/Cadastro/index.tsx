@@ -114,7 +114,7 @@ export default function Cadastro() {
 
                 <button
                     type="submit"
-                    className="w-fit rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                   className="inline-flex w-fit items-center justify-center rounded-lg bg-[#005FCC] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
                 >
                     Enviar informações
                 </button>
