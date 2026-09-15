@@ -1,32 +1,46 @@
-/**
- * ============================================================
- * STUB — DONO: IGOR
- * ============================================================
- * Figma: tela "Locais / Desktop", a linha de filtros à direita da busca.
- *
- * São três: "Entrada com rampa", "Banheiro acessível", "Estacionamento".
- * No desktop ficam alinhados à direita, na mesma faixa da busca.
- * No mobile descem para uma linha própria, abaixo do campo.
- *
- * Cada filtro liga e desliga ao ser clicado. Guarde quais estão ativos
- * num estado do React na página.
- *
- * ACESSIBILIDADE: como são botões de liga/desliga, cada um precisa de
- * aria-pressed={ativo}. Sem isso o leitor de tela não sabe se o filtro
- * está aplicado ou não.
- *
- * ESCOPO: visual + estado. A filtragem real depende da API.
- */
-
 interface FiltrosCategoriaProps {
-  ativos: string[];
-  onAlternar: (filtro: string) => void;
+  selecionados: string[];
+  onChange: (selecionados: string[]) => void;
 }
 
-export function FiltrosCategoria({ ativos }: FiltrosCategoriaProps) {
+const filtros = [
+  { id: "entrada", rotulo: "Entrada com rampa" },
+  { id: "banheiro", rotulo: "Banheiro acessível" },
+  { id: "vagas", rotulo: "Vagas reservadas" },
+  { id: "circulacao", rotulo: "Circulação", status: "naoInformado", detalhe: "Não informado" },
+  { id: "elevador", rotulo: "Elevador", status: "disponivel", detalhe: "Disponível" }
+];
+
+export default function FiltrosCategoria({ selecionados, onChange }: FiltrosCategoriaProps) {
+  const alterarFiltro = (id: string) => {
+    if (selecionados.includes(id)) {
+      onChange(selecionados.filter((item) => item !== id));
+      return;
+    }
+
+    onChange([...selecionados, id]);
+  };
+
   return (
-    <div>
-      <p className="text-sm text-slate-400">[stub] FiltrosCategoria · {ativos.length} ativos</p>
+    <div className="flex gap-2 pb-1">
+      {filtros.map((filtro) => {
+        const ativo = selecionados.includes(filtro.id);
+
+        return (
+          <button
+            key={filtro.id}
+            type="button"
+            onClick={() => alterarFiltro(filtro.id)}
+            className={`cursor-pointer whitespace-nowrap rounded-full px-2.5 py-1 text-[9px] transition ${
+              ativo
+                ? "bg-blue-600 text-white"
+                : "bg-slate-50 text-slate-500 hover:bg-slate-100"
+            }`}
+          >
+            {filtro.rotulo}
+          </button>
+        );
+      })}
     </div>
   );
-}
+};

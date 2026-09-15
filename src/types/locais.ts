@@ -1,4 +1,9 @@
-import type { RecursoAcessibilidade } from "./recursoAcessibilidade";
+interface RecursoAcessibilidade {
+  id: string;
+  rotulo: string;
+  status: "disponivel" | "indisponivel" | "naoInformado" | "naoSeAplica";
+  detalhe: string;
+}
 
 export interface Local {
   id: string;

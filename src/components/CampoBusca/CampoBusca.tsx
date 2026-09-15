@@ -1,36 +1,31 @@
-/**
- * ============================================================
- * STUB — DONO: IGOR
- * ============================================================
- * Figma: Section / Form Field, variante "Search" (a linha do meio,
- * com a lupa dentro do campo).
- *
- * Na tela /locais:
- *   Label acima: "Buscar"
- *   Placeholder: "Buscar por local ou endereço..."
- *   Lupa à esquerda, dentro do campo
- *
- * Estados previstos no Figma: Default, Focus (borda azul + ring 2px),
- * Filled, Error (borda vermelha + mensagem em texto), Disabled.
- * Para esta issue, Default e Focus bastam.
- *
- * ACESSIBILIDADE: usar <label htmlFor> de verdade ligado ao id do input.
- * Placeholder NÃO é label. Se o design não mostrar o texto do label,
- * use sr-only, mas ele precisa existir no HTML.
- *
- * ESCOPO: só o visual e o estado do texto digitado. Filtrar a lista
- * de verdade é integração com API, que é outra issue.
- */
-
 interface CampoBuscaProps {
-  valor: string;
-  onChange: (valor: string) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export function CampoBusca({ valor }: CampoBuscaProps) {
+export default function CampoBusca({ value, onChange }: CampoBuscaProps) {
   return (
-    <div>
-      <p className="text-sm text-slate-400">[stub] CampoBusca · valor: {valor}</p>
+    <div className="relative w-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Buscar por local ou endereço..."
+        className="h-10 w-full rounded-md border border-slate-300 bg-white pl-9 pr-3 text-[11px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500"
+      />
     </div>
   );
-}
+};

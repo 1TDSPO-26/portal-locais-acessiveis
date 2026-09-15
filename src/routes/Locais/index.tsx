@@ -1,25 +1,134 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+import CampoBusca from "../../components/CampoBusca/CampoBusca";
+import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
+import Paginacao from "../../components/Paginacao/Paginacao";
+
 import { locaisMock } from "../../types/locais";
-import { CampoBusca } from "../../components/CampoBusca/CampoBusca";
-import { FiltrosCategoria } from "../../components/FiltrosCategoria/FiltrosCategoria";
-import { ListaLocais } from "../../components/ListaLocais/ListaLocais";
-import { Paginacao } from "../../components/Paginacao/Paginacao";
+import LocalCard from "../../components/LocalCard/LocalCard";
+
+const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
-  const [pagina, setPagina] = useState(1);
+  const [paginaAtual, setPaginaAtual] = useState(1);
 
-  const locais = locaisMock;
+  const locaisFiltrados = useMemo(() => {
+    return locaisMock.filter((local) => {
+      const termo = busca.trim().toLowerCase();
+
+      const correspondeBusca =
+        !termo ||
+        local.nome.toLowerCase().includes(termo) ||
+        local.endereco.toLowerCase().includes(termo);
+
+      const possuiRecursos = filtros.every((id) =>
+        local.recursos.some(
+          (recurso) =>
+            recurso.id === id &&
+            recurso.status === "disponivel"
+        )
+      );
+
+      return correspondeBusca && possuiRecursos;
+    });
+  }, [busca, filtros]);
+
+  const totalPaginas = Math.ceil(
+    locaisFiltrados.length / ITENS_POR_PAGINA
+  );
+
+  const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+
+  const locaisDaPagina = locaisFiltrados.slice(
+    inicio,
+    inicio + ITENS_POR_PAGINA
+  );
+
+  const alterarBusca = (valor: string) => {
+    setBusca(valor);
+    setPaginaAtual(1);
+  };
+
+  const alterarFiltros = (novosFiltros: string[]) => {
+    setFiltros(novosFiltros);
+    setPaginaAtual(1);
+  };
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
-      <p className="text-sm text-slate-400">[stub] Página /locais</p>
+    <main className="mx-auto w-full max-w-[1180px] px-6 py-8">
+      <div className="mb-5">
+        <h1 className="font-bold text-slate-900 text-start mb-0">
+          Locais acessíveis
+        </h1>
 
-      <CampoBusca valor={busca} onChange={setBusca} />
-      <FiltrosCategoria ativos={filtros} onAlternar={() => setFiltros(filtros)} />
-      <ListaLocais locais={locais} />
-      <Paginacao paginaAtual={pagina} totalPaginas={1} onMudarPagina={setPagina} />
+        <p className="text-[12px] text-slate-500 text-start">
+          Encontre lugares e consulte informações para planejar sua visita.
+        </p>
+      </div>
+
+      <div className="mb-5">
+        <label className="mb-1 block text-[11px] font-medium text-slate-700 text-start">
+          Buscar
+        </label>
+
+        <div className="flex items-end gap-4">
+          <div className="w-[620px]">
+            <CampoBusca
+              value={busca}
+              onChange={alterarBusca}
+            />
+          </div>
+
+          <FiltrosCategoria
+            selecionados={filtros}
+            onChange={alterarFiltros}
+          />
+        </div>
+      </div>
+
+      <p className="mb-4 text-[11px] text-slate-500 text-start">
+        {locaisFiltrados.length}{" "}
+        {locaisFiltrados.length === 1
+          ? "local encontrado"
+          : "locais encontrados"}
+      </p>
+
+      {locaisDaPagina.length ? (
+        <div className="w-full overflow-hidden">
+          {locaisDaPagina.map((local, index) => (
+            <div
+              key={local.id}
+              className={`my-3 ${
+                index !== locaisDaPagina.length - 1
+              }`}
+            >
+              <LocalCard local={local} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Nenhum local encontrado
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Tente alterar sua busca ou remover algum filtro.
+          </p>
+        </div>
+      )}
+
+      {totalPaginas > 1 && (
+        <div className="mt-6">
+          <Paginacao
+            paginaAtual={paginaAtual}
+            totalPaginas={totalPaginas}
+            onChange={setPaginaAtual}
+          />
+        </div>
+      )}
     </main>
   );
-}
+};
