@@ -3,7 +3,10 @@ interface CampoBuscaProps {
   onChange: (value: string) => void;
 }
 
-export default function CampoBusca({ value, onChange }: CampoBuscaProps) {
+export default function CampoBusca({
+  value,
+  onChange,
+}: CampoBuscaProps) {
   return (
     <div className="relative w-full">
       <svg
@@ -12,7 +15,7 @@ export default function CampoBusca({ value, onChange }: CampoBuscaProps) {
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400"
+        className="absolute left-3 top-1/2 size-4 sm:size-3.5 -translate-y-1/2 text-slate-400"
         aria-hidden="true"
       >
         <circle cx="11" cy="11" r="8" />
@@ -24,8 +27,8 @@ export default function CampoBusca({ value, onChange }: CampoBuscaProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Buscar por local ou endereço..."
-        className="h-10 w-full rounded-md border border-slate-300 bg-white pl-9 pr-3 text-[11px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500"
+        className="h-11 sm:h-10 w-full rounded-md border border-slate-300 bg-white pl-9 pr-3 text-xs sm:text-[11px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500"
       />
     </div>
   );
-};
+}

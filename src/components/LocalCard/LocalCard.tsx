@@ -1,5 +1,7 @@
 import { NavLink } from "react-router";
+
 import type { Local } from "../../types/locais";
+
 import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 interface LocalCardProps {
@@ -7,12 +9,13 @@ interface LocalCardProps {
 }
 
 export default function LocalCard({ local }: LocalCardProps) {
-  const recursosDisponiveis = local.recursos
-    .filter((recurso) => recurso.status === "disponivel")
+  const recursosDisponiveis = local.recursos.filter(
+    (recurso) => recurso.status === "disponivel"
+  );
 
   return (
-    <article className="flex overflow-hidden rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px]">
-      <div className="w-[14rem] shrink-0 bg-slate-100">
+    <article className="flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px]">
+      <div className="w-full h-[125px] sm:h-auto sm:w-[14rem] shrink-0 bg-slate-100">
         {local.imagemUrl ? (
           <img
             src={local.imagemUrl}
@@ -26,13 +29,13 @@ export default function LocalCard({ local }: LocalCardProps) {
         )}
       </div>
 
-      <div className="flex flex-1 justify-between gap-4 p-4">
+      <div className="flex flex-1 justify-between gap-4 p-3 sm:p-4">
         <div className="flex-1 text-start">
-          <h2 className="text-lg font-semibold text-black">
+          <h2 className="text-base sm:text-lg font-semibold text-black">
             {local.nome}
           </h2>
 
-          <p className="mt-1 text-sm text-slate-500 text-black">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500">
             {local.cidade}
           </p>
 
@@ -47,11 +50,10 @@ export default function LocalCard({ local }: LocalCardProps) {
 
           <NavLink
             to={`/locais/${local.id}`}
-            className="mt-3 inline-block text-sm font-medium text-blue-600 hover:underline"
+            className="mt-2 sm:mt-3 inline-block text-xs sm:text-sm font-medium text-blue-600 hover:underline"
           >
             Ver detalhes →
           </NavLink>
-
         </div>
 
         <div>
@@ -62,4 +64,4 @@ export default function LocalCard({ local }: LocalCardProps) {
       </div>
     </article>
   );
-};
+}

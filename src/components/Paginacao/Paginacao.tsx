@@ -4,7 +4,11 @@ interface PaginacaoProps {
   onChange: (pagina: number) => void;
 }
 
-export default function Paginacao({ paginaAtual, totalPaginas, onChange }: PaginacaoProps) {
+export default function Paginacao({
+  paginaAtual,
+  totalPaginas,
+  onChange,
+}: PaginacaoProps) {
   const paginas = Array.from(
     { length: totalPaginas },
     (_, index) => index + 1
@@ -16,7 +20,7 @@ export default function Paginacao({ paginaAtual, totalPaginas, onChange }: Pagin
         type="button"
         disabled={paginaAtual === 1}
         onClick={() => onChange(paginaAtual - 1)}
-        className="cursor-pointer flex size-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
       >
         ‹
       </button>
@@ -26,7 +30,7 @@ export default function Paginacao({ paginaAtual, totalPaginas, onChange }: Pagin
           key={pagina}
           type="button"
           onClick={() => onChange(pagina)}
-          className={`cursor-pointer size-9 rounded-lg text-sm ${
+          className={`cursor-pointer size-8 sm:size-9 rounded-lg text-xs sm:text-sm ${
             pagina === paginaAtual
               ? "bg-blue-600 text-white"
               : "text-slate-600 hover:bg-slate-100"
@@ -40,10 +44,10 @@ export default function Paginacao({ paginaAtual, totalPaginas, onChange }: Pagin
         type="button"
         disabled={paginaAtual === totalPaginas}
         onClick={() => onChange(paginaAtual + 1)}
-        className="cursor-pointer flex size-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
       >
         ›
       </button>
     </div>
   );
-};
+}

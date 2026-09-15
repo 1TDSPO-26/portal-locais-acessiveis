@@ -7,11 +7,14 @@ const filtros = [
   { id: "entrada", rotulo: "Entrada com rampa" },
   { id: "banheiro", rotulo: "Banheiro acessível" },
   { id: "vagas", rotulo: "Vagas reservadas" },
-  { id: "circulacao", rotulo: "Circulação", status: "naoInformado", detalhe: "Não informado" },
-  { id: "elevador", rotulo: "Elevador", status: "disponivel", detalhe: "Disponível" }
+  { id: "circulacao", rotulo: "Circulação" },
+  { id: "elevador", rotulo: "Elevador" },
 ];
 
-export default function FiltrosCategoria({ selecionados, onChange }: FiltrosCategoriaProps) {
+export default function FiltrosCategoria({
+  selecionados,
+  onChange,
+}: FiltrosCategoriaProps) {
   const alterarFiltro = (id: string) => {
     if (selecionados.includes(id)) {
       onChange(selecionados.filter((item) => item !== id));
@@ -22,7 +25,7 @@ export default function FiltrosCategoria({ selecionados, onChange }: FiltrosCate
   };
 
   return (
-    <div className="flex gap-2 pb-1">
+    <div className="flex w-full gap-2 overflow-x-auto pb-1 sm:w-auto sm:overflow-visible">
       {filtros.map((filtro) => {
         const ativo = selecionados.includes(filtro.id);
 
@@ -43,4 +46,4 @@ export default function FiltrosCategoria({ selecionados, onChange }: FiltrosCate
       })}
     </div>
   );
-};
+}

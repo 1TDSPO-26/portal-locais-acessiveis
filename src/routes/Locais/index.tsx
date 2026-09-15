@@ -3,9 +3,9 @@ import { useMemo, useState } from "react";
 import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
 import Paginacao from "../../components/Paginacao/Paginacao";
+import LocalCard from "../../components/LocalCard/LocalCard";
 
 import { locaisMock } from "../../types/locais";
-import LocalCard from "../../components/LocalCard/LocalCard";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -57,24 +57,24 @@ export default function Locais() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-[1180px] px-6 py-8">
-      <div className="mb-5">
-        <h1 className="font-bold text-slate-900 text-start mb-0">
+    <main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mb-6 sm:mb-5">
+        <h1 className="mb-2 text-start text-2xl font-bold text-slate-900 sm:mb-0 sm:text-[inherit]">
           Locais acessíveis
         </h1>
 
-        <p className="text-[12px] text-slate-500 text-start">
+        <p className="max-w-[260px] text-start text-sm leading-5 text-slate-500 sm:max-w-none sm:text-[12px] sm:leading-normal">
           Encontre lugares e consulte informações para planejar sua visita.
         </p>
       </div>
 
       <div className="mb-5">
-        <label className="mb-1 block text-[11px] font-medium text-slate-700 text-start">
+        <label className="mb-1 block text-start text-[11px] font-medium text-slate-700">
           Buscar
         </label>
 
-        <div className="flex items-end gap-4">
-          <div className="w-[620px]">
+        <div className="flex flex-col items-stretch gap-7 sm:flex-row sm:items-end sm:gap-4">
+          <div className="w-full sm:w-[620px]">
             <CampoBusca
               value={busca}
               onChange={alterarBusca}
@@ -88,7 +88,7 @@ export default function Locais() {
         </div>
       </div>
 
-      <p className="mb-4 text-[11px] text-slate-500 text-start">
+      <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
         {locaisFiltrados.length}{" "}
         {locaisFiltrados.length === 1
           ? "local encontrado"
@@ -131,4 +131,4 @@ export default function Locais() {
       )}
     </main>
   );
-};
+}
