@@ -1,5 +1,8 @@
 import IconLogo from '../IconLogo/IconLogo';
 
+/**
+ * Interface de propriedades do componente ModalConfirmacao
+ */
 interface ModalConfirmacaoProps {
   isOpen: boolean;
   onClose: () => void;
@@ -8,6 +11,9 @@ interface ModalConfirmacaoProps {
   message?: string;
 }
 
+/**
+ * Componente Reutilizável de Modal de Confirmação para envios de formulário
+ */
 export default function ModalConfirmacao({
   isOpen,
   onClose,
@@ -15,21 +21,26 @@ export default function ModalConfirmacao({
   title = "Confirmar Envio",
   message = "Tem certeza de que deseja enviar estas informações?",
 }: ModalConfirmacaoProps) {
+  // Retorna nulo se o modal estiver fechado
   if (!isOpen) return null;
 
   return (
+    // Backdrop escurecido com desfoque de fundo (backdrop-blur-sm)
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
       onClick={onClose}
     >
+      {/* Container principal do modal com cantos rounded-2xl */}
       <div
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Identidade Visual / Logo */}
         <div className="flex justify-center mb-4">
           <IconLogo />
         </div>
 
+        {/* Título e Mensagem descritiva */}
         <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
           {title}
         </h3>
@@ -38,7 +49,7 @@ export default function ModalConfirmacao({
           {message}
         </p>
 
-        {/* Botões de Ação com Tailwind CSS */}
+        {/* Ações de Cancelamento e Confirmação */}
         <div className="flex flex-col-reverse sm:flex-row gap-3">
           <button
             type="button"
