@@ -9,7 +9,7 @@ export default function Acessibilidade() {
     
       <MainLayout>
 
-      <main>
+      
         <h1>Acessibilidade</h1>
 
         <section>
@@ -41,7 +41,7 @@ export default function Acessibilidade() {
             <a href="/sobre">Sobre</a> para que possamos corrigir.
           </p>
         </section>
-      </main>
+     
 
      </MainLayout>
     
