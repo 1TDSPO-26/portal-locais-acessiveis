@@ -9,7 +9,7 @@ import Home from  './routes/Home/index.tsx';
 import Locais from './routes/Locais/index.tsx';
 import Cadastro from './routes/Cadastro/index.tsx';
 import Sobre from './routes/Sobre/index.tsx';
-import LocalDetalhe from './routes/LocalDetalhe/index.tsx';
+import NotFound from './routes/NotFound/index.tsx';
 
 const router = createBrowserRouter([
   {path:"/", element:<App/>, children: [
@@ -18,7 +18,10 @@ const router = createBrowserRouter([
     {path:"/locais/:id", element:<LocalDetalhe/>},
     {path:"/cadastrar", element:<Cadastro/>},
     {path:"/sobre", element:<Sobre/>},
-  ]}
+  
+  ]},
+  {path:"/*", element:<NotFound/>}
+  
 ]);
 
 createRoot(document.getElementById('root')!).render(
