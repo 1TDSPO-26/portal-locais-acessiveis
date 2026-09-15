@@ -1,10 +1,13 @@
-import Header from '../components/MainLayout/Header';
-import Footer from '../components/MainLayout/Footer';
+import { MainLayout } from "../../layouts/MainLayout/MainLayout"
 
+
+
+
+// é uma rota ... lembrem é uma rota "/acessibilidade" ROTAAAAAAAAAAAAAAA!!! não componente...... ROTAAAAA LÊ porra da issue
 export default function Acessibilidade() {
   return (
-    <>
-      <Header />
+    
+      <MainLayout>
 
       <main>
         <h1>Acessibilidade</h1>
@@ -40,7 +43,7 @@ export default function Acessibilidade() {
         </section>
       </main>
 
-      <Footer />
-    </>
+     </MainLayout>
+    
   );
 }
