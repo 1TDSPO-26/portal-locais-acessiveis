@@ -9,7 +9,7 @@ import Home from  './routes/Home/index.tsx';
 import Locais from './routes/Locais/index.tsx';
 import Cadastro from './routes/Cadastro/index.tsx';
 import Sobre from './routes/Sobre/index.tsx';
-import LocalDetalhe from './routes/Locais/LocalDetalhe.tsx';
+import LocalDetalhe from './routes/LocalDetalhe/index.tsx';
 
 const router = createBrowserRouter([
   {path:"/", element:<App/>, children: [

@@ -1,5 +1,5 @@
-import type { RecursoAcessibilidade } from "../types";
-import { IconeStatus } from "./IconeStatus";
+import type { RecursoAcessibilidade } from "../routes/Locais/types";
+import { IconeStatus } from "./IconeStatus/IconeStatus";
 import { corDoStatus } from "./statusCores";
 
 /**

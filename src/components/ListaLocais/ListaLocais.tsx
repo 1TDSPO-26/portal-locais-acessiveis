@@ -1,4 +1,4 @@
-import type { Local } from "../types";
+import type { Local } from "../routes/Locais/types";
 import { LocalCard } from "./LocalCard";
 
 /**

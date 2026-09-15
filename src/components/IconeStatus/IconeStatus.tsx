@@ -1,5 +1,5 @@
-import type { StatusRecurso } from "../types";
-import { corDoStatus } from "./statusCores";
+import type { StatusRecurso } from "../../types/locais";
+import { corDoStatus } from "../statusCores";
 
 /**
  * Ícone de status de um recurso de acessibilidade.

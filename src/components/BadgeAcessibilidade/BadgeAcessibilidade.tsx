@@ -1,4 +1,4 @@
-import { IconeStatus } from "./IconeStatus";
+import { IconeStatus } from "../IconeStatus/IconeStatus.tsx";
 
 /**
  * Badge verde que aparece DENTRO do card: "✓ Entrada com rampa".

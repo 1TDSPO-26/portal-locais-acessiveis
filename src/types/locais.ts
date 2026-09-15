@@ -1,21 +1,17 @@
-import type { Local } from "../types";
+import type { RecursoAcessibilidade } from "./recursoAcessibilidade";
 
-/**
- * Dados falsos usados enquanto a API não existe.
- *
- * A lista foi montada de propósito com casos que costumam quebrar layout,
- * porque o QA precisa deles para testar o comportamento visual:
- *
- *  1. Parque Ibirapuera        -> caso "bonito", tudo preenchido
- *  2. Museu de Arte de SP      -> nome médio, sem contato
- *  3. Biblioteca Mário de A.   -> NOME LONGO, precisa truncar sem quebrar o card
- *  4. Shopping Center Norte    -> categoria diferente (Shopping)
- *  5. Estação da Luz           -> tem recurso indisponível (x vermelho)
- *  6. Igreja da Sé             -> SEM imagem, cai no placeholder
- *  7. Unidade Básica de Saúde  -> quase tudo "não informado", card mais vazio
- *
- * Quando a API entrar, só troca a origem dos dados. O resto do código continua igual.
- */
+export interface Local {
+  id: string;
+  nome: string;
+  categoria: "Parque" | "Cultura" | "Shopping" | "Serviço" | "Outro";
+  cidade: string;
+  endereco: string;
+  contato?: string;
+  descricao: string;
+  imagemUrl?: string;
+  recursos: RecursoAcessibilidade[];
+}
+
 export const locaisMock: Local[] = [
   {
     id: "1",

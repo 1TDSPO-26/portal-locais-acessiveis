@@ -1,4 +1,4 @@
-import type { CategoriaLocal } from "../types";
+import type { CategoriaLocal } from "../routes/Locais/types";
 
 /**
  * Tag de categoria. Figma: Section / Tag.
