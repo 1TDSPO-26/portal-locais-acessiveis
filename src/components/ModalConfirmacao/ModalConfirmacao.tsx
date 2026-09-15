@@ -26,12 +26,10 @@ export default function ModalConfirmacao({
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Logo do projeto */}
         <div className="flex justify-center mb-4">
           <IconLogo />
         </div>
 
-        {/* Título e Mensagem */}
         <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
           {title}
         </h3>
@@ -40,9 +38,24 @@ export default function ModalConfirmacao({
           {message}
         </p>
 
-        {/* Botões provisórios */}
-        <button onClick={onClose}>Cancelar</button>
-        <button onClick={onConfirm}>Confirmar</button>
+        {/* Botões de Ação com Tailwind CSS */}
+        <div className="flex flex-col-reverse sm:flex-row gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="w-full py-2.5 px-4 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm"
+          >
+            Confirmar
+          </button>
+        </div>
       </div>
     </div>
   );
