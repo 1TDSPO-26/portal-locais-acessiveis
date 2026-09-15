@@ -1,6 +1,6 @@
 export default function Acessibilidade() {
     return ( 
-        <main className="bg-white min-h-screen px-6 py-10 max-w-4xl mx-auto">
+        <div className="bg-white min-h-screen px-6 py-10 max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold text-slate-900 mb-8">Acessibilidade</h1>
 
             <section className="border border-slate-200 rounded-xl bg-slate-50 p-6 mb-6" >
@@ -32,6 +32,6 @@ export default function Acessibilidade() {
                     <a href="/sobre" className="text-blue-600 font-medium hover:text-blue-800 underline">Sobre</a> para que possamos corrigir.
                 </p>
             </section>
-        </main>
+        </div>
     );
 }
