@@ -121,7 +121,12 @@ export default function Home() {
 
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {locaisMock.slice(0, 6).map((local) => (
+              <div
+                key={local.id}
+                className="[&>article]:!flex-col [&>article>div:first-child]:!h-[130px] [&>article>div:first-child]:!w-full"
+              >
               <LocalCard key={local.id} local={local} />
+              </div>
             ))}
           </div>
           
