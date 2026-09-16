@@ -32,6 +32,10 @@ export default function ModalConfirmacao({
     >
       {/* Container principal do modal com cantos rounded-2xl */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-confirmacao-titulo"
+        aria-describedby="modal-confirmacao-mensagem"
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100"
         onClick={(e) => e.stopPropagation()}
       >
@@ -41,11 +45,11 @@ export default function ModalConfirmacao({
         </div>
 
         {/* Título e Mensagem descritiva */}
-        <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
+        <h3 id="modal-confirmacao-titulo" className="text-xl font-bold text-slate-800 text-center mb-2">
           {title}
         </h3>
 
-        <p className="text-slate-600 text-center text-sm mb-6 leading-relaxed">
+        <p id="modal-confirmacao-mensagem" className="text-slate-600 text-center text-sm mb-6 leading-relaxed">
           {message}
         </p>
 
