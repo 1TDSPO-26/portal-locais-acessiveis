@@ -2,6 +2,8 @@ import { Link } from "react-router";
 
 import Button from "../../components/Button/Button";
 import heroHome from "../../assets/images/hero-home.png";
+import LocalCard from "../../components/LocalCard/LocalCard";
+import { locaisMock } from "../../types/locais";
 
 export default function Home() {
   return (
@@ -117,7 +119,12 @@ export default function Home() {
             </Link>
           </div>
 
-          <div>{/* Area reservada ao LocalCard */}</div>
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {locaisMock.slice(0, 6).map((local) => (
+              <LocalCard key={local.id} local={local} />
+            ))}
+          </div>
+          
         </div>
       </section>
 
