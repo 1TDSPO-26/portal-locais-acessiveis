@@ -45,6 +45,14 @@ export default function Menu() {
                 />
             </button>
 
+            {isOpen && (
+                <div
+                    className="fixed inset-0 z-40 bg-black/50 md:hidden"
+                    onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
+                />
+            )}
+
             <div
                 className={`fixed left-0 right-0 top-16 z-50 overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96 border-b border-gray-200 opacity-100' : 'max-h-0 border-b border-transparent opacity-0 pointer-events-none'
                     }`}
