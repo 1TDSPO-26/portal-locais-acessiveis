@@ -46,7 +46,7 @@ export default function Menu() {
             </button>
 
             <div
-                className={`absolute left-0 right-0 top-full overflow-hidden bg-white transition-all duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96 border-t border-gray-200 opacity-100' : 'max-h-0 border-t border-transparent opacity-0'
+                className={`fixed left-0 right-0 top-16 z-50 overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96 border-b border-gray-200 opacity-100' : 'max-h-0 border-b border-transparent opacity-0 pointer-events-none'
                     }`}
             >
                 <ul className="flex flex-col gap-4 px-6 py-4">
