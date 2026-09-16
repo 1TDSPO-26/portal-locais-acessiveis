@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import IconLogo from '../IconLogo/IconLogo';
 
 /**
@@ -21,6 +22,24 @@ export default function ModalConfirmacao({
   title = "Confirmar Envio",
   message = "Tem certeza de que deseja enviar estas informações?",
 }: ModalConfirmacaoProps) {
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Move o foco para o botao de confirmar e permite fechar com Esc
+  useEffect(() => {
+    if (!isOpen) return;
+
+    confirmButtonRef.current?.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
   // Retorna nulo se o modal estiver fechado
   if (!isOpen) return null;
 
@@ -65,6 +84,7 @@ export default function ModalConfirmacao({
 
           <button
             type="button"
+            ref={confirmButtonRef}
             onClick={onConfirm}
             className="w-full py-2.5 px-4 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm"
           >
