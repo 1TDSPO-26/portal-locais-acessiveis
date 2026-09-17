@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import Cards from "../../components/Cards/Cards";
 import ilustracao from "../../img/imagem-pessoa-cadeirante.png";
 
 
 export default function Sobre() {
+
+  useEffect(() => {
+    document.title = "ACESSO + | SOBRE";
+  }, []);
+
   return (
     <div className="w-full min-h-screen px-5 pt-10 pb-11 flex flex-col gap-8 md:px-[72px] md:pt-16 md:pb-16 md:gap-11 mx-auto max-w-[1136px]">
         <section className="grid w-full gap-8 md:gap-16 md:min-h-[260px] grid-cols-1 md:grid-cols-[1fr_420px] md:items-center">

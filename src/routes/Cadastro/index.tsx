@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
 
 export default function Cadastro() {
+
+    useEffect(() => {
+        document.title = "ACESSO + | ACESSIBILIDADE";
+    }, []);
 
     const [nome, setNome] = useState<string>("")
     const [endereco, setEndereco] = useState<string>("")

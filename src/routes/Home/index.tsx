@@ -4,8 +4,14 @@ import Button from "../../components/Button/Button";
 import heroHome from "../../assets/images/hero-home.png";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import { locaisMock } from "../../types/locais";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    document.title = "ACESSO + | ACESSIBILIDADE";
+  }, []);
+
   return (
     <>
       {/* HERO */}
