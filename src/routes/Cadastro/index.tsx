@@ -2,6 +2,7 @@ import { useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
+import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
 
 export default function Cadastro() {
 
@@ -12,6 +13,7 @@ export default function Cadastro() {
     const [observacoes, setObservacoes] = useState<string>("")
 
     const [erros, setErros] = useState<Record<string, string>>({})
+    const [modalAberto, setModalAberto] = useState<boolean>(false)
 
     function alternaRecurso(valor: string) {
         if (recursos.includes(valor)) {
@@ -32,23 +34,32 @@ export default function Cadastro() {
         return novosErros
     }
 
-    function handleSubmit(e: React.FormEvent){
-    e.preventDefault()
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
 
-    const novosErros = validar()
-    setErros(novosErros)
+        const novosErros = validar()
+        setErros(novosErros)
 
-    if (Object.keys(novosErros).length === 0) {
+        if (Object.keys(novosErros).length === 0) {
+            setModalAberto(true)
+        }
+    }
+
+    function confirmarEnvio() {
         console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
-        alert("Cadastro enviado com sucesso!")
 
         setNome("")
         setEndereco("")
         setTipo("")
         setRecursos([])
         setObservacoes("")
+
+        setModalAberto(false)
     }
-}
+
+    function cancelarEnvio() {
+        setModalAberto(false)
+    }
 
     return (
         <main className="mx-auto max-w-4xl px-4 py-10">
@@ -123,6 +134,14 @@ export default function Cadastro() {
             <p className="mt-4 text-xs text-slate-400">
                 As informações enviadas não representam certificação oficial de acessibilidade.
             </p>
+
+            <ModalConfirmacao
+                isOpen={modalAberto}
+                onClose={cancelarEnvio}
+                onConfirm={confirmarEnvio}
+                title="Confirmar envio das informações?"
+                message="Revise os dados antes de continuar. Após a confirmação, as informações do local serão enviadas."
+            />
         </main>
     )
 }
