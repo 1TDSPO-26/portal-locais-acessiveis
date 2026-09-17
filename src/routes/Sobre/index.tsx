@@ -6,7 +6,7 @@ import ilustracao from "../../img/imagem-pessoa-cadeirante.png";
 export default function Sobre() {
 
   useEffect(() => {
-    document.title = "ACESSO + | SOBRE";
+    document.title = "SOBRE | ACESSO+";
   }, []);
 
   return (

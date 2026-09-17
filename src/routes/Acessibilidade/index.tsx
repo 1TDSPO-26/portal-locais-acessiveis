@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 export default function Acessibilidade() {
 
     useEffect(() => {
-            document.title = "ACESSO + | ACESSIBILIDADE";
+            document.title = "ACESSIBILIDADE | ACESSO+";
     }, []);
 
     return (

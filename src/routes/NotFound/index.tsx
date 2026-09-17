@@ -4,7 +4,7 @@ import { Link } from "react-router";
 export default function NotFound() {
 
   useEffect(() => {
-    document.title = "ACESSO + | PÁGINA NÃO ENCONTRADA";
+    document.title = "PÁGINA NÃO ENCONTRADA | ACESSO+";
   }, []);
 
   return (

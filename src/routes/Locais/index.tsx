@@ -12,7 +12,7 @@ const ITENS_POR_PAGINA = 4;
 export default function Locais() {
 
   useEffect(() => {
-    document.title = "ACESSO + | ACESSIBILIDADE";
+    document.title = "LOCAIS | ACESSO+";
   }, []);
 
   const [busca, setBusca] = useState("");

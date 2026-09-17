@@ -6,7 +6,7 @@ import Observacoes from "../../components/Observacoes/Observacoes"
 export default function Cadastro() {
 
     useEffect(() => {
-        document.title = "ACESSO + | ACESSIBILIDADE";
+        document.title = "CADASTRO | ACESSO+";
     }, []);
 
     const [nome, setNome] = useState<string>("")
