@@ -8,8 +8,8 @@ export default function LocalDetalhe() {
   const local = id ? buscarLocalPorId(id) : undefined;
   useEffect(() => {
     document.title = local
-      ? `${local.nome} | ACESSA+`
-      : "Local não encontrado | ACESSA+";
+      ? `${local.nome} | ACESSO+`
+      : "Local não encontrado | ACESSO+";
   }, [local]);
 
   if (!local) {
