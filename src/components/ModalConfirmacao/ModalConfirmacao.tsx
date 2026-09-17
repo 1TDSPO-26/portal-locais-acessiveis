@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import IconLogo from '../IconLogo/IconLogo';
 
 /**
@@ -22,24 +21,6 @@ export default function ModalConfirmacao({
   title = "Confirmar Envio",
   message = "Tem certeza de que deseja enviar estas informações?",
 }: ModalConfirmacaoProps) {
-  const confirmButtonRef = useRef<HTMLButtonElement>(null);
-
-  // Move o foco para o botao de confirmar e permite fechar com Esc
-  useEffect(() => {
-    if (!isOpen) return;
-
-    confirmButtonRef.current?.focus();
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
   // Retorna nulo se o modal estiver fechado
   if (!isOpen) return null;
 
@@ -51,10 +32,6 @@ export default function ModalConfirmacao({
     >
       {/* Container principal do modal com cantos rounded-2xl */}
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-confirmacao-titulo"
-        aria-describedby="modal-confirmacao-mensagem"
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100"
         onClick={(e) => e.stopPropagation()}
       >
@@ -64,11 +41,11 @@ export default function ModalConfirmacao({
         </div>
 
         {/* Título e Mensagem descritiva */}
-        <h3 id="modal-confirmacao-titulo" className="text-xl font-bold text-slate-800 text-center mb-2">
+        <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
           {title}
         </h3>
 
-        <p id="modal-confirmacao-mensagem" className="text-slate-600 text-center text-sm mb-6 leading-relaxed">
+        <p className="text-slate-600 text-center text-sm mb-6 leading-relaxed">
           {message}
         </p>
 
@@ -84,7 +61,6 @@ export default function ModalConfirmacao({
 
           <button
             type="button"
-            ref={confirmButtonRef}
             onClick={onConfirm}
             className="w-full py-2.5 px-4 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm"
           >
@@ -93,6 +69,5 @@ export default function ModalConfirmacao({
         </div>
       </div>
     </div>
-    
   );
 }
