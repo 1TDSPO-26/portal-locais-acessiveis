@@ -3,7 +3,7 @@ interface FiltrosCategoriaProps {
   onChange: (selecionados: string[]) => void;
   onClear: () => void;
 }
-
+//Filtros de pesquisa da página de pesquisa de estabelecimentos, com a possibilidade de selecionar todos os filtros ou limpar todos os filtros selecionados.
 const filtros = [
   { id: "entrada", rotulo: "Entrada com rampa" },
   { id: "banheiro", rotulo: "Banheiro acessível" },
