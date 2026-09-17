@@ -12,7 +12,7 @@ export default function LocalDetalhe() {
   }
 
   useEffect(() => {
-    document.title = `ACESSO + | ${id}`;
+    document.title = `ACESSO + | Local não encontrado`;
   }, []);
 
   return (
