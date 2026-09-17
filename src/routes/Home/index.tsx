@@ -101,23 +101,29 @@ export default function Home() {
                 )}
 
 
-                {busca.trim() && resultadosBusca.length > 0 && (
+                {busca.trim() && (
                   <div className="absolute top-[50px] z-20 w-full overflow-hidden rounded-[8px] border border-[#CBD5E1] bg-white shadow-lg">
-                    {resultadosBusca.map((local) => (
-                      <Link
-                        key={local.id}
-                        to={`/locais/${local.id}`}
-                        className="block border-b border-[#E2E8F0] px-4 py-3 last:border-b-0 hover:bg-[#F8FAFC] focus-visible:bg-[#F8FAFC] focus-visible:outline-2 focus-visible:outline-[#005FCC]"
-                      >
-                        <p className="m-0 text-[14px] font-semibold text-[#0F172A]">
-                          {local.nome}
-                        </p>
+                    {resultadosBusca.length > 0 ? (
+                      resultadosBusca.map((local) => (
+                        <Link
+                          key={local.id}
+                          to={`/locais/${local.id}`}
+                          className="block border-b border-[#E2E8F0] px-4 py-3 last:border-b-0 hover:bg-[#F8FAFC] focus-visible:bg-[#F8FAFC] focus-visible:outline-2 focus-visible:outline-[#005FCC]"
+                        >
+                          <p className="m-0 text-[14px] font-semibold text-[#0F172A]">
+                            {local.nome}
+                          </p>
 
-                        <p className="m-0 mt-1 text-[12px] text-[#64748B]">
-                          {local.endereco}
-                        </p>
-                      </Link>
-                    ))}
+                          <p className="m-0 mt-1 text-[12px] text-[#64748B]">
+                            {local.endereco}
+                          </p>
+                        </Link>
+                      ))
+                    ) : (
+                      <p className="m-0 px-4 py-4 text-[14px] text-[#64748B]">
+                        Nenhum local encontrado.
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
