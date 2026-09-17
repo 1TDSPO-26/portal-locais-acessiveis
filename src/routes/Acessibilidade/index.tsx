@@ -1,3 +1,5 @@
+import Button from "../../components/Button/Button";
+
 export default function Acessibilidade() {
     return ( 
         <div className="bg-white min-h-screen px-6 py-10 max-w-4xl mx-auto">
@@ -29,7 +31,8 @@ export default function Acessibilidade() {
                 <p className="text-slate-600 leading-relaxed">
                     Se você encontrar alguma barreira de acessibilidade neste site,
                     entre em contato através da nossa página de{' '}
-                    <a href="/sobre" className="text-blue-600 font-medium hover:text-blue-800 underline">Sobre</a> para que possamos corrigir.
+                    
+                    <Button to="/sobre" className="text-blue-600 font-medium hover:text-white-800 underline">Sobre</Button> para que possamos corrigir.
                 </p>
             </section>
         </div>
