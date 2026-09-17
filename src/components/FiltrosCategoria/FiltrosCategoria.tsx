@@ -27,6 +27,9 @@ export default function FiltrosCategoria({
   };
 
   const todosSelecionados = selecionados.length === filtros.length;
+  const alternarTodos = () => {
+    onChange(todosSelecionados ? [] : filtros.map((filtro) => filtro.id));
+  };
 
   return (
     <div className="flex w-full flex-col items-start gap-2 sm:w-auto">
@@ -34,13 +37,18 @@ export default function FiltrosCategoria({
         <input
           type="checkbox"
           checked={todosSelecionados}
-          onChange={() =>
-            onChange(todosSelecionados ? [] : filtros.map((filtro) => filtro.id))
-          }
-          className="size-3 accent-blue-600"
+          onChange={alternarTodos}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              alternarTodos();
+            }
+          }}
+          aria-label="Selecionar todos os filtros"
+          className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
           title={todosSelecionados ? "Botão de desmarcar todos os filtros" : "Botão de marcar todos os filtros"}
         />
-        <span title={todosSelecionados ? "Botã de desmarcar todos os filtros" : "Botão de marcar todos os filtros"}>Selecionar todos</span>
+        <span title={todosSelecionados ? "Botão de desmarcar todos os filtros" : "Botão de marcar todos os filtros"}>Selecionar todos</span>
       </label>
 
       <div className="flex w-full items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:overflow-visible">
