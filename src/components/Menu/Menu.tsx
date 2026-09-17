@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router';
+import Button from "../Button/Button";
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,12 +18,12 @@ export default function Menu() {
                 <li><NavLink to="/acessibilidade" className={linkClass}>Acessibilidade</NavLink></li>
             </ul>
 
-            <NavLink
+            <Button
                 to="/cadastrar"
-                className="ml-auto hidden items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.03] hover:bg-blue-700 active:scale-95 md:inline-flex"
+                className="ml-auto hidden md:inline-flex"
             >
                 Adicionar local
-            </NavLink>
+            </Button>
 
             <button
                 type="button"
@@ -55,13 +56,12 @@ export default function Menu() {
                     <li><NavLink to="/sobre" className={linkClass} onClick={() => setIsOpen(false)}>Sobre</NavLink></li>
                     <li><NavLink to="/acessibilidade" className={linkClass} onClick={() => setIsOpen(false)}>Acessibilidade</NavLink></li>
                     <li>
-                        <NavLink
+                        <Button
                             to="/cadastrar"
                             onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
                         >
                             Adicionar local
-                        </NavLink>
+                        </Button>
                     </li>
                 </ul>
             </div>
