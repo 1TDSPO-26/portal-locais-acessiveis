@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router";
 import { buscarLocalPorId, type Local } from "../../types/locais";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
-import Observacoes from "../../components/Observacoes/Observacoes";
 
 type Recurso = Local["recursos"][number];
 type StatusRecurso = Recurso["status"];
@@ -54,9 +53,21 @@ export default function LocalDetalhe() {
   const local = id ? buscarLocalPorId(id) : undefined;
 
   if (!local) {
-    return <p className="text-sm text-slate-400">[stub] 404 — local não encontrado</p>;
+    return (
+      <main className="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center">
+        <h1 className="text-xl font-semibold text-gray-900">Local não encontrado</h1>
+        <p className="mt-2 text-sm text-gray-500">
+          O local que você está procurando não existe ou foi removido.
+        </p>
+        <Link
+          to="/locais"
+          className="mt-6 inline-block rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        >
+          ← Voltar para locais
+        </Link>
+      </main>
+    );
   }
-
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
       <Link to="/locais" className="mb-4 inline-block text-sm text-blue-600 hover:underline">
@@ -125,7 +136,9 @@ export default function LocalDetalhe() {
         </aside>
       </div>
 
-      <Observacoes value="As informações deste portal não representam certificação oficial de acessibilidade e não substituem avaliação técnica especializada." onChange={()=> {1+1}}/>
+      <div className="mt-8 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+        As informações deste portal não representam certificação oficial de acessibilidade e não substituem avaliação técnica especializada.
+      </div>
       
     </main>
   );
