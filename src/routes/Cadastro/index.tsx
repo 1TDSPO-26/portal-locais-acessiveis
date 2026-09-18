@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
+import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
 import Button from "../../components/Button/Button";
 
 export default function Cadastro() {
@@ -17,6 +18,7 @@ export default function Cadastro() {
     const [observacoes, setObservacoes] = useState<string>("")
 
     const [erros, setErros] = useState<Record<string, string>>({})
+    const [modalAberto, setModalAberto] = useState<boolean>(false)
 
     function alternaRecurso(valor: string) {
         if (recursos.includes(valor)) {
@@ -44,15 +46,24 @@ export default function Cadastro() {
         setErros(novosErros)
 
         if (Object.keys(novosErros).length === 0) {
-            console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
-            alert("Cadastro enviado com sucesso!")
-
-            setNome("")
-            setEndereco("")
-            setTipo("")
-            setRecursos([])
-            setObservacoes("")
+            setModalAberto(true)
         }
+    }
+
+    function confirmarEnvio() {
+        console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
+
+        setNome("")
+        setEndereco("")
+        setTipo("")
+        setRecursos([])
+        setObservacoes("")
+
+        setModalAberto(false)
+    }
+
+    function cancelarEnvio() {
+        setModalAberto(false)
     }
 
     return (
@@ -128,6 +139,14 @@ export default function Cadastro() {
             <p className="mt-4 text-xs text-slate-400">
                 As informações enviadas não representam certificação oficial de acessibilidade.
             </p>
+
+            <ModalConfirmacao
+                isOpen={modalAberto}
+                onClose={cancelarEnvio}
+                onConfirm={confirmarEnvio}
+                title="Confirmar envio das informações?"
+                message="Revise os dados antes de continuar. Após a confirmação, as informações do local serão enviadas."
+            />
         </main>
     )
 }

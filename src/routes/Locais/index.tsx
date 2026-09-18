@@ -89,6 +89,7 @@ export default function Locais() {
           <FiltrosCategoria
             selecionados={filtros}
             onChange={alterarFiltros}
+            onClear={() => alterarFiltros([])}
           />
         </div>
       </div>
