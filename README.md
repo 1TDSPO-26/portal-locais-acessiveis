@@ -41,4 +41,8 @@ Este projeto utiliza um ecossistema moderno para desenvolvimento frontend:
 1. Clone o repositório:
 ```bash
 git clone https://github.com/1TDSPO-26/portal-locais-acessiveis.git
+
+npm install
+
+npm run dev
 ```
