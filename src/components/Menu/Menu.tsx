@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router';
+import Button from "../Button/Button";
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,19 +18,20 @@ export default function Menu() {
                 <li><NavLink to="/acessibilidade" className={linkClass}>Acessibilidade</NavLink></li>
             </ul>
 
-            <NavLink
+            <Button
                 to="/cadastrar"
-                className="ml-auto hidden items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.03] hover:bg-blue-700 active:scale-95 md:inline-flex"
+                className="ml-auto hidden md:inline-flex"
             >
                 Adicionar local
-            </NavLink>
+            </Button>
 
             <button
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
-                aria-label="Abrir menu"
+                aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
                 aria-expanded={isOpen}
-                className="relative ml-auto flex h-6 w-6 flex-col items-center justify-center gap-1.5 md:hidden"
+                aria-controls="mobile-menu-panel"
+                className="relative z-50 ml-auto flex h-6 w-6 flex-col items-center justify-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC] md:hidden"
             >
                 <span
                     className={`h-0.5 w-6 rounded-full bg-gray-700 transition-all duration-300 ${isOpen ? 'translate-y-2 rotate-45' : ''
@@ -45,9 +47,17 @@ export default function Menu() {
                 />
             </button>
 
+            {isOpen && (
+                <div
+                    className="fixed inset-0 top-16 z-40 bg-black/50 md:hidden"
+                    onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
+                />
+            )}
+
             <div
-                className={`absolute left-0 right-0 top-full overflow-hidden bg-white transition-all duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96 border-t border-gray-200 opacity-100' : 'max-h-0 border-t border-transparent opacity-0'
-                    }`}
+            id="mobile-menu-panel"
+            className={`fixed left-0 right-0 top-16 z-50 overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96 border-b border-gray-200 opacity-100' : 'max-h-0 border-b border-transparent opacity-0 pointer-events-none'}`}
             >
                 <ul className="flex flex-col gap-4 px-6 py-4">
                     <li><NavLink to="/" className={linkClass} onClick={() => setIsOpen(false)}>Início</NavLink></li>
@@ -55,13 +65,12 @@ export default function Menu() {
                     <li><NavLink to="/sobre" className={linkClass} onClick={() => setIsOpen(false)}>Sobre</NavLink></li>
                     <li><NavLink to="/acessibilidade" className={linkClass} onClick={() => setIsOpen(false)}>Acessibilidade</NavLink></li>
                     <li>
-                        <NavLink
+                        <Button
                             to="/cadastrar"
                             onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center justify-center rounded-lg bg-[#005FCC] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
                         >
                             Adicionar local
-                        </NavLink>
+                        </Button>
                     </li>
                 </ul>
             </div>

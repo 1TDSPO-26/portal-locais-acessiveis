@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { buscarLocalPorId, type Local } from "../../types/locais";
+import { useEffect } from "react";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
 
 type Recurso = Local["recursos"][number];
@@ -49,8 +50,14 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 }
 
 export default function LocalDetalhe() {
+
   const { id } = useParams<{ id: string }>();
   const local = id ? buscarLocalPorId(id) : undefined;
+  useEffect(() => {
+    document.title = local
+      ? `${local.nome} | ACESSO+`
+      : "Local não encontrado | ACESSO+";
+  }, [local]);
 
   if (!local) {
     return (

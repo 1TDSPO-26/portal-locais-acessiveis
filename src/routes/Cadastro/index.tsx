@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
 import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
+import Button from "../../components/Button/Button";
 
 export default function Cadastro() {
+
+    useEffect(() => {
+        document.title = "CADASTRO | ACESSO+";
+    }, []);
 
     const [nome, setNome] = useState<string>("")
     const [endereco, setEndereco] = useState<string>("")
@@ -123,12 +128,12 @@ export default function Cadastro() {
 
                 <Observacoes value={observacoes} onChange={setObservacoes} />
 
-                <button
+                <Button
                     type="submit"
-                   className="inline-flex w-fit items-center justify-center rounded-lg bg-[#005FCC] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
+                    className="w-fit px-5 py-2.5 font-semibold"
                 >
                     Enviar informações
-                </button>
+                </Button>
             </form>
 
             <p className="mt-4 text-xs text-slate-400">
