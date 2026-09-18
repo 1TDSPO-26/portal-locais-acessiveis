@@ -1,99 +1,48 @@
-# Pacote GitHub — CP Continuado
+# Acesso+ | Portal de Locais Acessíveis ♿
 
-- Linha Alterada
+> **Status do Projeto:** 🚧 Em Desenvolvimento 🚧
 
-Este pacote contém modelos padronizados para o projeto continuado do Portal de Locais e Serviços Acessíveis.
+Projeto acadêmico desenvolvido pela turma **1TDSPO** da **FIAP**. O **Acesso+** é uma plataforma web responsiva projetada para catalogar, visualizar e adicionar locais e serviços públicos focados na acessibilidade para pessoas com deficiência ou mobilidade reduzida.
 
-## Conteúdo
+O design do sistema (visível na prototipação) contempla jornadas completas tanto para Desktop quanto para Mobile, priorizando usabilidade e boas práticas de acessibilidade digital (WCAG).
 
-```text
-.github/
-  ISSUE_TEMPLATE/
-    feature.yml
-    bug.yml
-    test.yml
-    documentation.yml
-    config.yml
-  workflows/
-    ci.yml
-  CODEOWNERS
-  PULL_REQUEST_TEMPLATE.md
+---
 
-docs/
-  configuracao-labels.md
-  configuracao-project.md
-  MENSAGEM_TEAMS.md
-  modelo-bloqueio.md
-  modelo-relatorio-qa.md
-  modelo-relatorio-tech-lead.md
-  modelo-release.md
-  tutoriais/
-    README.md
-    01-primeiro-acesso.md
-    02-issues-e-project.md
-    03-dev-branch-commits-pr.md
-    04-tech-lead-revisao-merge.md
-    05-qa-testes.md
-    06-ci-cd.md
-    07-correcoes-conflitos-bloqueios.md
-    08-release.md
-    09-checklists-por-papel.md
+## 💻 Tecnologias e Ferramentas
 
-.env.example
-CONTRIBUTING.md
-MANUAL_PROFESSOR.md
-SETUP.md
-vercel.json
+Este projeto utiliza um ecossistema moderno para desenvolvimento frontend:
+
+*   **[React](https://react.dev/):** Biblioteca principal para construção da interface.
+*   **[Vite](https://vitejs.dev/):** Bundler extremamente rápido para ambiente de desenvolvimento.
+*   **[TypeScript](https://www.typescriptlang.org/):** Tipagem estática para maior segurança e previsibilidade do código.
+*   **[Tailwind CSS](https://tailwindcss.com/):** Framework utilitário para estilização ágil e padronizada.
+*   **Versionamento:** Git, Git Flow e GitHub Actions (para CI/CD contínuo).
+
+---
+
+## 🌟 Funcionalidades (Atuais e Planejadas)
+
+*   **Exploração de Locais:** Listagem interativa de locais com indicativos claros dos recursos disponíveis (rampas, piso tátil, libras, etc).
+*   **Páginas de Detalhes:** Visualização aprofundada de um local específico com fotos, descrições e mapa.
+*   **Cadastro de Novos Locais:** Formulário com validação de dados e feedback visual (Modal de Confirmação) para crowdsourcing de acessibilidade.
+*   **Painel de Acessibilidade Embutido:** Controles globais para redimensionamento de texto (A-, A, A+) e otimização para leitores de tela na raiz do projeto.
+*   **Design Responsivo:** Adaptação fluida garantida para smartphones, tablets e monitores (Desktop/Mobile First).
+
+---
+
+## ⚙️ Como Executar o Projeto Localmente
+
+**Pré-requisitos:**
+*   [Node.js](https://nodejs.org/) (versão 18+ recomendada)
+*   NPM 
+
+**Passo a passo:**
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/1TDSPO-26/portal-locais-acessiveis.git
+
+npm install
+
+npm run dev
 ```
-
-## Siglas e termos
-
-- CP: Check Point, ou momento formal de avaliação.
-- QA: Quality Assurance, ou Garantia da Qualidade.
-- DEV: Developer, ou Desenvolvedor.
-- CI: Continuous Integration, ou Integração Contínua.
-- Issue: registro formal de uma demanda.
-- Pull Request: solicitação para revisar e integrar uma alteração.
-- Git Flow: modelo de branches usado no projeto e extensão `git flow` que auxilia sua criação e publicação.
-- Release: versão oficialmente liberada.
-- Preview: publicação temporária utilizada para testes.
-
-## Ordem de utilização
-
-1. Abra `MANUAL_PROFESSOR.md`.
-2. Confirme que o repositório da organização está público.
-3. Crie a equipe `alunos` e conceda `Write` somente no repositório do projeto.
-4. Crie as equipes `professores`, `tech-leads` e `qas`.
-5. Copie este pacote para o repositório.
-6. Crie `develop` e defina-a como branch padrão.
-7. Confirme `git flow version` e execute `git flow init` em cada clone.
-8. Substitua `ORGANIZACAO` no `CODEOWNERS`.
-9. Crie labels e Milestones.
-10. Confirme os modelos de Issue e Pull Request.
-11. Execute o CI pela primeira vez.
-12. Configure os Rulesets.
-13. Crie o Project quando o serviço do GitHub estiver estável.
-14. Confirme a aplicação Vite já criada na turma-piloto.
-15. Execute o fluxo completo antes de repetir em outra organização.
-16. Faça a publicação controlada pela Vercel CLI; não tente conectar diretamente o repositório da organização ao plano Hobby.
-
-## Materiais por público
-
-- Professor: `MANUAL_PROFESSOR.md` e `SETUP.md`.
-- Todos os alunos: `docs/tutoriais/README.md`.
-- DEV: tutoriais 1, 2, 3, 6, 7 e 9.
-- Tech Lead: todos, com destaque para 4 e 8.
-- QA: tutoriais 1, 2, 5, 6, 7, 8 e 9.
-
-## O que não deve ser publicado
-
-- RM;
-- nota;
-- justificativa médica;
-- ocorrência disciplinar;
-- senha;
-- token;
-- arquivo `.env`;
-- dado médico ou pessoal sensível.
-
-O controle de notas deverá permanecer em ambiente privado do professor.
