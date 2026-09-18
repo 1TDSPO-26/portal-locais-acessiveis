@@ -4,6 +4,7 @@ interface FiltrosCategoriaProps {
   onClear: () => void;
 }
 
+
 const filtros = [
   { id: "entrada", rotulo: "Entrada com rampa" },
   { id: "banheiro", rotulo: "Banheiro acessível" },
