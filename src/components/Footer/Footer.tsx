@@ -21,7 +21,7 @@ export default function Footer() {
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-[#2563EB]">
             /+
           </span>
-          ACESSA +
+          ACESSO+
         </div>
         <p className="text-sm leading-5 opacity-75 align-left">
           Informação para planejar visitas com mais autonomia.

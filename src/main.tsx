@@ -11,12 +11,14 @@ import Cadastro from './routes/Cadastro/index.tsx';
 import Sobre from './routes/Sobre/index.tsx';
 import NotFound from './routes/NotFound/index.tsx';
 import Acessibilidade from './routes/Acessibilidade/index.tsx';
+import LocalDetalhe from './routes/LocalDetalhe/index.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/", element: <App />, children: [
       { path: "/", element: <Home /> },
       { path: "/locais", element: <Locais /> },
+      { path: "/locais/:id", element: <LocalDetalhe/>},
       { path: "/cadastrar", element: <Cadastro /> },
       { path: "/sobre", element: <Sobre /> },
       { path: "/acessibilidade", element: <Acessibilidade /> },

@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
 import Button from "../../components/Button/Button";
 
 export default function Cadastro() {
+
+    useEffect(() => {
+        document.title = "CADASTRO | ACESSO+";
+    }, []);
 
     const [nome, setNome] = useState<string>("")
     const [endereco, setEndereco] = useState<string>("")

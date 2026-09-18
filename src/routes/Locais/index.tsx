@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
@@ -10,6 +10,11 @@ import { locaisMock } from "../../types/locais";
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
+
+  useEffect(() => {
+    document.title = "LOCAIS | ACESSO+";
+  }, []);
+
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
