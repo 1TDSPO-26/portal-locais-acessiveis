@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal"
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
+import Button from "../../components/Button/Button";
 
 export default function Cadastro() {
 
@@ -36,23 +37,23 @@ export default function Cadastro() {
         return novosErros
     }
 
-    function handleSubmit(e: React.FormEvent){
-    e.preventDefault()
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
 
-    const novosErros = validar()
-    setErros(novosErros)
+        const novosErros = validar()
+        setErros(novosErros)
 
-    if (Object.keys(novosErros).length === 0) {
-        console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
-        alert("Cadastro enviado com sucesso!")
+        if (Object.keys(novosErros).length === 0) {
+            console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
+            alert("Cadastro enviado com sucesso!")
 
-        setNome("")
-        setEndereco("")
-        setTipo("")
-        setRecursos([])
-        setObservacoes("")
+            setNome("")
+            setEndereco("")
+            setTipo("")
+            setRecursos([])
+            setObservacoes("")
+        }
     }
-}
 
     return (
         <main className="mx-auto max-w-4xl px-4 py-10">
@@ -116,12 +117,12 @@ export default function Cadastro() {
 
                 <Observacoes value={observacoes} onChange={setObservacoes} />
 
-                <button
+                <Button
                     type="submit"
-                   className="inline-flex w-fit items-center justify-center rounded-lg bg-[#005FCC] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700 active:scale-95"
+                    className="w-fit px-5 py-2.5 font-semibold"
                 >
                     Enviar informações
-                </button>
+                </Button>
             </form>
 
             <p className="mt-4 text-xs text-slate-400">
