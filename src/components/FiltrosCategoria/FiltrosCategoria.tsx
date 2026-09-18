@@ -4,7 +4,6 @@ interface FiltrosCategoriaProps {
   onClear: () => void;
 }
 
-
 const filtros = [
   { id: "entrada", rotulo: "Entrada com rampa" },
   { id: "banheiro", rotulo: "Banheiro acessível" },
@@ -48,9 +47,21 @@ export default function FiltrosCategoria({
             }}
             aria-label="Selecionar todos os filtros"
             className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
-            title={todosSelecionados ? "Botão de desmarcar todos os filtros" : "Botão de marcar todos os filtros"}
+            title={
+              todosSelecionados
+                ? "Botão de desmarcar todos os filtros"
+                : "Botão de marcar todos os filtros"
+            }
           />
-          <span title={todosSelecionados ? "Botão de desmarcar todos os filtros" : "Botão de marcar todos os filtros"}>Selecionar todos</span>
+          <span
+            title={
+              todosSelecionados
+                ? "Botão de desmarcar todos os filtros"
+                : "Botão de marcar todos os filtros"
+            }
+          >
+            Selecionar todos
+          </span>
         </label>
 
         <button
@@ -64,15 +75,12 @@ export default function FiltrosCategoria({
         </button>
       </div>
 
-      <div className="flex w-full items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:overflow-visible">
+      <div className="flex w-full flex-wrap items-center gap-2 pb-1 sm:w-auto sm:flex-nowrap sm:overflow-visible">
         {filtros.map((filtro) => {
           const ativo = selecionados.includes(filtro.id);
 
           return (
-            <div
-              key={filtro.id}
-              className="flex shrink-0 items-center"
-            >
+            <div key={filtro.id} className="flex shrink-0 items-center">
               <button
                 type="button"
                 onClick={() => alterarFiltro(filtro.id)}
