@@ -1,3 +1,4 @@
+import Button from "../../components/Button/Button";
 import { useEffect, useState } from 'react';
 
 export default function Acessibilidade() {
@@ -83,13 +84,8 @@ export default function Acessibilidade() {
                 <p className="text-slate-600 leading-relaxed" style={{ fontSize: `${1 * fontScale}rem` }}>
                     Se você encontrar alguma barreira de acessibilidade neste site,
                     entre em contato através da nossa página de{' '}
-                    <a 
-                        href="/sobre" 
-                        className="text-blue-600 font-medium underline rounded hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-slate-50 transition-colors"
-                    >
-                        Sobre
-                    </a>{' '}
-                    para que possamos corrigir. Por favor, entre em contato com algum dos Desenvolvedores.
+                    
+                    <Button to="/sobre" className="text-blue-600 font-medium hover:text-white-800 underline">Sobre</Button> para que possamos corrigir.
                 </p>
             </section>
         </div>
