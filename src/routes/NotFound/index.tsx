@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router";
 
 export default function NotFound() {
+
+  useEffect(() => {
+    document.title = "PÁGINA NÃO ENCONTRADA | ACESSO+";
+  }, []);
+
   return (
     <section className="flex h-screen items-center justify-center bg-white px-4 text-left sm:px-6">
       <div className="w-full max-w-[620px] rounded-2xl bg-[#EFF6FF] px-8 py-10 sm:px-11 sm:py-12">
