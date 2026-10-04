@@ -12,7 +12,7 @@ export function useFavoritos() {
     useEffect(() => {
         localStorage.setItem('portalLocaisFavoritos', JSON.stringify(favoritos)); }, [favoritos]);
 
-        const alterarFavorito = (id: LocalId) => {
+        const alternarFavorito = (id: LocalId) => {
             setFavoritos((listaAtual) => {
                 if (listaAtual.includes(id)) {
                     return listaAtual.filter((item) => item !== id);
@@ -26,5 +26,5 @@ export function useFavoritos() {
       return favoritos.includes(id);
     };
 
-    return { favoritos, alterarFavorito, ehFavorito };
+    return { favoritos, alternarFavorito, ehFavorito };
 }
