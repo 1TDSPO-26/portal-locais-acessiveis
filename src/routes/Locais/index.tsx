@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useSearchParams } from "react-router";
 
 import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
@@ -15,9 +16,47 @@ export default function Locais() {
     document.title = "LOCAIS | ACESSO+";
   }, []);
 
-  const [busca, setBusca] = useState("");
-  const [filtros, setFiltros] = useState<string[]>([]);
-  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const busca = searchParams.get("busca") ?? "";
+
+  const filtros = useMemo(() => {
+    const valor = searchParams.get("filtros");
+    return valor ? valor.split(",").filter(Boolean) : [];
+  }, [searchParams]);
+
+  const paginaAtual = Math.max(1, Number(searchParams.get("pagina")) || 1);
+
+  const atualizarParams = (updates: {
+    busca?: string;
+    filtros?: string[];
+    pagina?: number;
+  }) => {
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
+
+        if (updates.busca !== undefined) {
+          if (updates.busca) params.set("busca", updates.busca);
+          else params.delete("busca");
+        }
+
+        if (updates.filtros !== undefined) {
+          if (updates.filtros.length)
+            params.set("filtros", updates.filtros.join(","));
+          else params.delete("filtros");
+        }
+
+        if (updates.pagina !== undefined) {
+          if (updates.pagina > 1) params.set("pagina", String(updates.pagina));
+          else params.delete("pagina");
+        }
+
+        return params;
+      },
+      { replace: true }
+    );
+  };
 
   const locaisFiltrados = useMemo(() => {
     return locaisMock.filter((local) => {
@@ -52,13 +91,15 @@ export default function Locais() {
   );
 
   const alterarBusca = (valor: string) => {
-    setBusca(valor);
-    setPaginaAtual(1);
+    atualizarParams({ busca: valor, pagina: 1 });
   };
 
   const alterarFiltros = (novosFiltros: string[]) => {
-    setFiltros(novosFiltros);
-    setPaginaAtual(1);
+    atualizarParams({ filtros: novosFiltros, pagina: 1 });
+  };
+
+  const alterarPagina = (pagina: number) => {
+    atualizarParams({ pagina });
   };
 
   return (
@@ -131,7 +172,7 @@ export default function Locais() {
           <Paginacao
             paginaAtual={paginaAtual}
             totalPaginas={totalPaginas}
-            onChange={setPaginaAtual}
+            onChange={alterarPagina}
           />
         </div>
       )}
