@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router";
 import { buscarLocalPorId, type Local } from "../../types/locais";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
 
 type Recurso = Local["recursos"][number];
@@ -52,6 +52,7 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 export default function LocalDetalhe() {
 
   const { id } = useParams<{ id: string }>();
+  const [mensagemCompartilhamento, setMensagemCompartilhamento] = useState("");
 
   const local = id ? buscarLocalPorId(id) : undefined;
 
@@ -62,18 +63,22 @@ export default function LocalDetalhe() {
   }, [local]);
 
 
-  // Indentação da função
-  const compartilharLocal = async () => {
-  // Recebimento o endereço completo da página acessada
-    const url = window.location.href;
+const compartilharLocal = async () => {
+  const url = window.location.href;
 
-  // Verifica se o navegador possui suporte ao compartilhamento nativo
-  if (navigator.share) {
-    await navigator.share({
-      title: local?.nome,
-      text: "Confira este local acessível",
-      url,
-    });
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: local?.nome,
+        text: "Confira este local acessível",
+        url,
+      });
+    } else {
+      await navigator.clipboard.writeText(url);
+      setMensagemCompartilhamento("Link copiado!");
+    }
+  } catch (error) {
+    console.error("Erro ao compartilhar o local:", error);
   }
 };
 
@@ -111,6 +116,12 @@ export default function LocalDetalhe() {
     >
       Compartilhar
       </button>
+
+      {mensagemCompartilhamento && (
+        <span className="text-sm text-green-600" role="status">
+          {mensagemCompartilhamento}
+        </span>
+      )}
     </header>
 
       <p className="mb-6 text-sm text-gray-500">
