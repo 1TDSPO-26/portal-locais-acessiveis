@@ -18,12 +18,15 @@ export async function buscarLocais(): Promise<ResultadoLocais> {
     const locais: Local[] = await resp.json();
     localStorage.setItem(CHAVE_CACHE, JSON.stringify(locais));
     return { locais, origem: "api" };
-  } catch {
+  } catch (erro) {
+    // 🔍 Isto vai mostrar o erro real no F12 do navegador!
+    console.error("❌ O FETCH DA API FALHOU POR ESTE MOTIVO:", erro);
+
     try {
       const cache = localStorage.getItem(CHAVE_CACHE);
       if (cache) return { locais: JSON.parse(cache), origem: "cache" };
     } catch {
-      // cache indisponível ou corrompido: segue para os dados locais
+      // cache indisponível
     }
     return { locais: locaisMock, origem: "local" };
   }
