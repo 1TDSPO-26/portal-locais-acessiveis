@@ -101,3 +101,84 @@ test('abre menu mobile e acessa Locais pelo teclado', async ({ page }) => {
     page.getByRole('button', { name: 'Abrir menu' })
   ).toHaveAttribute('aria-expanded', 'false');
 });
+
+// TESTA LOCAL INEXISTENTE E RETORNO A LISTA PELO TECLADO
+test('retorna à lista quando o local não existe', async ({ page }) => {
+  await page.goto('/locais/id-inexistente');
+
+  await expect(
+    page.getByRole('heading', {
+      name: 'Local não encontrado',
+      exact: true,
+    })
+  ).toBeVisible();
+
+  const linkVoltar = page.getByRole('link', {
+    name: 'Voltar para locais',
+  });
+
+  for (let tentativa = 0; tentativa < 30; tentativa++) {
+    await page.keyboard.press('Tab');
+
+    const recebeuFoco = await linkVoltar.evaluate(
+      elemento => elemento === document.activeElement
+    );
+
+    if (recebeuFoco) break;
+  }
+
+  await expect(linkVoltar).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(/\/locais$/);
+  await expect(
+    page.getByRole('heading', {
+      name: 'Locais acessíveis',
+      exact: true,
+    })
+  ).toBeVisible();
+});
+
+// TESTE PARA ABRIR DETALHE DE LOCAL PELO TECLADO
+test('abre detalhes de um local pelo teclado', async ({ page }) => {
+  await page.goto('/locais');
+
+  const primeiroCard = page.getByRole('article').first();
+  const nomeLocal = await primeiroCard.getByRole('heading').innerText();
+  const linkDetalhes = primeiroCard.getByRole('link', {
+    name: 'Ver detalhes',
+  });
+
+  for (let tentativa = 0; tentativa < 40; tentativa++) {
+    await page.keyboard.press('Tab');
+
+    const recebeuFoco = await linkDetalhes.evaluate(
+      elemento => elemento === document.activeElement
+    );
+
+    if (recebeuFoco) break;
+  }
+
+  await expect(linkDetalhes).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(/\/locais\/[^/]+$/);
+  await expect(
+    page.getByRole('heading', {
+      name: nomeLocal,
+      exact: true,
+      level: 1,
+    })
+  ).toBeVisible();
+
+  // Confere se o detalhe continua acessível após atualizar a página.
+  await page.reload();
+
+  await expect(
+    page.getByRole('heading', {
+      name: nomeLocal,
+      exact: true,
+      level: 1,
+    })
+  ).toBeVisible();
+});
