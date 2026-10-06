@@ -64,17 +64,18 @@ export default function LocalDetalhe() {
 
 
 const compartilharLocal = async () => {
-  const url = window.location.href;
+  const caminhoLocal = `/local/${id}`;
+  const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
 
   try {
     if (navigator.share) {
       await navigator.share({
         title: local?.nome,
         text: "Confira este local acessível",
-        url,
+        url: urlParaCopiar,
       });
     } else {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(urlParaCopiar);
       setMensagemCompartilhamento("Link copiado!");
     }
   } catch (error) {
