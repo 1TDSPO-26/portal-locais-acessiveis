@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router";
-import { buscarLocalPorId, type Local } from "../../types/locais";
-import { useEffect } from "react";
+import type { Local } from "../../types/locais";
+import { buscarLocal } from "../../services/locais";
+import { useEffect, useState } from "react";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
 
 type Recurso = Local["recursos"][number];
@@ -52,14 +53,73 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 export default function LocalDetalhe() {
 
   const { id } = useParams<{ id: string }>();
-  const local = id ? buscarLocalPorId(id) : undefined;
+
+  const [local, setLocal] = useState<Local | null>(null);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => {
+
+    const controller = new AbortController();
+    setCarregando(true);
+    setErro("");
+    setLocal(null);
+
+    async function Carregar() {
+      try {
+        if (!id) throw new Error("Identificador ausente!");
+        const encontrado = await buscarLocal(id, controller.signal);
+        if (!controller.signal.aborted) setLocal(encontrado);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setErro(error instanceof Error ? error.message : "Falha ao consultar!");
+        }
+      } finally {
+        if (!controller.signal.aborted) setCarregando(false);
+      }
+    }
+
+    Carregar();
+    return () => controller.abort();
+  }, [id]);
+
   useEffect(() => {
     document.title = local
       ? `${local.nome} | ACESSO+`
       : "Local não encontrado | ACESSO+";
   }, [local]);
 
-  if (!local) {
+  if (carregando) {
+    return (
+      <main className="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center gap-3 px-4 py-16 text-center">
+        <svg
+          className="h-8 w-8 animate-spin text-blue-600"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-90"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+          />
+        </svg>
+        <p role="status" className="text-sm text-gray-500">
+          Carregando local...
+        </p>
+      </main>
+    );
+  }
+
+  if (erro || !local) {
     return (
       <main className="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center">
         <h1 className="text-xl font-semibold text-gray-900">Local não encontrado</h1>
@@ -146,7 +206,7 @@ export default function LocalDetalhe() {
       <div className="mt-8 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
         As informações deste portal não representam certificação oficial de acessibilidade e não substituem avaliação técnica especializada.
       </div>
-      
+
     </main>
   );
 }
