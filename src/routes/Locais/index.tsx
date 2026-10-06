@@ -6,17 +6,22 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 
 import { locaisMock } from "../../types/locais";
+import { useUrlFilters } from "../../hooks/useUrlFilters";
 
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
-
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
   }, []);
 
-  const [busca, setBusca] = useState("");
-  const [filtros, setFiltros] = useState<string[]>([]);
+  const {
+    busca,
+    filtros,
+    alterarBusca,
+    alterarFiltros,
+  } = useUrlFilters();
+
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
@@ -51,13 +56,13 @@ export default function Locais() {
     inicio + ITENS_POR_PAGINA
   );
 
-  const alterarBusca = (valor: string) => {
-    setBusca(valor);
+  const handleBusca = (valor: string) => {
+    alterarBusca(valor);
     setPaginaAtual(1);
   };
 
-  const alterarFiltros = (novosFiltros: string[]) => {
-    setFiltros(novosFiltros);
+  const handleFiltros = (novosFiltros: string[]) => {
+    alterarFiltros(novosFiltros);
     setPaginaAtual(1);
   };
 
@@ -74,7 +79,10 @@ export default function Locais() {
       </div>
 
       <div className="mb-5">
-        <label className="mb-1 block text-start text-[11px] font-medium text-slate-700">
+        <label
+          htmlFor="campo-busca"
+          className="mb-1 block text-start text-[11px] font-medium text-slate-700"
+        >
           Buscar
         </label>
 
@@ -82,14 +90,14 @@ export default function Locais() {
           <div className="w-full sm:w-[620px]">
             <CampoBusca
               value={busca}
-              onChange={alterarBusca}
+              onChange={handleBusca}
             />
           </div>
 
           <FiltrosCategoria
             selecionados={filtros}
-            onChange={alterarFiltros}
-            onClear={() => alterarFiltros([])}
+            onChange={handleFiltros}
+            onClear={() => handleFiltros([])}
           />
         </div>
       </div>
@@ -106,9 +114,8 @@ export default function Locais() {
           {locaisDaPagina.map((local, index) => (
             <div
               key={local.id}
-              className={`my-3 ${
-                index !== locaisDaPagina.length - 1
-              }`}
+              className={`my-3 ${index !== locaisDaPagina.length - 1
+                }`}
             >
               <LocalCard local={local} />
             </div>
