@@ -6,6 +6,7 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 
 import { locaisMock } from "../../types/locais";
+import type { Local } from "../../types/locais";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -15,12 +16,13 @@ export default function Locais() {
     document.title = "LOCAIS | ACESSO+";
   }, []);
 
+  const [locais, setLocais] = useState(locaisMock);
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-    return locaisMock.filter((local) => {
+    return locais.filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -38,7 +40,7 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [busca, filtros]);
+  }, [locais, busca, filtros]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -59,6 +61,22 @@ export default function Locais() {
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
     setPaginaAtual(1);
+  };
+
+  const excluirLocal = (id: Local["id"]) => {
+    const local = locais.find((local) => local.id === id);
+
+    if (!local) return;
+
+    const confirmou = window.confirm(
+      `Tem certeza que deseja excluir o local "${local.nome}"?`
+    );
+
+    if (!confirmou) return;
+
+    setLocais((locaisAtuais) =>
+      locaisAtuais.filter((local) => local.id !== id)
+    );
   };
 
   return (
@@ -97,7 +115,7 @@ export default function Locais() {
       <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
         {locaisFiltrados.length}{" "}
         {locaisFiltrados.length === 1
-          ? "local encontrado"
+          ? "local encontrado"  
           : "locais encontrados"}
       </p>
 
@@ -110,7 +128,10 @@ export default function Locais() {
                 index !== locaisDaPagina.length - 1
               }`}
             >
-              <LocalCard local={local} />
+              <LocalCard
+                local={local}
+                onExcluir={() => excluirLocal(local.id)}
+              />
             </div>
           ))}
         </div>
