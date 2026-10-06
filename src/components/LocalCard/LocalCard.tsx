@@ -6,7 +6,7 @@ import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 interface LocalCardProps {
   local: Local;
-  onExcluir: () => void;
+  onExcluir?: () => void;
 }
 
 export default function LocalCard({ local, onExcluir }: LocalCardProps) {
@@ -62,13 +62,15 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
             {local.categoria}
           </span>
 
-          <button
-            type="button"
-            onClick={onExcluir}
-            className="cursor-pointer text-xs font-medium text-red-600 hover:text-red-700 hover:underline"
-          >
-            Excluir
-          </button>
+          {onExcluir && (
+            <button
+              type="button"
+              onClick={onExcluir}
+              className="cursor-pointer text-xs font-medium text-red-600 hover:text-red-700 hover:underline"
+            >
+              Excluir
+            </button>
+          )}
         </div>
       </div>
     </article>
