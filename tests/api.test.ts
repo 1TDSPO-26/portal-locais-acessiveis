@@ -10,8 +10,8 @@ afterEach(() => {
 });
 
 describe("apiGet", () => {
-  it("usa http://localhost:3001 como URL padrão", () => {
-    assert.equal(API_URL, "http://localhost:3001");
+  it("usa /api (proxy do Vite) como URL padrão", () => {
+    assert.equal(API_URL, "/api");
   });
 
   it("monta a URL com o caminho e devolve o JSON da resposta", async () => {
@@ -23,7 +23,7 @@ describe("apiGet", () => {
 
     assert.deepEqual(dados, [{ id: "1" }]);
     assert.equal(fetchMock.mock.callCount(), 1);
-    assert.equal(fetchMock.mock.calls[0].arguments[0], "http://localhost:3001/locais");
+    assert.equal(fetchMock.mock.calls[0].arguments[0], "/api/locais");
   });
 
   it("lança ApiError com o status quando a API responde com erro", async () => {

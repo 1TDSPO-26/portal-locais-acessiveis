@@ -4,7 +4,10 @@
 // Toda requisição do front passa por aqui, assim a URL e o tratamento
 // de erros ficam em um lugar só.
 
-const URL_PADRAO = "http://localhost:3001";
+// Por padrão usamos "/api", que o Vite repassa para o JSON Server
+// (veja o proxy em vite.config.ts). Para apontar para outra API,
+// defina VITE_API_URL no arquivo .env.
+const URL_PADRAO = "/api";
 
 // No navegador, o Vite preenche import.meta.env com as variáveis do .env.
 // Nos testes (Node), import.meta.env não existe, então usamos a URL padrão.

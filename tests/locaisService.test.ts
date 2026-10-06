@@ -20,7 +20,7 @@ describe("listarLocais", () => {
     const locais = await listarLocais();
 
     assert.equal(fetchMock.mock.callCount(), 1);
-    assert.equal(fetchMock.mock.calls[0].arguments[0], "http://localhost:3001/locais");
+    assert.equal(fetchMock.mock.calls[0].arguments[0], "/api/locais");
     assert.equal(locais.length, db.locais.length);
     assert.equal(locais[0].nome, "Parque Ibirapuera");
   });
