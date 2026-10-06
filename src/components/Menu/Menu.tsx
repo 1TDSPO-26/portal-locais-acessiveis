@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router';
 import Button from "../Button/Button";
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
+    const botaoRef = useRef<HTMLButtonElement | null>(null); 
 
     const linkClass = ({ isActive }: { isActive: boolean }) =>
         `relative pb-1 text-sm transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#005FCC] after:transition-all after:duration-300 hover:text-gray-900 hover:after:w-full ${isActive ? 'font-medium text-gray-900 after:w-full' : 'text-gray-600 after:w-0'
@@ -26,6 +27,7 @@ export default function Menu() {
             </Button>
 
             <button
+                ref={botaoRef}
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
