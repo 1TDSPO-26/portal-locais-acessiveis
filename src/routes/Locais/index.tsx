@@ -7,6 +7,7 @@ import LocalCard from "../../components/LocalCard/LocalCard";
 
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
+import { filtrarLocais } from "../../utils/filtrarLocais";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -56,26 +57,10 @@ export default function Locais() {
     setTentativa((valor) => valor + 1);
   };
 
-  const locaisFiltrados = useMemo(() => {
-    return locais.filter((local) => {
-      const termo = busca.trim().toLowerCase();
-
-      const correspondeBusca =
-        !termo ||
-        local.nome.toLowerCase().includes(termo) ||
-        local.endereco.toLowerCase().includes(termo);
-
-      const possuiRecursos = filtros.every((id) =>
-        local.recursos.some(
-          (recurso) =>
-            recurso.id === id &&
-            recurso.status === "disponivel"
-        )
-      );
-
-      return correspondeBusca && possuiRecursos;
-    });
-  }, [locais, busca, filtros]);
+  const locaisFiltrados = useMemo(
+    () => filtrarLocais(locais, busca, filtros),
+    [locais, busca, filtros]
+  );
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
