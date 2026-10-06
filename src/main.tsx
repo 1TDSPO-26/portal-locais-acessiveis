@@ -27,8 +27,30 @@ const router = createBrowserRouter([
   { path: "/*", element: <NotFound />, handle: { title: "PÁGINA NÃO ENCONTRADA | ACESSO+" } }
 ]);
 
+router.subscribe((state) => {
+  const match = state.matches[state.matches.length - 1];
 
+  if (match?.route.handle && typeof match.route.handle === "object") {
+    const handle = match.route.handle as { title?: string };
 
+    if (handle.title) {
+      document.title = handle.title;
+    }
+  }
+});
+
+const initialMatch = router.state.matches[router.state.matches.length - 1];
+
+if (
+  initialMatch?.route.handle &&
+  typeof initialMatch.route.handle === "object"
+) {
+  const handle = initialMatch.route.handle as { title?: string };
+
+  if (handle.title) {
+    document.title = handle.title;
+  }
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
