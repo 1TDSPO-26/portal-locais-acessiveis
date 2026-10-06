@@ -23,7 +23,7 @@ export default function LocalCard({ local }: LocalCardProps) {
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-slate-400">
+          <div className="flex h-full items-center justify-center text-sm text-slate-700">
             Imagem do local
           </div>
         )}
@@ -35,7 +35,7 @@ export default function LocalCard({ local }: LocalCardProps) {
             {local.nome}
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-500">
+          <p className="mt-1 text-xs sm:text-sm text-slate-700">
             {local.cidade}
           </p>
 
@@ -57,7 +57,7 @@ export default function LocalCard({ local }: LocalCardProps) {
         </div>
 
         <div>
-          <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-600">
+          <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-900">
             {local.categoria}
           </span>
         </div>
