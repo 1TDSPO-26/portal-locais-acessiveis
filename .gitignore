@@ -28,3 +28,7 @@ pnpm
 .env.local
 .env.*.local
 *.local
+
+# pastas criadas para teste do qa
+/playwright-report/
+/test-results/
