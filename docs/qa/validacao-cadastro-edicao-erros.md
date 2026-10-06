@@ -4,7 +4,7 @@
 
 - Turma: 1TDSPO
 - CP: CP2
-- QA responsável: Arthur Carvalho Brito Martins — RM 572325
+- QA responsável: Arthur Carvalho Brito Martins
 - Issue de QA: #62 — Validar cadastro, edição e mensagens de erro
 - Data da execução: 06/10/2026
 - Branch do QA: `feature/62-validacao-cadastro-edicao-erros`
