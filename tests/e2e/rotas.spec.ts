@@ -51,3 +51,53 @@ test('abre Locais pelo menu usando teclado', async ({ page }) => {
     })
   ).toBeVisible();
 });
+
+// TESTE PARA MENU MOBILE E ACESSO A LOCAIS
+test('abre menu mobile e acessa Locais pelo teclado', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const botaoMenu = page.getByRole('button', { name: 'Abrir menu' });
+
+  for (let tentativa = 0; tentativa < 20; tentativa++) {
+    await page.keyboard.press('Tab');
+
+    const recebeuFoco = await botaoMenu.evaluate(
+      elemento => elemento === document.activeElement
+    );
+
+    if (recebeuFoco) break;
+  }
+
+  await expect(botaoMenu).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  const botaoFechar = page.getByRole('button', { name: 'Fechar menu' });
+  await expect(botaoFechar).toHaveAttribute('aria-expanded', 'true');
+
+  const linkLocais = page
+    .locator('#mobile-menu-panel')
+    .getByRole('link', { name: 'Locais', exact: true });
+
+  for (let tentativa = 0; tentativa < 20; tentativa++) {
+    await page.keyboard.press('Tab');
+
+    const recebeuFoco = await linkLocais.evaluate(
+      elemento => elemento === document.activeElement
+    );
+
+    if (recebeuFoco) break;
+  }
+
+  await expect(linkLocais).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(/\/locais$/);
+  await expect(
+    page.getByRole('heading', { name: 'Locais acessíveis', exact: true })
+  ).toBeVisible();
+
+  await expect(
+    page.getByRole('button', { name: 'Abrir menu' })
+  ).toHaveAttribute('aria-expanded', 'false');
+});

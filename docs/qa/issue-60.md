@@ -14,8 +14,9 @@ Comando: npx playwright test --headed
 | --- | --- |
 | Abrir URL inexistente e voltar ao início com Tab e Enter | Passou |
 | Acessar Locais pelo menu com Tab e Enter | Passou |
+| Abrir menu mobile e acessar Locais pelo teclado | Passou |
 
-Resultado: 2 testes aprovados, 0 falhas.
+Resultado: 3 testes aprovados, 0 falhas.
 
 ## Verificações
 - npm run build: passou.
