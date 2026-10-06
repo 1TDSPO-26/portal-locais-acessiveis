@@ -6,9 +6,10 @@ import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 interface LocalCardProps {
   local: Local;
+  onExcluir: () => void;
 }
 
-export default function LocalCard({ local }: LocalCardProps) {
+export default function LocalCard({ local, onExcluir }: LocalCardProps) {
   const recursosDisponiveis = local.recursos.filter(
     (recurso) => recurso.status === "disponivel"
   );
@@ -56,10 +57,18 @@ export default function LocalCard({ local }: LocalCardProps) {
           </NavLink>
         </div>
 
-        <div>
+        <div className="flex flex-col items-end gap-2">
           <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-600">
             {local.categoria}
           </span>
+
+          <button
+            type="button"
+            onClick={onExcluir}
+            className="cursor-pointer text-xs font-medium text-red-600 hover:text-red-700 hover:underline"
+          >
+            Excluir
+          </button>
         </div>
       </div>
     </article>
