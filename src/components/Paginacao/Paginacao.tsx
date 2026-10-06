@@ -4,15 +4,52 @@ interface PaginacaoProps {
   onChange: (pagina: number) => void;
 }
 
+
+/**
+ * Gera o intervalo de páginas visíveis.
+ * Mostra no máximo 5 páginas por bloco (2 antes + atual + 2 depois), sempre incluindo
+ * a primeira e a última, com "..." onde houver lacunas.
+ */
+function gerarIntervaloPaginas(
+  paginaAtual: number,
+  totalPaginas: number
+): (number | "...")[] {
+
+  if (totalPaginas <= 5) {
+    return Array.from({ length: totalPaginas }, (_, i) => i + 1);
+  }
+
+  const paginas: (number | "...")[] = [];
+
+  paginas.push(1);
+
+  const inicio = Math.max(2, paginaAtual - 2);
+  const fim = Math.min(totalPaginas - 1, paginaAtual + 2);
+
+  if (inicio > 2) {
+    paginas.push("...");
+  }
+
+  for (let i = inicio; i <= fim; i++) {
+    paginas.push(i);
+  }
+
+  if (fim < totalPaginas - 1) {
+    paginas.push("...");
+  }
+
+  paginas.push(totalPaginas);
+
+  return paginas;
+}
+
+
 export default function Paginacao({
   paginaAtual,
   totalPaginas,
   onChange,
 }: PaginacaoProps) {
-  const paginas = Array.from(
-    { length: totalPaginas },
-    (_, index) => index + 1
-  );
+  const paginas = gerarIntervaloPaginas(paginaAtual, totalPaginas);
 
   return (
     <nav
@@ -33,21 +70,35 @@ export default function Paginacao({
         ‹
       </button>
 
-      {paginas.map((pagina) => (
-        <button
-          key={pagina}
-          type="button"
-          aria-label={`Ir para a página ${pagina}`}
-          aria-current={pagina === paginaAtual ? "page" : undefined}
-          onClick={() => onChange(pagina)}
-          className={`cursor-pointer size-8 sm:size-9 rounded-lg text-xs sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] ${pagina === paginaAtual
-            ? "bg-blue-600 text-white"
-            : "text-slate-600 hover:bg-slate-100"
-            }`}
-        >
-          {pagina}
-        </button>
-      ))}
+
+      {/* Se for reticências, renderiza um span não clicável. Senão, renderiza o botão de página normalmente */}
+      {paginas.map((item, index) => {
+        if (item === "...") {
+          return (
+            <span
+              key={`ellipsis-${index}`}
+              aria-hidden="true"
+              className="flex size-8 sm:size-9 items-center justify-center text-xs sm:text-sm text-slate-400">
+              ...
+            </span>
+          );
+        }
+
+        return (
+          <button
+            key={item}
+            type="button"
+            aria-label={`Ir para a página ${item}`}
+            aria-current={item === paginaAtual ? "page" : undefined}
+            onClick={() => onChange(item)}
+            className={`cursor-pointer size-8 sm:size-9 rounded-lg text-xs sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] ${item === paginaAtual
+              ? "bg-blue-600 text-white"
+              : "text-slate-600 hover:bg-slate-100"
+              }`}>
+            {item}
+          </button>
+        );
+      })}
 
       <button
         type="button"
