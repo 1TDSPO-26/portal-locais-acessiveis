@@ -5,7 +5,7 @@ import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 
-import { locaisMock } from "../../types/locais";
+import { obterLocais } from "../../storage/localStorage";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -20,7 +20,7 @@ export default function Locais() {
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-    return locaisMock.filter((local) => {
+    return obterLocais().filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =

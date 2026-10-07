@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
-import { buscarLocalPorId, type Local } from "../../types/locais";
+import type { Local } from "../../types/locais";
+import { obterLocalPorId } from "../../storage/localStorage";
 import { useEffect, useState } from "react";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
 
@@ -54,7 +55,7 @@ export default function LocalDetalhe() {
   const { id } = useParams<{ id: string }>();
   const [mensagemCompartilhamento, setMensagemCompartilhamento] = useState("");
 
-  const local = id ? buscarLocalPorId(id) : undefined;
+  const local = id ? obterLocalPorId(id) : undefined;
 
   useEffect(() => {
     document.title = local
