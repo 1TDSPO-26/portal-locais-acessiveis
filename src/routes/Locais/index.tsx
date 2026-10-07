@@ -4,12 +4,18 @@ import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
+import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
+<<<<<<< HEAD
 import { obterLocais } from "../../storage/localStorage";
+=======
+import { useLocais } from "../../hooks/useLocais";
+>>>>>>> 1a91485a7f06b183ac635aa3369811952a6a5ea1
 
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
+  const { locais, offline, carregando } = useLocais();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -20,7 +26,11 @@ export default function Locais() {
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
+<<<<<<< HEAD
     return obterLocais().filter((local) => {
+=======
+    return locais.filter((local) => {
+>>>>>>> 1a91485a7f06b183ac635aa3369811952a6a5ea1
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -38,7 +48,7 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [busca, filtros]);
+  }, [locais, busca, filtros]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -94,6 +104,8 @@ export default function Locais() {
         </div>
       </div>
 
+      <AvisoOffline offline={offline} />
+
       <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
         {locaisFiltrados.length}{" "}
         {locaisFiltrados.length === 1
@@ -101,7 +113,9 @@ export default function Locais() {
           : "locais encontrados"}
       </p>
 
-      {locaisDaPagina.length ? (
+      {carregando ? (
+        <p className="text-start text-sm text-slate-500">Carregando locais...</p>
+      ) : locaisDaPagina.length ? (
         <div className="w-full overflow-hidden">
           {locaisDaPagina.map((local, index) => (
             <div
