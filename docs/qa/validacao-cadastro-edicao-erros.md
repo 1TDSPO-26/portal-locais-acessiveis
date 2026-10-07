@@ -6,12 +6,13 @@
 - CP: CP2
 - QA responsável: Arthur Carvalho Brito Martins
 - Issue de QA: #62 — Validar cadastro, edição e mensagens de erro
-- Data da execução: 06/10/2026
+- Data da execução inicial: 06/10/2026
+- Data do reteste: 07/10/2026
 - Branch do QA: `feature/62-validacao-cadastro-edicao-erros`
-- Versão analisada: `develop` — commit `5c9be20`
+- Versão analisada inicialmente: `develop` — commit `5c9be20`
 - Ambiente: aplicação local executada no Google Chrome
 - Viewports testados: desktop e móvel com 375 × 667 pixels
-- Pull Requests relacionadas: nenhuma PR específica de cadastro ou edição foi utilizada nesta execução
+- Pull Requests relacionadas: nenhuma PR específica foi utilizada na execução inicial; a PR #104 foi utilizada no reteste do DEF-03
 
 ## Objetivo
 
@@ -53,7 +54,7 @@ Este ciclo verificou:
 | --- | ------- | ----------------- | ------------------- | -------------------- | -------- | --------- |
 | CAD-01 | Abrir o cadastro | Acessada a rota `/cadastrar`. | O formulário deve abrir e apresentar os campos necessários. | O formulário abriu com os campos de nome, tipo, endereço, recursos, observações e botão de envio. | Aprovado | `cad-01-formulario-aberto.png` |
 | CAD-02 | Enviar cadastro válido | Preenchidos os campos obrigatórios com dados válidos e selecionado “Enviar informações”. | O envio deve ser aceito e apresentar uma confirmação clara. | Foi apresentado modal com a pergunta de confirmação e as opções “Cancelar” e “Confirmar”. | Aprovado | `cad-02-cadastro-valido-confirmacao.png` |
-| CAD-03 | Confirmar o envio | Selecionada a opção “Confirmar” no modal. | A confirmação deve ser concluída e o usuário deve conseguir prosseguir. | O modal fechou, os campos foram limpos e a página continuou utilizável, mas nenhuma mensagem final de sucesso foi apresentada. | Aprovado com ressalva | `cad-03-apos-confirmar-envio.png` |
+| CAD-03 | Confirmar o envio | Selecionada a opção “Confirmar” no modal. | A confirmação deve ser concluída e o usuário deve conseguir prosseguir. | O modal fechou, os campos foram limpos e a página continuou utilizável, mas nenhuma mensagem final de sucesso foi apresentada na execução inicial. | Aprovado com ressalva | `cad-03-apos-confirmar-envio.png` |
 | CAD-04 | Verificar persistência | Procurado o local “Local Teste QA” na listagem antes e depois de atualizar a página. | O local deve continuar disponível com os dados informados. | A busca apresentou “0 locais encontrados” e “Nenhum local encontrado”. O cadastro não foi persistido. | Reprovado | `cad-04-verificacao-persistencia.png` |
 | CAD-05 | Cancelar a confirmação | Preenchido o formulário, aberta a confirmação e selecionada a opção “Cancelar”. | O modal deve fechar sem enviar e os dados preenchidos devem permanecer disponíveis para revisão. | O modal fechou e todos os dados preenchidos permaneceram no formulário. | Aprovado | `cad-05-cancelamento-preserva-dados.png` |
 | EDI-01 | Acessar a edição | Aberta a página de detalhes de um local existente e procurada uma opção de edição. | A funcionalidade de edição deve estar disponível quando implementada. | Não existe botão, link ou rota visível para edição na versão testada. | Bloqueado | `edi-01-edicao-indisponivel.png` |
@@ -72,11 +73,13 @@ Este ciclo verificou:
 
 ## Automação
 
-Na versão testada não foi encontrado comando ou estrutura de testes automatizados no `package.json`.
+Na versão testada inicialmente e na branch da PR #104, não foi encontrado comando ou estrutura de testes automatizados no `package.json`.
 
 Conforme a orientação recebida, não foi configurado um ambiente de automação do zero. Os cenários foram executados manualmente com passos e evidências reproduzíveis.
 
 ## Validações técnicas
+
+### Execução inicial
 
 - `npm ci`: dependências instaladas com sucesso. O comando informou uma vulnerabilidade de alta severidade nas dependências.
 - `npm run lint`: concluído com 0 erros e 0 avisos.
@@ -87,6 +90,12 @@ Evidências:
 
 - `01-lint-sem-erros.png`
 - `02-build-sem-erros.png`
+
+### Reteste da PR #104
+
+- `npm ci`: dependências instaladas com sucesso.
+- `npm run lint`: concluído sem erros.
+- `npm run build`: concluído com sucesso.
 
 ## Registro das evidências
 
@@ -104,7 +113,7 @@ As imagens foram armazenadas localmente na pasta:
 
 `C:\Fiap\front-end\projeto-qa\evidencias-qa-62`
 
-A pasta está fora do repositório e não altera o código do projeto. As imagens serão anexadas individualmente à Pull Request da entrega.
+A pasta está fora do repositório e não altera o código do projeto. As evidências da execução inicial foram anexadas à PR #97, e as evidências do reteste da PR #104 serão adicionadas à mesma Pull Request.
 
 ## Defeitos encontrados
 
@@ -112,21 +121,48 @@ A pasta está fora do repositório e não altera o código do projeto. As imagen
 | -- | ---------- | ------------------- | --------- | -------- |
 | DEF-01 | Alta | CAD-04 | O cadastro confirmado não é persistido nem apresentado na listagem de locais. | Identificado |
 | DEF-02 | Média | ERR-06 | O foco não é direcionado ao primeiro campo inválido depois do envio com erros. | Identificado |
-| DEF-03 | Baixa | CAD-03 | Nenhuma mensagem final de sucesso é apresentada depois da confirmação do envio. | Identificado |
+| DEF-03 | Baixa | CAD-03 | Nenhuma mensagem final de sucesso era apresentada depois da confirmação do envio. | Correção validada na PR #104; aguardando merge |
 
 ## Limitações
 
 - A funcionalidade de edição ainda não está disponível.
 - O cadastro não utiliza API ou serviço de persistência na versão testada.
 - Não existem regras específicas de formato nos campos disponíveis.
-- O projeto não possui estrutura configurada de testes automatizados.
-- As evidências estão armazenadas fora do repositório e serão anexadas à Pull Request.
+- O projeto não possui estrutura configurada de testes automatizados nas versões analisadas.
+- As evidências estão armazenadas fora do repositório e são anexadas à Pull Request da entrega.
 
 ## Retestes
 
-Nenhum reteste foi executado nesta etapa. Os defeitos permanecem aguardando correção.
+### RT-01 — Reteste da mensagem de sucesso do cadastro
 
-Depois de eventuais correções, os cenários afetados deverão ser repetidos, informando o novo commit testado e anexando novas evidências.
+- Data: 07/10/2026
+- Pull Request testada: #104 — Feature/90 toast acessível
+- Branch testada: `feature/90-toast-acessivel`
+- Commit testado: `51f19a5`
+- Defeito relacionado: DEF-03
+- Ambiente: aplicação local no Google Chrome, em desktop e viewport móvel de 375 × 667 pixels
+
+#### Verificações realizadas
+
+- [x] A mensagem “Informações enviadas com sucesso!” foi apresentada após a confirmação do cadastro.
+- [x] O botão de fechamento do toast ficou acessível por teclado.
+- [x] O botão apresentou foco visível.
+- [x] O toast foi fechado corretamente com a tecla Enter.
+- [x] O cancelamento do envio não apresentou a mensagem de sucesso e preservou os dados preenchidos.
+- [x] O toast e seu botão de fechamento ficaram visíveis no viewport móvel de 375 × 667 pixels.
+- [x] `npm run lint` foi concluído sem erros.
+- [x] `npm run build` foi concluído com sucesso.
+
+#### Evidências
+
+- `reteste-pr104-def03-toast-sucesso.png`
+- `reteste-pr104-toast-mobile.png`
+
+#### Resultado
+
+**Aprovado.** O DEF-03 foi corrigido na PR #104. A mensagem final de sucesso foi apresentada e pôde ser fechada por teclado em desktop e em tela móvel.
+
+A correção foi validada diretamente na PR antes do merge. Os defeitos DEF-01 e DEF-02 não foram corrigidos por esta implementação. A funcionalidade de edição continua indisponível e seus cenários permanecem bloqueados.
 
 ## Decisão final
 
@@ -136,6 +172,8 @@ Depois de eventuais correções, os cenários afetados deverão ser repetidos, i
 - [ ] Bloqueado
 - [ ] Ainda não avaliado
 
-A versão testada foi reprovada porque o cadastro confirmado não foi persistido. Também foi identificado que o foco não é direcionado ao primeiro campo inválido.
+A versão testada permanece reprovada porque o cadastro confirmado não foi persistido e o foco não foi direcionado ao primeiro campo inválido.
+
+O DEF-03 teve sua correção validada diretamente na PR #104, que ainda aguarda merge em `develop`.
 
 A funcionalidade de edição não pôde ser validada porque ainda não está disponível. Essa limitação deverá ser informada ao Tech Lead, conforme a orientação recebida.
