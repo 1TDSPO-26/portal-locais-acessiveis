@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router";
 import { buscarLocalPorId, type Local } from "../../types/locais";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BadgeAcessibilidade from "../../components/BadgeAcessibilidade/BadgeAcessibilidade";
 
 type Recurso = Local["recursos"][number];
@@ -52,12 +52,36 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 export default function LocalDetalhe() {
 
   const { id } = useParams<{ id: string }>();
+  const [mensagemCompartilhamento, setMensagemCompartilhamento] = useState("");
+
   const local = id ? buscarLocalPorId(id) : undefined;
+
   useEffect(() => {
     document.title = local
       ? `${local.nome} | ACESSO+`
       : "Local não encontrado | ACESSO+";
   }, [local]);
+
+
+const compartilharLocal = async () => {
+  const caminhoLocal = `/local/${id}`;
+  const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: local?.nome,
+        text: "Confira este local acessível",
+        url: urlParaCopiar,
+      });
+    } else {
+      await navigator.clipboard.writeText(urlParaCopiar);
+      setMensagemCompartilhamento("Link copiado!");
+    }
+  } catch (error) {
+    console.error("Erro ao compartilhar o local:", error);
+  }
+};
 
   if (!local) {
     return (
@@ -84,7 +108,22 @@ export default function LocalDetalhe() {
       <header className="mb-1 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{local.nome}</h1>
         <BadgeAcessibilidade texto={local.categoria} />
-      </header>
+
+      
+      <button
+        type="button"
+        onClick={compartilharLocal}
+        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+    >
+      Compartilhar
+      </button>
+
+      {mensagemCompartilhamento && (
+        <span className="text-sm text-green-600" role="status">
+          {mensagemCompartilhamento}
+        </span>
+      )}
+    </header>
 
       <p className="mb-6 text-sm text-gray-500">
         {local.cidade} · {local.endereco}
