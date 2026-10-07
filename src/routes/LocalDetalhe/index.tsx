@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import type { Local } from "../../types/locais";
 import { obterLocalPorId } from "../../storage/localStorage";
 import { useEffect, useState } from "react";
@@ -53,6 +53,8 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 export default function LocalDetalhe() {
 
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const mensagemSucesso = (location.state as { mensagem?: string } | null)?.mensagem;
   const [mensagemCompartilhamento, setMensagemCompartilhamento] = useState("");
 
   const local = id ? obterLocalPorId(id) : undefined;
@@ -118,6 +120,12 @@ const compartilharLocal = async () => {
     >
       Compartilhar
       </button>
+        <Link
+          to={`/locais/${local.id}/editar`}
+          className="rounded-md border border-blue-600 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+        >
+          Editar local
+        </Link>
 
       {mensagemCompartilhamento && (
         <span className="text-sm text-green-600" role="status">
@@ -125,6 +133,11 @@ const compartilharLocal = async () => {
         </span>
       )}
     </header>
+      {mensagemSucesso && (
+        <p role="status" className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800">
+          {mensagemSucesso}
+        </p>
+      )}
 
       <p className="mb-6 text-sm text-gray-500">
         {local.cidade} · {local.endereco}
