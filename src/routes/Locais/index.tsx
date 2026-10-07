@@ -9,7 +9,7 @@ import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 import { useLocais } from "../../hooks/useLocais";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
-import { filtrarLocais } from "../../utils/filtrarLocais";
+// import { filtrarLocais } from "../../utils/filtrarLocais";
 
 const ITENS_POR_PAGINA = 4;
 
