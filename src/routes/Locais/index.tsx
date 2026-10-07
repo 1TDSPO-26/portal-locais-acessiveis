@@ -14,7 +14,7 @@ import { filtrarLocais } from "../../utils/filtrarLocais";
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
-  const { locais, offline, carregando } = useLocais();
+   const { offline} = useLocais();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -60,10 +60,26 @@ export default function Locais() {
     setTentativa((valor) => valor + 1);
   };
 
-  const locaisFiltrados = useMemo(
-    () => filtrarLocais(locais, busca, filtros),
-    [locais, busca, filtros]
-  );
+   const locaisFiltrados = useMemo(() => {
+    return locais.filter((local) => {
+      const termo = busca.trim().toLowerCase();
+
+      const correspondeBusca =
+        !termo ||
+        local.nome.toLowerCase().includes(termo) ||
+        local.endereco.toLowerCase().includes(termo);
+
+      const possuiRecursos = filtros.every((id) =>
+        local.recursos.some(
+          (recurso) =>
+            recurso.id === id &&
+            recurso.status === "disponivel"
+        )
+      );
+
+      return correspondeBusca && possuiRecursos;
+    });
+  }, [locais, busca, filtros]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -119,7 +135,7 @@ export default function Locais() {
         </div>
       </div>
 
-      <AvisoOffline offline={offline} />
+     
 
       <AvisoOffline offline={offline} />
 
