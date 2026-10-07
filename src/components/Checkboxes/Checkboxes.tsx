@@ -15,7 +15,7 @@ function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
                 id={id}
                 checked={checked}
                 onChange={() => onChange(valor)}
-                className="h-4 w-4 rounded border-slate-300 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className="h-4 w-4 rounded border-slate-500 focus-visible:ring-2 focus-visible:ring-[#005FCC]"
             />
             <label htmlFor={id} className="text-sm text-slate-700">{label}</label>
         </div>

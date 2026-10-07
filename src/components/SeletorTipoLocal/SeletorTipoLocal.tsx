@@ -17,7 +17,7 @@ export default function SeletorTipoLocal({ value, onChange, error }: SeletorTipo
                 onChange={(e) => onChange(e.target.value)}
                 aria-invalid={!!error}
                 aria-describedby={error ? "tipoLocal-erro" : undefined}
-                className={`min-h-11 w-full min-w-0 rounded-lg border px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${error ? "border-red-500" : "border-slate-300"}`}
+                className={`min-h-11 w-full min-w-0 rounded-lg border px-3 py-2 text-base sm:text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC] ${error ? "border-red-500" : "border-slate-500"}`}
             >
                 <option value="" disabled hidden>Selecione uma opção</option>
                 <option value="restaurante">Restaurante</option>
