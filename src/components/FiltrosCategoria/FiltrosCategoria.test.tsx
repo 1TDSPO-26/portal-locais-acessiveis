@@ -4,6 +4,8 @@ import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import FiltrosCategoria from './FiltrosCategoria'
 
+const todosOsIds = ['entrada', 'banheiro', 'vagas', 'circulacao', 'elevador']
+
 const rotulos = [
   'Entrada com rampa',
   'Banheiro acessível',
@@ -72,6 +74,103 @@ describe('FiltrosCategoria', () => {
     renderFiltros()
     screen.getAllByRole('button').forEach((botao) => {
       expect(botao).toHaveAttribute('type', 'button')
+    })
+  })
+
+  describe('Selecionar todos', () => {
+    it('fica desmarcado quando nem todos os filtros estão selecionados', () => {
+      renderFiltros(['entrada', 'banheiro'])
+      expect(
+        screen.getByRole('checkbox', { name: 'Selecionar todos os filtros' })
+      ).not.toBeChecked()
+    })
+
+    it('fica marcado quando todos os filtros estão selecionados', () => {
+      renderFiltros(todosOsIds)
+      expect(
+        screen.getByRole('checkbox', { name: 'Selecionar todos os filtros' })
+      ).toBeChecked()
+    })
+
+    it('seleciona todos os filtros ao ser marcado', async () => {
+      const user = userEvent.setup()
+      const { onChange } = renderFiltros(['vagas'])
+      await user.click(screen.getByRole('checkbox', { name: 'Selecionar todos os filtros' }))
+      expect(onChange).toHaveBeenCalledWith(todosOsIds)
+    })
+
+    it('limpa a seleção ao ser desmarcado com todos selecionados', async () => {
+      const user = userEvent.setup()
+      const { onChange } = renderFiltros(todosOsIds)
+      await user.click(screen.getByRole('checkbox', { name: 'Selecionar todos os filtros' }))
+      expect(onChange).toHaveBeenCalledWith([])
+    })
+
+    it('também funciona ao clicar no texto do rótulo', async () => {
+      const user = userEvent.setup()
+      const { onChange } = renderFiltros()
+      await user.click(screen.getByText('Selecionar todos'))
+      expect(onChange).toHaveBeenCalledWith(todosOsIds)
+    })
+  })
+
+  describe('navegação por teclado', () => {
+    it('segue a ordem de foco: selecionar todos, limpar e filtros', async () => {
+      const user = userEvent.setup()
+      renderFiltros(['entrada'])
+
+      await user.tab()
+      expect(screen.getByRole('checkbox', { name: 'Selecionar todos os filtros' })).toHaveFocus()
+      await user.tab()
+      expect(screen.getByRole('button', { name: 'Limpar filtros' })).toHaveFocus()
+
+      for (const rotulo of rotulos) {
+        await user.tab()
+        expect(screen.getByRole('button', { name: rotulo })).toHaveFocus()
+      }
+    })
+
+    it('pula "Limpar filtros" no Tab quando ele está desabilitado', async () => {
+      const user = userEvent.setup()
+      renderFiltros()
+
+      await user.tab()
+      await user.tab()
+      expect(screen.getByRole('button', { name: 'Entrada com rampa' })).toHaveFocus()
+    })
+
+    it('alterna "Selecionar todos" com Enter e com Espaço', async () => {
+      const user = userEvent.setup()
+      const { onChange } = renderFiltros()
+
+      await user.tab()
+      await user.keyboard('{Enter}')
+      expect(onChange).toHaveBeenLastCalledWith(todosOsIds)
+
+      await user.keyboard(' ')
+      expect(onChange).toHaveBeenLastCalledWith(todosOsIds)
+      expect(onChange).toHaveBeenCalledTimes(2)
+    })
+
+    it('aciona um filtro com Enter e com Espaço', async () => {
+      const user = userEvent.setup()
+      const { onChange } = renderFiltros()
+
+      screen.getByRole('button', { name: 'Banheiro acessível' }).focus()
+      await user.keyboard('{Enter}')
+      expect(onChange).toHaveBeenLastCalledWith(['banheiro'])
+
+      await user.keyboard(' ')
+      expect(onChange).toHaveBeenCalledTimes(2)
+    })
+
+    it('aciona "Limpar filtros" com Enter', async () => {
+      const user = userEvent.setup()
+      const { onClear } = renderFiltros(['elevador'])
+
+      screen.getByRole('button', { name: 'Limpar filtros' }).focus()
+      await user.keyboard('{Enter}')
+      expect(onClear).toHaveBeenCalledTimes(1)
     })
   })
 })
