@@ -28,6 +28,19 @@ export default function Cadastro() {
         }
     }
 
+    function normalizar() {
+        return {
+            nome: nome.trim(),
+            tipo: tipo.trim(),
+            endereco: endereco.trim(),
+            recursos: [...new Set(
+                recursos
+                    .map((recurso) => recurso.trim()) 
+                    .filter(Boolean))],
+            observacoes: observacoes.trim(),
+        }
+    }
+
     function validar(): Record<string, string> {
         const novosErros: Record<string, string> = {}
 
