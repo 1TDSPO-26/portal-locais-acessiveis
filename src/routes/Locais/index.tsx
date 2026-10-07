@@ -4,8 +4,12 @@ import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
+import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao";
+
+
 
 import { locaisMock } from "../../types/locais";
+import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -17,10 +21,11 @@ export default function Locais() {
 
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
+  const [ordenacao, setOrdenacao] = useState<CriterioOrdenacao>("nome-asc");
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-    return locaisMock.filter((local) => {
+    const filtrados = locaisMock.filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -38,7 +43,9 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [busca, filtros]);
+
+    return ordenarLocais(filtrados, ordenacao);
+  }, [busca, filtros, ordenacao]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -53,6 +60,11 @@ export default function Locais() {
 
   const alterarBusca = (valor: string) => {
     setBusca(valor);
+    setPaginaAtual(1);
+  };
+
+  const alterarOrdenacao = (criterio: CriterioOrdenacao) => {
+    setOrdenacao(criterio);
     setPaginaAtual(1);
   };
 
@@ -94,21 +106,28 @@ export default function Locais() {
         </div>
       </div>
 
-      <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
-        {locaisFiltrados.length}{" "}
-        {locaisFiltrados.length === 1
-          ? "local encontrado"
-          : "locais encontrados"}
-      </p>
+      <div className="mb-3 mt-5 flex flex-col gap-3 sm:mb-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-between">
+        <p
+          className="text-start text-[11px] text-slate-500"
+          role="status"
+          aria-live="polite"
+        >
+          {locaisFiltrados.length}{" "}
+          {locaisFiltrados.length === 1
+            ? "local encontrado"
+            : "locais encontrados"}
+        </p>
+
+        <SeletorOrdenacao value={ordenacao} onChange={alterarOrdenacao} />
+      </div>
 
       {locaisDaPagina.length ? (
         <div className="w-full overflow-hidden">
           {locaisDaPagina.map((local, index) => (
             <div
               key={local.id}
-              className={`my-3 ${
-                index !== locaisDaPagina.length - 1
-              }`}
+              className={`my-3 ${index !== locaisDaPagina.length - 1
+                }`}
             >
               <LocalCard local={local} />
             </div>
