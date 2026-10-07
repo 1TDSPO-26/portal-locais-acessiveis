@@ -11,8 +11,11 @@ function verificarResposta(resposta: Response): void {
         }
     }
 
-export async function listarLocais(signal?: AbortSignal): Promise<Local[]> {
-    const resposta = await fetch(URL, { signal });
+export async function listarLocais(limit?: number, signal?: AbortSignal): Promise<Local[]> {
+
+    const queryParam = limit ? `?_limit=${limit}` : "";
+
+    const resposta = await fetch(`${URL}${queryParam}`, { signal });
     verificarResposta(resposta);
     return resposta.json();
 }
