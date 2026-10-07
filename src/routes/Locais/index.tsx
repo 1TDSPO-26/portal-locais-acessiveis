@@ -4,7 +4,9 @@ import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
+import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
+import { useLocais } from "../../hooks/useLocais";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
 import { filtrarLocais } from "../../utils/filtrarLocais";
@@ -12,6 +14,7 @@ import { filtrarLocais } from "../../utils/filtrarLocais";
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
+  const { locais, offline, carregando } = useLocais();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -116,6 +119,10 @@ export default function Locais() {
         </div>
       </div>
 
+      <AvisoOffline offline={offline} />
+
+      <AvisoOffline offline={offline} />
+
       {carregando ? (
         <div
           role="status"
@@ -152,7 +159,9 @@ export default function Locais() {
           : "locais encontrados"}
       </p>
 
-      {locaisDaPagina.length ? (
+      {carregando ? (
+        <p className="text-start text-sm text-slate-500">Carregando locais...</p>
+      ) : locaisDaPagina.length ? (
         <div className="w-full overflow-hidden">
           {locaisDaPagina.map((local, index) => (
             <div
@@ -190,4 +199,4 @@ export default function Locais() {
       )}
     </main>
   );
-}
+}
