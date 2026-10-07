@@ -72,10 +72,17 @@ export default function Cadastro() {
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
 
-        const novosErros = validar()
+        const dados = normalizar()
+
+        const novosErros = validar(dados)
         setErros(novosErros)
 
         if (Object.keys(novosErros).length === 0) {
+            setNome(dados.nome)
+            setTipo(dados.tipo)
+            setEndereco(dados.endereco)
+            setRecursos(dados.recursos)
+            setObservacoes(dados.observacoes)
             setModalAberto(true)
         }
     }
