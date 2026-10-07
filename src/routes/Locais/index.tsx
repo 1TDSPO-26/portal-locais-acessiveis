@@ -6,11 +6,8 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
-<<<<<<< HEAD
 import { obterLocais } from "../../storage/localStorage";
-=======
 import { useLocais } from "../../hooks/useLocais";
->>>>>>> 1a91485a7f06b183ac635aa3369811952a6a5ea1
 
 const ITENS_POR_PAGINA = 4;
 
@@ -26,11 +23,7 @@ export default function Locais() {
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-<<<<<<< HEAD
     return obterLocais().filter((local) => {
-=======
-    return locais.filter((local) => {
->>>>>>> 1a91485a7f06b183ac635aa3369811952a6a5ea1
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
