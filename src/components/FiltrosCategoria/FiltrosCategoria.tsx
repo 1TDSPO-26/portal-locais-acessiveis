@@ -46,7 +46,7 @@ export default function FiltrosCategoria({
               }
             }}
             aria-label="Selecionar todos os filtros"
-            className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC]"
             title={
               todosSelecionados
                 ? "Botão de desmarcar todos os filtros"

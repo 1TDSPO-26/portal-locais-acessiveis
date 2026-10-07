@@ -93,7 +93,7 @@ export default function Cadastro() {
                         onChange={(e) => setNome(e.target.value)}
                         aria-invalid={!!erros.nome}
                         aria-describedby={erros.nome ? "nomeLocal-erro" : undefined}
-                        className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.nome ? "border-red-500" : "border-slate-300"}`}
+                        className={`rounded-lg border px-3 py-2 text-sm text-slate-900 placeholder:text-slate-800 outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC] ${erros.nome ? "border-red-500" : "border-slate-500"}`}
                     />
                     {erros.nome && <p id="nomeLocal-erro" role="alert" className="text-sm text-red-600">{erros.nome}</p>}
                 </div>
@@ -113,7 +113,7 @@ export default function Cadastro() {
                         onChange={(e) => setEndereco(e.target.value)}
                         aria-invalid={!!erros.endereco}
                         aria-describedby={erros.endereco ? "endereco-erro" : undefined}
-                        className={`rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 ${erros.endereco ? "border-red-500" : "border-slate-300"}`}
+                        className={`rounded-lg border px-3 py-2 text-sm text-slate-900 placeholder:text-slate-800 outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC] ${erros.endereco ? "border-red-500" : "border-slate-500"}`}
                     />
                     {erros.endereco && <p id="endereco-erro" role="alert" className="text-sm text-red-600">{erros.endereco}</p>}
                 </div>
