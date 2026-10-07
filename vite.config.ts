@@ -16,6 +16,7 @@ export default defineConfig({
         rewrite: (caminho) => caminho.replace(/^\/api/, ''),
       },
     },
+  },
   test: {
     environment: 'jsdom',
   },
