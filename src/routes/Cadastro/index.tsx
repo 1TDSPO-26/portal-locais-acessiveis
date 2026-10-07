@@ -35,19 +35,36 @@ export default function Cadastro() {
             endereco: endereco.trim(),
             recursos: [...new Set(
                 recursos
-                    .map((recurso) => recurso.trim()) 
+                    .map((recurso) => recurso.trim())
                     .filter(Boolean))],
             observacoes: observacoes.trim(),
         }
     }
 
-    function validar(): Record<string, string> {
+    function validar(dados: ReturnType<typeof normalizar>): Record<string, string> {
         const novosErros: Record<string, string> = {}
 
-        if (!nome.trim()) novosErros.nome = "Informe o nome do local"
-        if (!tipo) novosErros.tipo = "Selecione o tipo de local"
-        if (!endereco.trim()) novosErros.endereco = "Informe o endereço"
-        if (recursos.length === 0) novosErros.recursos = "Marque pelo menos um recurso"
+        const tiposValidos = [
+            "restaurante",
+            "hospital",
+            "escola",
+            "Outro",
+        ]
+
+        const recursosValidos = [
+            "rampa",
+            "banheiro",
+            "circulacao",
+            "vaga",
+            "elevador",
+        ]
+
+        if (!dados.nome) novosErros.nome = "Informe o nome do local"
+        if (!tiposValidos.includes(dados.tipo)) novosErros.tipo = "Selecione o tipo de local"
+        if (!dados.endereco) novosErros.endereco = "Informe o endereço"
+        if (dados.recursos.length === 0) {
+            novosErros.recursos = "Marque pelo menos um recurso"
+        } else if (dados.recursos.some((recurso) => !recursosValidos.includes(recurso))) novosErros.recursos = "Selecione apenas recursos válidos"
 
         return novosErros
     }
