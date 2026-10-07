@@ -5,7 +5,8 @@ import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 
-import { locaisMock } from "../../types/locais";
+import { listarLocais } from "../../services/locais";
+import type { Local } from "../../types/locais";
 
 const ITENS_POR_PAGINA = 4;
 
@@ -15,12 +16,38 @@ export default function Locais() {
     document.title = "LOCAIS | ACESSO+";
   }, []);
 
+  const [locais, setLocais] = useState<Local[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setCarregando(true);
+    setErro("");
+
+    async function carregar() {
+      try {
+        const dados = await listarLocais(undefined, controller.signal);
+        if (!controller.signal.aborted) setLocais(dados);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setErro(error instanceof Error ? error.message : "Falha ao carregar locais.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setCarregando(false);
+      }
+    }
+
+    carregar();
+    return () => controller.abort();
+  }, []);
+
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-    return locaisMock.filter((local) => {
+    return locais.filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -38,7 +65,7 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [busca, filtros]);
+  }, [locais, busca, filtros]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -94,46 +121,62 @@ export default function Locais() {
         </div>
       </div>
 
-      <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
-        {locaisFiltrados.length}{" "}
-        {locaisFiltrados.length === 1
-          ? "local encontrado"
-          : "locais encontrados"}
-      </p>
-
-      {locaisDaPagina.length ? (
-        <div className="w-full overflow-hidden">
-          {locaisDaPagina.map((local, index) => (
-            <div
-              key={local.id}
-              className={`my-3 ${
-                index !== locaisDaPagina.length - 1
-              }`}
-            >
-              <LocalCard local={local} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Nenhum local encontrado
-          </h2>
-
-          <p className="mt-2 text-sm text-slate-500">
-            Tente alterar sua busca ou remover algum filtro.
-          </p>
-        </div>
+      {carregando && (
+        <p role="status" className="mb-4 text-sm text-slate-500">
+          Carregando locais...
+        </p>
       )}
 
-      {totalPaginas > 1 && (
-        <div className="mt-6">
-          <Paginacao
-            paginaAtual={paginaAtual}
-            totalPaginas={totalPaginas}
-            onChange={setPaginaAtual}
-          />
-        </div>
+      {erro && (
+        <p role="alert" className="mb-4 text-sm text-red-600">
+          {erro}
+        </p>
+      )}
+
+      {!carregando && !erro && (
+        <>
+          <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
+            {locaisFiltrados.length}{" "}
+            {locaisFiltrados.length === 1
+              ? "local encontrado"
+              : "locais encontrados"}
+          </p>
+
+          {locaisDaPagina.length ? (
+            <div className="w-full overflow-hidden">
+              {locaisDaPagina.map((local, index) => (
+                <div
+                  key={local.id}
+                  className={`my-3 ${
+                    index !== locaisDaPagina.length - 1
+                  }`}
+                >
+                  <LocalCard local={local} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Nenhum local encontrado
+              </h2>
+
+              <p className="mt-2 text-sm text-slate-500">
+                Tente alterar sua busca ou remover algum filtro.
+              </p>
+            </div>
+          )}
+
+          {totalPaginas > 1 && (
+            <div className="mt-6">
+              <Paginacao
+                paginaAtual={paginaAtual}
+                totalPaginas={totalPaginas}
+                onChange={setPaginaAtual}
+              />
+            </div>
+          )}
+        </>
       )}
     </main>
   );

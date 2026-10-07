@@ -1,6 +1,5 @@
 import type { Local } from "../types/locais";
 
-
 const URL = "http://localhost:3001/locais";
 
 function verificarResposta(resposta: Response): void {
@@ -13,15 +12,20 @@ function verificarResposta(resposta: Response): void {
 
 export async function listarLocais(limit?: number, signal?: AbortSignal): Promise<Local[]> {
 
-    const queryParam = limit ? `?_limit=${limit}` : "";
+    if (limit) {
+        const resposta = await fetch(`${URL}?_page=1&_per_page=${limit}`, { signal });
+        verificarResposta(resposta);
+        const paginado = await resposta.json();
+        return paginado.data;
+    }
 
-    const resposta = await fetch(`${URL}${queryParam}`, { signal });
+    const resposta = await fetch(URL, { signal });
     verificarResposta(resposta);
     return resposta.json();
 }
 
 export async function buscarLocal(id: string, signal?: AbortSignal): Promise<Local> {
-    const resposta = await fetch(`${URL}./${encodeURIComponent(id)}`, { signal });
+    const resposta = await fetch(`${URL}/${encodeURIComponent(id)}`, { signal });
     verificarResposta(resposta);
     return resposta.json();
 }

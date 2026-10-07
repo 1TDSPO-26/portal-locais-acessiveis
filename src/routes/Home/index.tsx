@@ -1,15 +1,42 @@
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
 
 import Button from "../../components/Button/Button";
 import heroHome from "../../assets/images/hero-home.png";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import { listarLocais } from "../../services/locais";
-import { useEffect } from "react";
+import type { Local } from "../../types/locais";
 
 export default function Home() {
 
+  const [locaisDestaque, setLocaisDestaque] = useState<Local[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+
   useEffect(() => {
     document.title = "INÍCIO | ACESSO+";
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setCarregando(true);
+    setErro("");
+
+    async function carregar() {
+      try {
+        const dados = await listarLocais(6, controller.signal);
+        if (!controller.signal.aborted) setLocaisDestaque(dados);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setErro(error instanceof Error ? error.message : "Falha ao carregar locais.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setCarregando(false);
+      }
+    }
+
+    carregar();
+    return () => controller.abort();
   }, []);
 
   return (
@@ -125,17 +152,30 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {listarLocais.slice(0, 6).map((local) => (
-              <div
-                key={local.id}
-                className="[&>article]:!flex-col [&>article>div:first-child]:!h-[130px] [&>article>div:first-child]:!w-full"
-              >
-              <LocalCard key={local.id} local={local} />
-              </div>
-            ))}
-          </div>
-          
+          {carregando && (
+            <p role="status" className="mt-6 text-sm text-[#64748B]">
+              Carregando locais...
+            </p>
+          )}
+
+          {erro && (
+            <p role="alert" className="mt-6 text-sm text-red-600">
+              {erro}
+            </p>
+          )}
+
+          {!carregando && !erro && (
+            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {locaisDestaque.map((local) => (
+                <div
+                  key={local.id}
+                  className="[&>article]:!flex-col [&>article>div:first-child]:!h-[130px] [&>article>div:first-child]:!w-full"
+                >
+                  <LocalCard key={local.id} local={local} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
