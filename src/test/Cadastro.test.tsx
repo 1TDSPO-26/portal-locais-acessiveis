@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom/vitest'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Cadastro from '../routes/Cadastro/index'
 
 afterEach(() => {
   cleanup()
+  vi.restoreAllMocks()
 })
 
 describe('Cadastro - renderização inicial', () => {
