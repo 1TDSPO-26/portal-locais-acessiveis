@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach, describe, expect, it } from 'vitest'
 import { cleanup, render, screen } from '@testing-library/react'
-import Cadastro from './index'
 import userEvent from '@testing-library/user-event'
+import Cadastro from '../routes/Cadastro/index'
 
 afterEach(() => {
   cleanup()
@@ -24,7 +24,29 @@ describe('Cadastro - renderização inicial', () => {
       }),
     ).toBeInTheDocument()
   })
-  describe('Cadastro - acessibilidade', () => {
+
+  it('exibe os campos necessários do formulário', () => {
+    render(<Cadastro />)
+
+    expect(screen.getByLabelText('Nome do local')).toBeInTheDocument()
+    expect(screen.getByLabelText('Tipo de local')).toBeInTheDocument()
+    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
+    expect(screen.getByLabelText('Observações')).toBeInTheDocument()
+    expect(screen.getAllByRole('checkbox')).toHaveLength(5)
+  })
+
+  it('inicia sem o modal e sem a mensagem de sucesso', () => {
+    render(<Cadastro />)
+
+    expect(
+      screen.queryByText('Confirmar envio das informações?'),
+    ).not.toBeInTheDocument()
+
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  })
+})
+
+describe('Cadastro - acessibilidade', () => {
   it('oferece nomes acessíveis para os controles do formulário', () => {
     render(<Cadastro />)
 
@@ -71,26 +93,5 @@ describe('Cadastro - renderização inicial', () => {
 
     await user.tab()
     expect(endereco).toHaveFocus()
-  })
-})
-
-  it('exibe os campos necessários do formulário', () => {
-    render(<Cadastro />)
-
-    expect(screen.getByLabelText('Nome do local')).toBeInTheDocument()
-    expect(screen.getByLabelText('Tipo de local')).toBeInTheDocument()
-    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
-    expect(screen.getByLabelText('Observações')).toBeInTheDocument()
-    expect(screen.getAllByRole('checkbox')).toHaveLength(5)
-  })
-
-  it('inicia sem o modal e sem a mensagem de sucesso', () => {
-    render(<Cadastro />)
-
-    expect(
-      screen.queryByText('Confirmar envio das informações?'),
-    ).not.toBeInTheDocument()
-
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
 })
