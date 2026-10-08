@@ -8,9 +8,10 @@ import { useFavoritos } from "../../hooks/useFavoritos";
 
 interface LocalCardProps {
   local: Local;
+  onExcluir?: () => void;
 }
 
-export default function LocalCard({ local }: LocalCardProps) {
+export default function LocalCard({ local, onExcluir }: LocalCardProps) {
 
   const { alternarFavorito, ehFavorito } = useFavoritos();
   const favoritado = ehFavorito(local.id);
@@ -67,29 +68,43 @@ export default function LocalCard({ local }: LocalCardProps) {
             {local.categoria}
           </span>
 
-          <button 
-            type="button"
-            className={`mt-auto p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
-              favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400'
-            }`}
-            onClick={(e) => {
-              e.preventDefault();
-              alternarFavorito(local.id);
-            }}
-            aria-label={favoritado ? `Remover ${local.nome} dos favoritos` : `Favoritar ${local.nome}`}
-            aria-pressed={favoritado}
-          >
-            <svg 
-              xmlns="http://w3.org" 
-              viewBox="0 0 576 512" 
-              fill={favoritado ? "currentColor" : "none"} 
-              stroke="currentColor" 
-              strokeWidth="32" 
-              className="w-4 h-4"
+          <div className="mt-auto flex items-center gap-2">
+            {onExcluir && (
+              <button
+                type="button"
+                onClick={onExcluir}
+                className="cursor-pointer rounded px-1.5 py-1 text-xs font-medium text-red-600 transition-colors hover:text-red-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+              >
+                Excluir
+              </button>
+            )}
+
+            <button
+              type="button"
+              className={`cursor-pointer rounded-full p-1.5 transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 
+                ${favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400'}`
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                alternarFavorito(local.id);
+              }}
+              aria-label={favoritado ? `Remover ${local.nome} dos favoritos` : `Favoritar ${local.nome}`}
+              aria-pressed={favoritado}
             >
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
+                fill={favoritado ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                strokeWidth="32"
+                className="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+              </svg>
+            </button>
+          </div>
+
         </div>
       </div>
     </article>

@@ -102,6 +102,22 @@ export default function Locais() {
     setPaginaAtual(1);
   };
 
+  const excluirLocal = (id: Local["id"]) => {
+    const local = locais.find((local) => local.id === id);
+
+    if (!local) return;
+
+    const confirmou = window.confirm(
+      `Tem certeza que deseja excluir o local "${local.nome}"?`
+    );
+
+    if (!confirmou) return;
+
+    setLocais((locaisAtuais) =>
+      locaisAtuais.filter((local) => local.id !== id)
+    );
+  };
+
   return (
     <main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
       <div className="mb-6 sm:mb-5">
@@ -171,7 +187,7 @@ export default function Locais() {
       <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
         {locaisFiltrados.length}{" "}
         {locaisFiltrados.length === 1
-          ? "local encontrado"
+          ? "local encontrado"  
           : "locais encontrados"}
       </p>
 
@@ -186,7 +202,10 @@ export default function Locais() {
                 index !== locaisDaPagina.length - 1
               }`}
             >
-              <LocalCard local={local} />
+              <LocalCard
+                local={local}
+                onExcluir={() => excluirLocal(local.id)}
+              />
             </div>
           ))}
         </div>
