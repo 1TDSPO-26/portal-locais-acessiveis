@@ -15,9 +15,14 @@ function Checkbox({ label, valor, checked, onChange }: CheckboxProps){
                 id={id}
                 checked={checked}
                 onChange={() => onChange(valor)}
-                className="h-4 w-4 rounded border-slate-300 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+                className="h-4 w-4 rounded border-slate-300 dark:border-slate-600 focus-visible:ring-2 focus-visible:ring-cyan-500/40"
             />
-            <label htmlFor={id} className="text-sm text-slate-700">{label}</label>
+            <label
+                htmlFor={id}
+                className="text-sm text-slate-700 dark:text-slate-300"
+            >
+                {label}
+            </label>
         </div>
     )
 }
@@ -48,7 +53,15 @@ export default function Checkboxes({ selecionados, onToggle, error }: ChecklistP
                     onChange={onToggle}
                 />
             ))}
-            {error && <p id="recursos-erro" role="alert" className="text-sm text-red-600">{error}</p>}
+            {error && (
+                <p
+                    id="recursos-erro"
+                    role="alert"
+                    className="text-sm text-red-600 dark:text-red-400"
+                >
+                    {error}
+                </p>
+            )}
         </div>
     )
 }

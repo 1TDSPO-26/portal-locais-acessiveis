@@ -17,18 +17,18 @@ function GithubIcon() {
 export default function Cards() {
   return (
     <section className="w-full max-w-[1136px] text-left">
-      <h2 className="text-[24px] font-semibold leading-[32px] tracking-[-0.2px] text-[#0F172A]">
+      <h2 className="text-[24px] font-semibold leading-[32px] tracking-[-0.2px] text-[#0F172A] dark:text-slate-100">
         Equipe do projeto
       </h2>
 
-      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {integrantes.map((integrante) => {
           const [nome, cargo] = integrante.nome.split(" - ");
 
           return (
             <div
               key={integrante.github}
-              className="flex flex-col items-center gap-2 rounded-[12px] border-2 border-[#CBD5E1] p-4 text-center w-full"
+              className="flex w-full flex-col items-center gap-2 rounded-[12px] border-2 border-[#CBD5E1] p-4 text-center dark:border-slate-600"
             >
               <img
                 src={`https://github.com/${integrante.github}.png`}
@@ -37,12 +37,12 @@ export default function Cards() {
                 className="h-16 w-16 rounded-full object-cover"
               />
 
-              <p className="text-[14px] font-semibold leading-[20px] text-[#0F172A]">
+              <p className="text-[14px] font-semibold leading-[20px] text-[#0F172A] dark:text-slate-100">
                 {nome}
               </p>
 
               {cargo && (
-                <span className="text-[12px] font-medium leading-[16px] text-[#475569]">
+                <span className="text-[12px] font-medium leading-[16px] text-[#475569] dark:text-slate-300">
                   {cargo}
                 </span>
               )}
@@ -52,10 +52,12 @@ export default function Cards() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Acessar o perfil de ${nome} no GitHub`}
-                className="mt-1 text-[#475569] transition-colors hover:text-[#0F172A]"
+                className="mt-1 text-[#475569] transition-colors hover:text-[#0F172A] dark:text-slate-300 dark:hover:text-slate-100"
               >
                 <GithubIcon />
-                <span className="sr-only">Acessar o perfil de {nome} no GitHub</span>
+                <span className="sr-only">
+                  Acessar o perfil de {nome} no GitHub
+                </span>
               </a>
             </div>
           );

@@ -32,7 +32,7 @@ export default function ModalConfirmacao({
     >
       {/* Container principal do modal com cantos rounded-2xl */}
       <div
-        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100"
+        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-slate-100 dark:bg-slate-800 dark:border-slate-600"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Identidade Visual / Logo */}
@@ -41,11 +41,11 @@ export default function ModalConfirmacao({
         </div>
 
         {/* Título e Mensagem descritiva */}
-        <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
+        <h3 className="text-xl font-bold text-slate-800 text-center mb-2 dark:text-slate-100">
           {title}
         </h3>
 
-        <p className="text-slate-600 text-center text-sm mb-6 leading-relaxed">
+        <p className="text-slate-600 text-center text-sm mb-6 leading-relaxed dark:text-slate-300">
           {message}
         </p>
 
@@ -54,7 +54,7 @@ export default function ModalConfirmacao({
           <button
             type="button"
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors"
+            className="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
           >
             Cancelar
           </button>

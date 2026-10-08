@@ -65,7 +65,7 @@ export default function Paginacao({
         aria-label="Ir para a página anterior"
         disabled={paginaAtual === 1}
         onClick={() => onChange(paginaAtual - 1)}
-        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:text-slate-300 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-300"
       >
         ‹
       </button>
@@ -78,7 +78,7 @@ export default function Paginacao({
             <span
               key={`ellipsis-${index}`}
               aria-hidden="true"
-              className="flex size-8 sm:size-9 items-center justify-center text-xs sm:text-sm text-slate-400">
+              className="flex size-8 sm:size-9 items-center justify-center text-xs sm:text-sm text-slate-400 dark:text-slate-500">
               ...
             </span>
           );
@@ -91,9 +91,9 @@ export default function Paginacao({
             aria-label={`Ir para a página ${item}`}
             aria-current={item === paginaAtual ? "page" : undefined}
             onClick={() => onChange(item)}
-            className={`cursor-pointer size-8 sm:size-9 rounded-lg text-xs sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] ${item === paginaAtual
+            className={`cursor-pointer size-8 sm:size-9 rounded-lg text-xs sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:focus-visible:outline-blue-300 ${item === paginaAtual
               ? "bg-blue-600 text-white"
-              : "text-slate-600 hover:bg-slate-100"
+              : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700"
               }`}>
             {item}
           </button>
@@ -105,7 +105,7 @@ export default function Paginacao({
         aria-label="Ir para a próxima página"
         disabled={paginaAtual === totalPaginas}
         onClick={() => onChange(paginaAtual + 1)}
-        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+        className="cursor-pointer flex size-8 sm:size-9 items-center justify-center rounded-lg text-xs sm:text-sm text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:text-slate-300 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-300"
       >
         ›
       </button>

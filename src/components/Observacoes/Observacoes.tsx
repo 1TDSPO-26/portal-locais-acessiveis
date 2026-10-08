@@ -6,7 +6,7 @@ interface ObservacoesProps {
 export default function Observacoes({ value, onChange }: ObservacoesProps){
     return(
         <div className="flex flex-col gap-2 mt-8">
-            <label htmlFor="observacoes" className="text-sm font-semibold text-slate-800">
+            <label htmlFor="observacoes" className="text-sm font-semibold text-slate-800 dark:text-slate-200">
                 Observações
             </label>
             <textarea
