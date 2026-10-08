@@ -58,7 +58,6 @@ export default function Locais() {
     setBusca(valor);
     setPaginaAtual(1);
   };
-
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
     setPaginaAtual(1);
