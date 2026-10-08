@@ -1,22 +1,19 @@
-import { StrictMode, lazy, Suspense } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import './global.css';
 import App from './App.tsx';
 
-// Carrega cada página somente quando ela precisar aparecer
-const Home = lazy(() => import('./routes/Home/index.tsx'));
-const Locais = lazy(() => import('./routes/Locais/index.tsx'));
-const Cadastro = lazy(() => import('./routes/Cadastro/index.tsx'));
-const Sobre = lazy(() => import('./routes/Sobre/index.tsx'));
-const NotFound = lazy(() => import('./routes/NotFound/index.tsx'));
-const Acessibilidade = lazy(
-  () => import('./routes/Acessibilidade/index.tsx')
-);
-const LocalDetalhe = lazy(
-  () => import('./routes/LocalDetalhe/index.tsx')
-);
+import {
+  Home,
+  Locais,
+  Cadastro,
+  Sobre,
+  NotFound,
+  Acessibilidade,
+  LocalDetalhe,
+} from './routes/LazyPages';
 
 const router = createBrowserRouter([
   {
