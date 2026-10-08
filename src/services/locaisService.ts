@@ -36,7 +36,7 @@ export async function buscarLocais(): Promise<ResultadoLocais> {
     const resp = await fetch(`${API_URL}/locais`);
     if (!resp.ok) throw new Error("Erro ao buscar locais");
 
-    const locais: Local[] = await resp.json();
+    const locais: Local[] = await resp.json() as Local[];
     localStorage.setItem(CHAVE_CACHE, JSON.stringify(locais));
     return { locais, origem: "api" };
   } catch (erro) {
