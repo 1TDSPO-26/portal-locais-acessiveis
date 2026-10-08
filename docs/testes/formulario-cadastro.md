@@ -98,7 +98,7 @@ Pasta local:
 | @arthurmartinss | Renderização inicial do formulário | A preencher |
 | @arthurmartinss | Rótulos e acessibilidade | A preencher |
 | @MuriloSCruzz | Formulário não permite deixar os campos obrigatórios vazios e mostra mensagem de erro de validação |
-| @MuriloSCruzz | Espaços e dados incompletos | A preencher |
+| @MuriloSCruzz | Formulário não permite preencher o input com espaços |
 | @otomendes | Abertura e cancelamento do modal | 36d0301 |
 | @otomendes | Confirmação e mensagem de sucesso | Commit que adiciona o teste CAD-T06 e atualiza este documento |
 
