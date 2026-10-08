@@ -6,7 +6,7 @@ Issue #84 — Criar testes do formulário de cadastro.
 
 ## Objetivo
 
-Automatizar os principais comportamentos do formulário de cadastro utilizando as ferramentas de teste já configuradas no projeto.
+Criar testes que verificam se o formulário de cadastro funciona como esperado.
 
 ## Ferramentas utilizadas
 
@@ -16,32 +16,46 @@ Automatizar os principais comportamentos do formulário de cadastro utilizando a
 - jest-dom
 - jsdom
 
+## Como usamos o Vitest
+
+O Vitest roda os testes. Eles preenchem o formulário, clicam nos botões e verificam o resultado. Assim, podemos conferir se uma mudança no código afetou o cadastro.
+
+Usamos a React Testing Library para encontrar os campos e botões, o user-event para simular as ações e o jest-dom para conferir o resultado. O jsdom simula o navegador durante os testes.
+
+Para executar somente os testes do Cadastro:
+
+```bash
+npm test -- Cadastro
+```
+
+Esse comando roda os testes de Cadastro. Os dois testes do Oto (CAD-T05 e CAD-T06) passaram em 07/10/2026.
+
 ## Arquivo principal dos testes
 
 `src/routes/Cadastro/Cadastro.test.tsx`
 
 ## Divisão das atividades
 
-| Responsável | Escopo |
+| Responsável | O que vai testar |
 | --- | --- |
-| @arthurmartinss | Renderização inicial, rótulos e acessibilidade dos campos |
-| @MuriloSCruzz | Campos obrigatórios, espaços e preenchimento incompleto |
-| @otomendes | Modal de confirmação, cancelamento, confirmação e mensagem de sucesso |
+| @arthurmartinss | Título, campos, botão e nomes dos campos para leitores de tela |
+| @MuriloSCruzz | Campos vazios, preenchidos só com espaços ou incompletos |
+| @otomendes | Cancelar e confirmar no modal de confirmação |
 
 ## Cenários planejados
 
 | ID | Cenário | Responsável | Situação |
 | --- | --- | --- | --- |
-| CAD-T01 | Renderizar título, campos e botão do formulário | @arthurmartinss | Pendente |
-| CAD-T02 | Verificar rótulos e nomes acessíveis dos campos | @arthurmartinss | Pendente |
-| CAD-T03 | Exibir erros ao enviar os campos obrigatórios vazios | @MuriloSCruzz | Pendente |
-| CAD-T04 | Rejeitar espaços e identificar preenchimento incompleto | @MuriloSCruzz | Pendente |
-| CAD-T05 | Abrir o modal e cancelar mantendo os dados | @otomendes | Pendente |
-| CAD-T06 | Confirmar o envio, limpar os campos e exibir o toast | @otomendes | Pendente |
+| CAD-T01 | Conferir se o título, os campos e o botão aparecem | @arthurmartinss | Passou |
+| CAD-T02 | Conferir os rótulos e os nomes dos campos para leitores de tela | @arthurmartinss | Passou |
+| CAD-T03 | Conferir os erros ao tentar enviar campos obrigatórios vazios | @MuriloSCruzz | Pendente |
+| CAD-T04 | Conferir se campos só com espaços ou incompletos são rejeitados | @MuriloSCruzz | Pendente |
+| CAD-T05 | Cancelar fecha o modal e mantém os dados preenchidos | @otomendes | Passou |
+| CAD-T06 | Confirmar limpa o formulário e mostra a mensagem de sucesso | @otomendes | Passou |
 
 ## Estratégia de commits
 
-Cada integrante realizará pelo menos dois commits autorais e relevantes.
+Cada integrante deve salvar seu trabalho em pelo menos dois commits, cada um com uma parte dos testes.
 
 | Responsável | Primeiro commit | Segundo commit |
 | --- | --- | --- |
@@ -49,7 +63,7 @@ Cada integrante realizará pelo menos dois commits autorais e relevantes.
 | @MuriloSCruzz | Campos obrigatórios | Espaços e dados incompletos |
 | @otomendes | Abertura e cancelamento do modal | Confirmação e mensagem de sucesso |
 
-Os identificadores dos commits serão registrados após a conclusão de cada etapa.
+Vamos preencher a tabela de commits depois de salvar cada parte.
 
 ## Como executar
 
@@ -61,17 +75,17 @@ npm run build
 
 ## Resultados da execução
 
-Os resultados serão preenchidos conforme cada grupo de testes for implementado.
+A tabela mostra o que já foi verificado.
 
 | Verificação | Resultado |
 | --- | --- |
-| Testes automatizados | Pendente |
-| Lint | Pendente |
-| Build | Pendente |
+| Testes automatizados | Os 7 testes de Cadastro passaram: 5 do Arthur e 2 do Oto. Os testes do Murilo ainda estão pendentes. |
+| Lint | Passou: 0 erros e 0 avisos em 07/10/2026 |
+| Build | Passou em 07/10/2026 |
 
 ## Evidências
 
-As evidências serão armazenadas fora do repositório e anexadas à Pull Request.
+As capturas serão enviadas pelo Teams ao Arthur, que vai anexá-las ao PR.
 
 Pasta local:
 
@@ -85,9 +99,16 @@ Pasta local:
 | @arthurmartinss | Rótulos e acessibilidade | A preencher |
 | @MuriloSCruzz | Formulário não permite deixar os campos obrigatórios vazios e mostra mensagem de erro de validação |
 | @MuriloSCruzz | Espaços e dados incompletos | A preencher |
-| @otomendes | Abertura e cancelamento do modal | A preencher |
-| @otomendes | Confirmação e mensagem de sucesso | A preencher |
+| @otomendes | Abertura e cancelamento do modal | 36d0301 |
+| @otomendes | Confirmação e mensagem de sucesso | Commit que adiciona o teste CAD-T06 e atualiza este documento |
 
 ## Resultado final
 
-A preencher depois da execução completa dos testes, do lint e do build.
+Oto - Minha parte passou. Abaixo deixo um relatório.
+
+## Resultados de Oto (@otomendes) — 07/10/2026
+
+- Preenchemos o formulário e abrimos o modal. Ao clicar em Cancelar, o modal fecha e os dados continuam preenchidos. Nada é enviado e nenhuma mensagem de sucesso aparece. Também conseguimos abrir o modal de novo.
+- Ao clicar em Confirmar, o modal fecha, o formulário fica vazio e a mensagem de sucesso aparece. Também verificamos se o botão de fechar remove essa mensagem.
+- O envio ainda é simulado: os dados aparecem no console. O teste confere isso, mas não comprova que foram salvos em um servidor.
+- No terminal do VS Code, rodamos os testes de Cadastro, o lint e o build. Todos passaram.

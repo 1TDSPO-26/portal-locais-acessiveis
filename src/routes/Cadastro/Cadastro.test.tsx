@@ -135,4 +135,25 @@ describe('Cadastro: cancelar e confirmar', () => {
     expect(screen.getByRole('button', { name: 'Confirmar' })).toBeInTheDocument()
   })
 
+  it('CAD-T06: Confirmar limpa o formulário e mostra a mensagem de sucesso', async () => {
+    const user = userEvent.setup()
+    const envio = vi.spyOn(console, 'log').mockImplementation(() => {})
+    render(<Cadastro />)
+    await preencherCadastro(user)
+    await user.click(screen.getByRole('button', { name: 'Enviar informações' }))
+    await user.click(screen.getByRole('button', { name: 'Confirmar' }))
+    expect(envio).toHaveBeenCalledTimes(1)
+    expect(envio).toHaveBeenCalledWith('Dados enviados:', {
+      nome: 'Biblioteca do bairro', tipo: 'outro',
+      endereco: 'Rua das Flores, 10, São Paulo, SP',
+      recursos: ['banheiro', 'rampa'], observacoes: 'Entrada pela rua lateral',
+    })
+    expect(screen.queryByRole('button', { name: 'Confirmar' })).not.toBeInTheDocument()
+    for (const campo of screen.getAllByRole('textbox')) expect(campo).toHaveValue('')
+    expect(screen.getByRole('combobox', { name: 'Tipo de local' })).toHaveValue('')
+    for (const recurso of screen.getAllByRole('checkbox')) expect(recurso).not.toBeChecked()
+    expect(screen.getByRole('status')).toHaveTextContent('Informações enviadas com sucesso!')
+    await user.click(screen.getByRole('button', { name: 'Fechar mensagem' }))
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  })
 })
