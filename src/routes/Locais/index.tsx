@@ -6,7 +6,6 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
-import { locaisMock } from "../../types/locais";
 import { useLocais } from "../../hooks/useLocais";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
