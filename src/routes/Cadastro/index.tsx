@@ -5,6 +5,7 @@ import Observacoes from "../../components/Observacoes/Observacoes"
 import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
 import Button from "../../components/Button/Button";
 import Toast from "../../components/Toast/Toast"
+import { cadastrarLocal } from "../../services/locaisService"
 
 export default function Cadastro() {
 
@@ -52,17 +53,27 @@ export default function Cadastro() {
         }
     }
 
-    function confirmarEnvio() {
-        console.log("Dados enviados:", { nome, tipo, endereco, recursos, observacoes })
+    async function confirmarEnvio() {
+        try {
+            await cadastrarLocal({
+                nome,
+                categoria: tipo,
+                endereco,
+                descricao: observacoes,
+                recursos
+            })
 
-        setNome("")
-        setEndereco("")
-        setTipo("")
-        setRecursos([])
-        setObservacoes("")
+            setNome("")
+            setEndereco("")
+            setTipo("")
+            setRecursos([])
+            setObservacoes("")
 
-        setModalAberto(false)
-        setToastAberto(true)
+            setModalAberto(false)
+            setToastAberto(true)
+        } catch (erro) {
+            console.error("Erro ao cadastrar local:", erro)
+        }
     }
 
     function cancelarEnvio() {

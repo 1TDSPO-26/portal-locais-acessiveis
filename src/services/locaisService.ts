@@ -29,6 +29,14 @@ export interface ResultadoLocais {
   origem: "api" | "cache" | "local";
 }
 
+export interface NovoLocal {
+  nome: string;
+  categoria: string;
+  endereco: string;
+  descricao: string;
+  recursos: string[];
+}
+
 export async function buscarLocais(): Promise<ResultadoLocais> {
   try {
     if (!API_URL) throw new Error("API não configurada");
@@ -40,7 +48,6 @@ export async function buscarLocais(): Promise<ResultadoLocais> {
     localStorage.setItem(CHAVE_CACHE, JSON.stringify(locais));
     return { locais, origem: "api" };
   } catch (erro) {
-    // 🔍 Isto vai mostrar o erro real no F12 do navegador!
     console.error("❌ O FETCH DA API FALHOU POR ESTE MOTIVO:", erro);
 
     try {
@@ -49,6 +56,27 @@ export async function buscarLocais(): Promise<ResultadoLocais> {
     } catch {
       // cache indisponível
     }
+
     return { locais: locaisMock, origem: "local" };
   }
+}
+
+export async function cadastrarLocal(novoLocal: NovoLocal): Promise<Local> {
+  if (!API_URL) {
+    throw new Error("API não configurada");
+  }
+
+  const resp = await fetch(`${API_URL}/locais`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(novoLocal),
+  });
+
+  if (!resp.ok) {
+    throw new Error("Erro ao cadastrar local");
+  }
+
+  return resp.json();
 }
