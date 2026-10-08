@@ -1,17 +1,26 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Encontre locais e serviços com informações sobre recursos de acessibilidade para planejar suas visitas."
-    />
-    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
-    <title>INÍCIO | ACESSO+</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Encontre locais e serviços com informações sobre recursos de acessibilidade para planejar suas visitas." />
+  <script>
+    (function () {
+      var salvo = localStorage.getItem('portalLocaisTema');
+      var escuro = salvo ? salvo === 'escuro'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (escuro) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
+  <title>INÍCIO | ACESSO+</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
