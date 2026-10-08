@@ -21,7 +21,7 @@ export async function listarLocais(signal?: AbortSignal): Promise<Local[]> {
 
 }
 
-const API_URL = import.meta.env.VITE_API_URL as string | undefined;
+const API_URL = typeof import.meta.env !== 'undefined' ? import.meta.env.VITE_API_URL : undefined;
 const CHAVE_CACHE = "locais_cache";
 
 export interface ResultadoLocais {
