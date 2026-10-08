@@ -1,4 +1,5 @@
-
+// Converte os dados do formulário de cadastro em uma linha da planilha.
+// Colunas da aba "Locais": Data | Nome | Tipo | Endereço | Recursos | Observações
 export interface DadosCadastro {
   nome: string;
   tipo: string;
@@ -7,6 +8,7 @@ export interface DadosCadastro {
   observacoes: string;
 }
 
+// Textos legíveis para os valores usados no SeletorTipoLocal e nos Checkboxes.
 const TIPOS: Record<string, string> = {
   restaurante: "Restaurante",
   hospital: "Hospital",
