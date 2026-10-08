@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './global.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import EditarLocal from './routes/EditarLocal/index.tsx';
 
 // Import das rotas
 import Home from './routes/Home/index.tsx';
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
     path: "/", element: <App />, children: [
       { path: "/", element: <Home /> },
       { path: "/locais", element: <Locais /> },
-      { path: "/locais/:id", element: <LocalDetalhe/>},
+      { path: "/locais/:id", element: <LocalDetalhe /> },
+      { path: "/locais/:id/editar", element: <EditarLocal /> },
       { path: "/cadastrar", element: <Cadastro /> },
       { path: "/sobre", element: <Sobre /> },
       { path: "/acessibilidade", element: <Acessibilidade /> },

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import Button from "../../components/Button/Button";
 import heroHome from "../../assets/images/hero-home.png";
 import LocalCard from "../../components/LocalCard/LocalCard";
-import { locaisMock } from "../../types/locais";
+import { obterLocais } from "../../storage/localStorage";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -126,7 +126,7 @@ export default function Home() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {locaisMock.slice(0, 6).map((local) => (
+            {obterLocais().slice(0, 6).map((local) => (
               <div
                 key={local.id}
                 className="[&>article]:!flex-col [&>article>div:first-child]:!h-[130px] [&>article>div:first-child]:!w-full"

@@ -6,6 +6,7 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
+import { obterLocais } from "../../storage/localStorage";
 import { useLocais } from "../../hooks/useLocais";
 
 const ITENS_POR_PAGINA = 4;
@@ -22,7 +23,7 @@ export default function Locais() {
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   const locaisFiltrados = useMemo(() => {
-    return locais.filter((local) => {
+    return obterLocais().filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -57,7 +58,6 @@ export default function Locais() {
     setBusca(valor);
     setPaginaAtual(1);
   };
-
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
     setPaginaAtual(1);
