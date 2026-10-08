@@ -27,6 +27,11 @@ export function useModalFocus<T extends HTMLElement>({
         if (!container) return;
 
         const trigger = document.activeElement as HTMLElement | null;
+
+        // Bloqueia o scroll do fundo enquanto o modal estiver aberto
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
         const getItems = () =>
             Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE));
 
@@ -62,6 +67,7 @@ export function useModalFocus<T extends HTMLElement>({
         document.addEventListener("keydown", onKeyDown);
         return () => {
             document.removeEventListener("keydown", onKeyDown);
+            document.body.style.overflow = prevOverflow;
             if (trigger && document.contains(trigger)) trigger.focus();
         };
     }, [isOpen, initialFocusRef]);
