@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom/vitest'
+import { useState } from 'react'
 import { afterEach, describe, it, expect, vi } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -15,6 +16,18 @@ function renderModal(props = {}) {
     <ModalConfirmacao isOpen={true} onClose={onClose} onConfirm={onConfirm} {...props} />
   )
   return { onClose, onConfirm, ...utils }
+}
+
+function ComGatilho() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)}>
+        Abrir modal
+      </button>
+      <ModalConfirmacao isOpen={open} onClose={() => setOpen(false)} onConfirm={() => { }} />
+    </>
+  )
 }
 
 describe('ModalConfirmacao', () => {
@@ -71,7 +84,7 @@ describe('ModalConfirmacao', () => {
     const user = userEvent.setup()
     const { onConfirm, onClose } = renderModal()
 
-    await user.tab()
+    // o foco já nasce em Cancelar, pois o modal move o foco ao abrir
     expect(screen.getByRole('button', { name: 'Cancelar' })).toHaveFocus()
     await user.keyboard('{Enter}')
     expect(onClose).toHaveBeenCalledTimes(1)
@@ -97,5 +110,51 @@ describe('ModalConfirmacao', () => {
 
     rerender(<ModalConfirmacao isOpen={false} onClose={vi.fn()} onConfirm={vi.fn()} />)
     expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+  })
+
+  // ---- gerenciamento de foco e acessibilidade (issue #77) ----
+
+  it('expõe role="dialog" com aria-modal e nome acessível', () => {
+    renderModal()
+    const dialog = screen.getByRole('dialog', { name: 'Confirmar Envio' })
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
+  })
+
+  it('move o foco para dentro do modal ao abrir', () => {
+    renderModal()
+    expect(screen.getByRole('dialog')).toContainElement(document.activeElement as HTMLElement)
+  })
+
+  it('mantém o foco preso no modal com Tab e Shift+Tab', async () => {
+    const user = userEvent.setup()
+    renderModal()
+    const cancelar = screen.getByRole('button', { name: 'Cancelar' })
+    const confirmar = screen.getByRole('button', { name: 'Confirmar' })
+
+    expect(cancelar).toHaveFocus()
+    await user.tab({ shift: true })
+    expect(confirmar).toHaveFocus()
+    await user.tab()
+    expect(cancelar).toHaveFocus()
+  })
+
+  it('chama onClose ao pressionar Esc', async () => {
+    const user = userEvent.setup()
+    const { onClose } = renderModal()
+    await user.keyboard('{Escape}')
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('devolve o foco ao botão que abriu o modal ao fechar', async () => {
+    const user = userEvent.setup()
+    render(<ComGatilho />)
+    const gatilho = screen.getByRole('button', { name: 'Abrir modal' })
+
+    await user.click(gatilho)
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(gatilho).toHaveFocus()
   })
 })
