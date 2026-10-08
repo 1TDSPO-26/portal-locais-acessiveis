@@ -83,7 +83,7 @@ Pasta local:
 | --- | --- | --- |
 | @arthurmartinss | Renderização inicial do formulário | A preencher |
 | @arthurmartinss | Rótulos e acessibilidade | A preencher |
-| @MuriloSCruzz | Campos obrigatórios | A preencher |
+| @MuriloSCruzz | Formulário não permite deixar os campos obrigatórios vazios e mostra mensagem de erro de validação |
 | @MuriloSCruzz | Espaços e dados incompletos | A preencher |
 | @otomendes | Abertura e cancelamento do modal | A preencher |
 | @otomendes | Confirmação e mensagem de sucesso | A preencher |
