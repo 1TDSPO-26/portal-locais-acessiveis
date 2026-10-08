@@ -30,13 +30,43 @@ export default function Cadastro() {
         }
     }
 
-    function validar(): Record<string, string> {
+    function normalizar() {
+        return {
+            nome: nome.trim(),
+            tipo: tipo.trim(),
+            endereco: endereco.trim(),
+            recursos: [...new Set(
+                recursos
+                    .map((recurso) => recurso.trim())
+                    .filter(Boolean))],
+            observacoes: observacoes.trim(),
+        }
+    }
+
+    function validar(dados: ReturnType<typeof normalizar>): Record<string, string> {
         const novosErros: Record<string, string> = {}
 
-        if (!nome.trim()) novosErros.nome = "Informe o nome do local"
-        if (!tipo) novosErros.tipo = "Selecione o tipo de local"
-        if (!endereco.trim()) novosErros.endereco = "Informe o endereço"
-        if (recursos.length === 0) novosErros.recursos = "Marque pelo menos um recurso"
+        const tiposValidos = [
+            "restaurante",
+            "hospital",
+            "escola",
+            "Outro",
+        ]
+
+        const recursosValidos = [
+            "rampa",
+            "banheiro",
+            "circulacao",
+            "vaga",
+            "elevador",
+        ]
+
+        if (!dados.nome) novosErros.nome = "Informe o nome do local"
+        if (!tiposValidos.includes(dados.tipo)) novosErros.tipo = "Selecione o tipo de local"
+        if (!dados.endereco) novosErros.endereco = "Informe o endereço"
+        if (dados.recursos.length === 0) {
+            novosErros.recursos = "Marque pelo menos um recurso"
+        } else if (dados.recursos.some((recurso) => !recursosValidos.includes(recurso))) novosErros.recursos = "Selecione apenas recursos válidos"
 
         return novosErros
     }
@@ -44,10 +74,17 @@ export default function Cadastro() {
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
 
-        const novosErros = validar()
+        const dados = normalizar()
+
+        const novosErros = validar(dados)
         setErros(novosErros)
 
         if (Object.keys(novosErros).length === 0) {
+            setNome(dados.nome)
+            setTipo(dados.tipo)
+            setEndereco(dados.endereco)
+            setRecursos(dados.recursos)
+            setObservacoes(dados.observacoes)
             setModalAberto(true)
         }
     }
