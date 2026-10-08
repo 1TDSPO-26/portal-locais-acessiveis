@@ -4,12 +4,18 @@ import type { Local } from "../../types/locais";
 
 import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
+import { useFavoritos } from "../../hooks/useFavoritos";
+
 interface LocalCardProps {
   local: Local;
   onExcluir?: () => void;
 }
 
 export default function LocalCard({ local, onExcluir }: LocalCardProps) {
+
+  const { alternarFavorito, ehFavorito } = useFavoritos();
+  const favoritado = ehFavorito(local.id);
+
   const recursosDisponiveis = local.recursos.filter(
     (recurso) => recurso.status === "disponivel"
   );
@@ -57,7 +63,7 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
           </NavLink>
         </div>
 
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex flex-col items-end justify-between h-full min-h-[85px] shrink-0">
           <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-600">
             {local.categoria}
           </span>
