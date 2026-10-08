@@ -21,7 +21,6 @@ export default function Locais() {
     document.title = "LOCAIS | ACESSO+";
   }, []);
 
-  const [locais, setLocais] = useState(locaisMock);
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
