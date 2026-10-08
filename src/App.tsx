@@ -1,10 +1,13 @@
-import { MainLayout } from "./layouts/MainLayout/MainLayout";
+import { Suspense } from "react";
 import { Outlet } from "react-router";
+import { MainLayout } from "./layouts/MainLayout/MainLayout";
 
 export default function App() {
   return (
     <MainLayout>
-      <Outlet />
+      <Suspense fallback={<p>Carregando página...</p>}>
+        <Outlet />
+      </Suspense>
     </MainLayout>
   );
 }
