@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom/vitest'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import Cadastro from './index'
 import userEvent from '@testing-library/user-event'
 
 afterEach(() => {
   cleanup()
+  vi.restoreAllMocks()
 })
 
 describe('Cadastro - renderização inicial', () => {
@@ -93,4 +94,45 @@ describe('Cadastro - renderização inicial', () => {
 
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
+})
+
+async function preencherCadastro(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByRole('textbox', { name: 'Nome do local' }), 'Biblioteca do bairro')
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Tipo de local' }), 'outro')
+  await user.type(screen.getByRole('textbox', { name: 'Endereço' }), 'Rua das Flores, 10, São Paulo, SP')
+  await user.click(screen.getByRole('checkbox', { name: 'Banheiro acessível' }))
+  await user.click(screen.getByRole('checkbox', { name: 'Entrada com rampa ou acesso em nível' }))
+  await user.type(screen.getByRole('textbox', { name: 'Observações' }), 'Entrada pela rua lateral')
+}
+
+function verificarDadosPreenchidos() {
+  expect(screen.getByRole('textbox', { name: 'Nome do local' })).toHaveValue('Biblioteca do bairro')
+  expect(screen.getByRole('combobox', { name: 'Tipo de local' })).toHaveValue('outro')
+  expect(screen.getByRole('textbox', { name: 'Endereço' })).toHaveValue('Rua das Flores, 10, São Paulo, SP')
+  expect(screen.getByRole('textbox', { name: 'Observações' })).toHaveValue('Entrada pela rua lateral')
+  expect(screen.getByRole('checkbox', { name: 'Banheiro acessível' })).toBeChecked()
+  expect(screen.getByRole('checkbox', { name: 'Entrada com rampa ou acesso em nível' })).toBeChecked()
+  expect(screen.getByRole('checkbox', { name: 'Vaga reservada' })).not.toBeChecked()
+}
+
+describe('Cadastro: cancelar e confirmar', () => {
+  it('CAD-T05: Cancelar fecha o modal e mantém os dados preenchidos', async () => {
+    const user = userEvent.setup()
+    const envio = vi.spyOn(console, 'log').mockImplementation(() => {})
+    render(<Cadastro />)
+    expect(screen.queryByRole('button', { name: 'Confirmar' })).not.toBeInTheDocument()
+    await preencherCadastro(user)
+    await user.click(screen.getByRole('button', { name: 'Enviar informações' }))
+    expect(screen.getByRole('heading', { name: 'Confirmar envio das informações?' })).toBeInTheDocument()
+    expect(screen.getByText('Revise os dados antes de continuar. Após a confirmação, as informações do local serão enviadas.')).toBeInTheDocument()
+    expect(envio).not.toHaveBeenCalled()
+    await user.click(screen.getByRole('button', { name: 'Cancelar' }))
+    expect(screen.queryByRole('button', { name: 'Confirmar' })).not.toBeInTheDocument()
+    verificarDadosPreenchidos()
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(envio).not.toHaveBeenCalled()
+    await user.click(screen.getByRole('button', { name: 'Enviar informações' }))
+    expect(screen.getByRole('button', { name: 'Confirmar' })).toBeInTheDocument()
+  })
+
 })
