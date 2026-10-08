@@ -5,13 +5,27 @@ import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
+import LoadingState from "../../components/LoadingState/LoadingState";
+import EmptyState from "../../components/EmptyState/EmptyState";
+import ErrorState from "../../components/ErrorState/ErrorState";
 
 import { useLocais } from "../../hooks/useLocais";
 
 const ITENS_POR_PAGINA = 4;
 
+
 export default function Locais() {
   const { locais, offline, carregando } = useLocais();
+  const [erro, setErro] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = "LOCAIS | ACESSO+";
+    if (!carregando && (!locais || locais.length === 0) && offline) {
+      setErro("Sem conexão com a internet ou servidor indisponível.");
+    } else {
+      setErro(null);
+    }
+  }, [carregando, locais, offline]);
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -63,6 +77,12 @@ export default function Locais() {
     setPaginaAtual(1);
   };
 
+  const limparBuscaEFiltros = () => {
+    setBusca("");
+    setFiltros([]);
+    setPaginaAtual(1);
+  };
+
   return (
     <main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
       <div className="mb-6 sm:mb-5">
@@ -105,15 +125,18 @@ export default function Locais() {
           : "locais encontrados"}
       </p>
 
+      {/* RENDERIZAÇÃO DOS ESTADOS (Substituiu o bloco antigo) */}
       {carregando ? (
-        <p className="text-start text-sm text-slate-500">Carregando locais...</p>
+        <LoadingState />
+      ) : erro ? (
+        <ErrorState mensagem="Não foi possível carregar os locais acessíveis." />
       ) : locaisDaPagina.length ? (
         <div className="w-full overflow-hidden">
           {locaisDaPagina.map((local, index) => (
             <div
               key={local.id}
               className={`my-3 ${
-                index !== locaisDaPagina.length - 1
+                index !== locaisDaPagina.length - 1 ? "border-b border-slate-100 pb-3" : ""
               }`}
             >
               <LocalCard local={local} />
@@ -121,18 +144,13 @@ export default function Locais() {
           ))}
         </div>
       ) : (
-        <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Nenhum local encontrado
-          </h2>
-
-          <p className="mt-2 text-sm text-slate-500">
-            Tente alterar sua busca ou remover algum filtro.
-          </p>
-        </div>
+        <EmptyState
+          mensagem="Nenhum local encontrado para esta pesquisa ou filtro."
+          onLimparFiltros={limparBuscaEFiltros}
+        />
       )}
 
-      {totalPaginas > 1 && (
+      {!carregando && !erro && totalPaginas > 1 && (
         <div className="mt-6">
           <Paginacao
             paginaAtual={paginaAtual}
@@ -143,4 +161,6 @@ export default function Locais() {
       )}
     </main>
   );
+
+ 
 }
