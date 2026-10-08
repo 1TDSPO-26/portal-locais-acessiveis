@@ -1,17 +1,18 @@
 import { Suspense } from "react";
 import type { RouteObject } from "react-router";
 import App from "../App";
-
+import CarregamentoPagina from "../components/CarregamentoPagina/CarregamentoPagina";
+ 
 import {
-    Home,
-    Locais,
-    LocalDetalhe,
-    Cadastro,
-    Sobre,
-    Acessibilidade,
-    NotFound,
+  Home,
+  Locais,
+  LocalDetalhe,
+  Cadastro,
+  Sobre,
+  Acessibilidade,
+  NotFound,
 } from "./paginas";
-
+ 
 export const rotas: RouteObject[] = [
   {
     path: "/",
@@ -28,9 +29,9 @@ export const rotas: RouteObject[] = [
   {
     path: "*",
     element: (
-      <Suspense fallback={<p>Carregando página...</p>}>
-        <NotFound />
-      </Suspense>
+<Suspense fallback={<CarregamentoPagina />}>
+<NotFound />
+</Suspense>
     ),
   },
 ];
