@@ -24,6 +24,7 @@ export default function CampoBusca({
 
       <input
         type="text"
+        aria-label="Buscar por local ou endereço"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Buscar por local ou endereço..."
