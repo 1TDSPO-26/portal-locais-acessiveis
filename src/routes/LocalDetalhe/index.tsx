@@ -105,9 +105,9 @@ export default function LocalDetalhe() {
     <main className="mx-auto max-w-5xl px-4 py-8">
       <nav
         aria-label="Navegação estrutural"
-        className="mb-6 text-sm text-gray-600"
+        className="mb-6"
       >
-        <ol className="flex flex-wrap items-center gap-2">
+        <ol className="flex flex-wrap items-center gap-2 text-sm">
           <li>
             <Link
               to="/"
@@ -118,7 +118,7 @@ export default function LocalDetalhe() {
           </li>
 
           <li aria-hidden="true" className="text-gray-400">
-            /
+            <span>/</span>
           </li>
 
           <li>
@@ -131,14 +131,16 @@ export default function LocalDetalhe() {
           </li>
 
           <li aria-hidden="true" className="text-gray-400">
-            /
+            <span>/</span>
           </li>
 
           <li
             aria-current="page"
-            className="font-medium text-gray-900"
+            className="min-w-0 font-medium text-gray-900"
           >
-            {local.nome}
+            <span className="block max-w-[250px] truncate sm:max-w-none">
+              {local.nome}
+            </span>
           </li>
         </ol>
       </nav>
