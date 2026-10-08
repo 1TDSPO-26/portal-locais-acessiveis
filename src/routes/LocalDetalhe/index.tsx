@@ -155,13 +155,18 @@ export default function LocalDetalhe() {
         <button
           type="button"
           onClick={compartilharLocal}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          aria-label={`Compartilhar o local ${local.nome}`}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
         >
           Compartilhar
         </button>
 
         {mensagemCompartilhamento && (
-          <span className="text-sm text-green-600" role="status">
+          <span
+            className="text-sm text-green-600"
+            role="status"
+            aria-live="polite"
+          >
             {mensagemCompartilhamento}
           </span>
         )}
