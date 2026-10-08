@@ -15,7 +15,7 @@ const projetoItems = [
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col gap-8 bg-ink px-14 py-9 text-white md:flex-row md:items-start md:justify-between">
+    <footer className="flex flex-col gap-10 bg-ink px-16 py-9 text-white md:flex-row md:items-start md:justify-between">
       <div className="flex max-w-88.75 flex-col gap-3">
         <div className="flex items-center gap-2 text-xl leading-7">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface text-sm font-bold text-primary">
@@ -23,7 +23,7 @@ export default function Footer() {
           </span>
           ACESSO+
         </div>
-        <p className="text-left text-sm leading-5 opacity-75">
+        <p className="text-left text-sm leading-5 opacity-80">
           Informação para planejar visitas com mais autonomia.
         </p>
       </div>
