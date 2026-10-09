@@ -41,7 +41,6 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
     );
   }
 
-  // naoSeAplica
   return (
     <svg viewBox="0 0 20 20" fill="none" className={`h-5 w-5 shrink-0 ${cor}`} aria-hidden="true">
       <line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -50,7 +49,6 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 }
 
 export default function LocalDetalhe() {
-
   const { id } = useParams<{ id: string }>();
   const [mensagemCompartilhamento, setMensagemCompartilhamento] = useState("");
 
@@ -62,34 +60,37 @@ export default function LocalDetalhe() {
       : "Local não encontrado | ACESSO+";
   }, [local]);
 
+  const compartilharLocal = async () => {
+    const caminhoLocal = `/local/${id}`;
+    const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
 
-const compartilharLocal = async () => {
-  const caminhoLocal = `/local/${id}`;
-  const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
-
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: local?.nome,
-        text: "Confira este local acessível",
-        url: urlParaCopiar,
-      });
-    } else {
-      await navigator.clipboard.writeText(urlParaCopiar);
-      setMensagemCompartilhamento("Link copiado!");
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: local?.nome,
+          text: "Confira este local acessível",
+          url: urlParaCopiar,
+        });
+      } else {
+        await navigator.clipboard.writeText(urlParaCopiar);
+        setMensagemCompartilhamento("Link copiado!");
+      }
+    } catch (error) {
+      console.error("Erro ao compartilhar o local:", error);
     }
-  } catch (error) {
-    console.error("Erro ao compartilhar o local:", error);
-  }
-};
+  };
 
   if (!local) {
     return (
       <main className="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="text-xl font-semibold text-gray-900">Local não encontrado</h1>
+        <h1 className="text-xl font-semibold text-gray-900">
+          Local não encontrado
+        </h1>
+
         <p className="mt-2 text-sm text-gray-500">
           O local que você está procurando não existe ou foi removido.
         </p>
+
         <Link
           to="/locais"
           className="mt-6 inline-block rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
@@ -99,31 +100,77 @@ const compartilharLocal = async () => {
       </main>
     );
   }
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
-      <Link to="/locais" className="mb-4 inline-block text-sm text-blue-600 hover:underline">
-        ← Voltar para locais
-      </Link>
+      <nav
+        aria-label="Navegação estrutural"
+        className="mb-6"
+      >
+        <ol className="flex flex-wrap items-center gap-2 text-sm">
+          <li>
+            <Link
+              to="/"
+              className="rounded-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            >
+              Início
+            </Link>
+          </li>
+
+          <li aria-hidden="true" className="text-gray-400">
+            <span>/</span>
+          </li>
+
+          <li>
+            <Link
+              to="/locais"
+              className="rounded-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            >
+              Locais
+            </Link>
+          </li>
+
+          <li aria-hidden="true" className="text-gray-400">
+            <span>/</span>
+          </li>
+
+          <li
+            aria-current="page"
+            className="min-w-0 font-medium text-gray-900"
+          >
+            <span className="block max-w-[250px] truncate sm:max-w-none">
+              {local.nome}
+            </span>
+          </li>
+        </ol>
+      </nav>
 
       <header className="mb-1 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{local.nome}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+          {local.nome}
+        </h1>
+
         <BadgeAcessibilidade texto={local.categoria} />
 
-      
-      <button
-        type="button"
-        onClick={compartilharLocal}
-        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-    >
-      Compartilhar
-      </button>
+        <button
+          type="button"
+          onClick={compartilharLocal}
+          aria-label={`Compartilhar o local ${local.nome}`}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+        >
+          Compartilhar
+        </button>
 
-      {mensagemCompartilhamento && (
-        <span className="text-sm text-green-600" role="status">
-          {mensagemCompartilhamento}
-        </span>
-      )}
-    </header>
+        {mensagemCompartilhamento && (
+          <span
+            className="text-sm text-green-600"
+            role="status"
+            aria-live="polite"
+          >
+            {mensagemCompartilhamento}
+          </span>
+        )}
+      </header>
 
       <p className="mb-6 text-sm text-gray-500">
         {local.cidade} · {local.endereco}
@@ -146,23 +193,42 @@ const compartilharLocal = async () => {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
           <section aria-labelledby="sobre-local">
-            <h2 id="sobre-local" className="mb-2 text-lg font-semibold text-gray-900">
+            <h2
+              id="sobre-local"
+              className="mb-2 text-lg font-semibold text-gray-900"
+            >
               Sobre o local
             </h2>
-            <p className="leading-relaxed text-gray-600">{local.descricao}</p>
+
+            <p className="leading-relaxed text-gray-600">
+              {local.descricao}
+            </p>
           </section>
 
           <section aria-labelledby="recursos-acessibilidade">
-            <h2 id="recursos-acessibilidade" className="mb-4 text-lg font-semibold text-gray-900">
+            <h2
+              id="recursos-acessibilidade"
+              className="mb-4 text-lg font-semibold text-gray-900"
+            >
               Recursos de acessibilidade
             </h2>
+
             <ul className="space-y-4">
               {local.recursos.map((recurso) => (
-                <li key={recurso.id} className="flex items-start gap-3">
+                <li
+                  key={recurso.id}
+                  className="flex items-start gap-3"
+                >
                   <IconeStatus status={recurso.status} />
+
                   <div>
-                    <p className="font-medium text-gray-900">{recurso.rotulo}</p>
-                    <p className={`text-sm ${CORES_STATUS[recurso.status]}`}>{recurso.detalhe}</p>
+                    <p className="font-medium text-gray-900">
+                      {recurso.rotulo}
+                    </p>
+
+                    <p className={`text-sm ${CORES_STATUS[recurso.status]}`}>
+                      {recurso.detalhe}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -170,10 +236,17 @@ const compartilharLocal = async () => {
           </section>
         </div>
 
-        <aside className="h-fit rounded-lg bg-gray-50 p-5" aria-labelledby="endereco-contato">
-          <h2 id="endereco-contato" className="mb-3 text-sm font-semibold text-gray-900">
+        <aside
+          className="h-fit rounded-lg bg-gray-50 p-5"
+          aria-labelledby="endereco-contato"
+        >
+          <h2
+            id="endereco-contato"
+            className="mb-3 text-sm font-semibold text-gray-900"
+          >
             Endereço e contato
           </h2>
+
           <address className="space-y-1 text-sm not-italic text-gray-600">
             <p>{local.endereco}</p>
             <p>{local.cidade}</p>
@@ -185,7 +258,6 @@ const compartilharLocal = async () => {
       <div className="mt-8 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
         As informações deste portal não representam certificação oficial de acessibilidade e não substituem avaliação técnica especializada.
       </div>
-      
     </main>
   );
 }
