@@ -68,25 +68,28 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
             {local.categoria}
           </span>
 
-          <button 
-            type="button"
-            className={`mt-auto p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
-              favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400 dark:text-slate-500 dark:hover:text-slate-400'
-            }`}
-            onClick={(e) => {
-              e.preventDefault();
-              alternarFavorito(local.id);
-            }}
-            aria-label={favoritado ? `Remover ${local.nome} dos favoritos` : `Favoritar ${local.nome}`}
-            aria-pressed={favoritado}
-          >
-            <svg 
-              xmlns="http://w3.org" 
-              viewBox="0 0 576 512" 
-              fill={favoritado ? "currentColor" : "none"} 
-              stroke="currentColor" 
-              strokeWidth="32" 
-              className="w-4 h-4"
+          <div className="mt-auto flex items-center gap-2">
+            {onExcluir && (
+              <button
+                type="button"
+                onClick={onExcluir}
+                className="cursor-pointer rounded px-1.5 py-1 text-xs font-medium text-red-600 transition-colors hover:text-red-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 dark:text-red-400 dark:hover:text-red-300"
+              >
+                Excluir
+              </button>
+            )}
+
+            <button
+              type="button"
+              className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+                favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400 dark:text-slate-500 dark:hover:text-slate-400'
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                alternarFavorito(local.id);
+              }}
+              aria-label={favoritado ? `Remover ${local.nome} dos favoritos` : `Favoritar ${local.nome}`}
+              aria-pressed={favoritado}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -101,9 +104,9 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
               </svg>
             </button>
           </div>
+          </div>
 
         </div>
-      </div>
     </article>
   );
 }

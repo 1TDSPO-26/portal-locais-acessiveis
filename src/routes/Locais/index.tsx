@@ -164,41 +164,24 @@ export default function Locais() {
 
       <AvisoOffline offline={offline} />
 
-      <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 dark:text-slate-400 sm:mb-4 sm:mt-0">
-        {locaisFiltrados.length}{" "}
-        {locaisFiltrados.length === 1
-          ? "local encontrado"
-          : "locais encontrados"}
-      </p>
-
       {carregando ? (
-        <p className="text-start text-sm text-slate-500 dark:text-slate-400">
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400"
+        >
           Carregando locais...
-        </p>
-      ) : locaisDaPagina.length ? (
-        <div className="w-full overflow-hidden">
-          {locaisDaPagina.map((local, index) => (
-            <div
-              key={local.id}
-              className={`my-3 ${
-                index !== locaisDaPagina.length - 1
-              }`}
-            >
-              <LocalCard local={local} />
-            </div>
-          ))}
         </div>
-      ) : (
-        <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center dark:border-slate-600">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-            Nenhum local encontrado
+      ) : erro ? (
+        <div
+          role="alert"
+          className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-red-200 bg-red-50 px-6 text-center"
+        >
+          <h2 className="text-lg font-semibold text-red-800">
+            Não foi possível carregar os locais
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-            Tente alterar sua busca ou remover algum filtro.
-          </p>
-        </div>
-      )}
+          <p className="mt-2 text-sm text-red-700">{erro}</p>
 
           <button
             type="button"

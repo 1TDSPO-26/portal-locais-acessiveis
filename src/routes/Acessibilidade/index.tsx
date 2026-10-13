@@ -1,18 +1,6 @@
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from 'react';
 
-const botaoAcessibilidade =
-    "px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors";
-
-const secaoAcessibilidade =
-    "border border-slate-200 rounded-xl bg-slate-50 p-6 mb-6";
-
-const tituloSecao =
-    "font-bold text-slate-900 mb-2";
-
-const textoSecao =
-    "text-slate-600 leading-relaxed";
-
 export default function Acessibilidade() {
     const [fontScale, setFontScale] = useState(1);
 
