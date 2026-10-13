@@ -1,4 +1,6 @@
+import { useId, useRef } from 'react';
 import IconLogo from '../IconLogo/IconLogo';
+import { useModalFocus } from '../../hooks/useModalFocus';
 
 /**
  * Interface de propriedades do componente ModalConfirmacao
@@ -21,6 +23,20 @@ export default function ModalConfirmacao({
   title = "Confirmar Envio",
   message = "Tem certeza de que deseja enviar estas informações?",
 }: ModalConfirmacaoProps) {
+  // Ids para associar título e mensagem ao diálogo (leitores de tela)
+  const titleId = useId();
+  const messageId = useId();
+
+  // Foco inicial no botão seguro (Cancelar), padrão recomendado para confirmações
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  // Gerencia foco: move ao abrir, prende com Tab, fecha com Esc e devolve ao gatilho
+  const dialogRef = useModalFocus<HTMLDivElement>({
+    isOpen,
+    onClose,
+    initialFocusRef: cancelRef,
+  });
+
   // Retorna nulo se o modal estiver fechado
   if (!isOpen) return null;
 
@@ -52,6 +68,7 @@ export default function ModalConfirmacao({
         {/* Ações de Cancelamento e Confirmação */}
         <div className="flex flex-col-reverse sm:flex-row gap-3">
           <button
+            ref={cancelRef}
             type="button"
             onClick={onClose}
             className="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
