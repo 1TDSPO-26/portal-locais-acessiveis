@@ -16,20 +16,17 @@ const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
   const { locais, offline, carregando } = useLocais();
-  const [erro, setErro] = useState<string | null>(null);
-
-  useEffect(() => {
-    document.title = "LOCAIS | ACESSO+";
-    if (!carregando && (!locais || locais.length === 0) && offline) {
-      setErro("Sem conexão com a internet ou servidor indisponível.");
-    } else {
-      setErro(null);
-    }
-  }, [carregando, locais, offline]);
+ 
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
   }, []);
+
+
+  const erro = (!carregando && (!locais || locais.length === 0) && offline)
+    ? "Sem conexão com a internet ou servidor indisponível."
+    : null;
+  
 
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
