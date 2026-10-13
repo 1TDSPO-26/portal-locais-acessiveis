@@ -78,5 +78,5 @@ export async function cadastrarLocal(novoLocal: NovoLocal): Promise<Local> {
     throw new Error("Erro ao cadastrar local");
   }
 
-  return resp.json();
+  return (await resp.json()) as Local; // <--- Adicionado o "as Local" aqui
 }
