@@ -22,8 +22,7 @@ export default function Locais() {
 
   useEffect(() => {
     const controller = new AbortController();
-    setCarregando(true);
-    setErro("");
+   
 
     async function carregar() {
       try {

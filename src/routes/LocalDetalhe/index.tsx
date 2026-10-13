@@ -61,9 +61,6 @@ export default function LocalDetalhe() {
   useEffect(() => {
 
     const controller = new AbortController();
-    setCarregando(true);
-    setErro("");
-    setLocal(null);
 
     async function Carregar() {
       try {

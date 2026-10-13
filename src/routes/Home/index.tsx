@@ -19,9 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     const controller = new AbortController();
-    setCarregando(true);
-    setErro("");
-
+  
     async function carregar() {
       try {
         const dados = await listarLocais(6, controller.signal);
