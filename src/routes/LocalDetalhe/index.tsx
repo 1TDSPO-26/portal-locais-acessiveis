@@ -61,7 +61,7 @@ export default function LocalDetalhe() {
   }, [local]);
 
   const compartilharLocal = async () => {
-    const caminhoLocal = `/local/${id}`;
+    const caminhoLocal = `/locais/${id}`;
     const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
 
     try {
