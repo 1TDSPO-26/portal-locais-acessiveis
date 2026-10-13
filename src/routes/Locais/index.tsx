@@ -132,17 +132,17 @@ export default function Locais() {
   return (
     <main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
       <div className="mb-6 sm:mb-5">
-        <h1 className="mb-2 text-start text-2xl font-bold text-slate-900 sm:mb-0 sm:text-[inherit]">
+        <h1 className="mb-2 text-start text-2xl font-bold text-slate-900 dark:text-slate-100 sm:mb-0 sm:text-[inherit]">
           Locais acessíveis
         </h1>
 
-        <p className="max-w-[260px] text-start text-sm leading-5 text-slate-500 sm:max-w-none sm:text-[12px] sm:leading-normal">
+        <p className="max-w-[260px] text-start text-sm leading-5 text-slate-500 dark:text-slate-400 sm:max-w-none sm:text-[12px] sm:leading-normal">
           Encontre lugares e consulte informações para planejar sua visita.
         </p>
       </div>
 
       <div className="mb-5">
-        <label className="mb-1 block text-start text-[11px] font-medium text-slate-700">
+        <label className="mb-1 block text-start text-[11px] font-medium text-slate-700 dark:text-slate-300">
           Buscar
         </label>
 
@@ -168,7 +168,7 @@ export default function Locais() {
         <div
           role="status"
           aria-live="polite"
-          className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500"
+          className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400"
         >
           Carregando locais...
         </div>

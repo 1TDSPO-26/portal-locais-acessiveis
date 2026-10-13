@@ -13,27 +13,27 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <main>
       {/* HERO */}
-      <section className="w-full bg-white text-left">
+      <section className="w-full bg-white text-left dark:bg-slate-900">
         <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-[18px] px-5 py-11 lg:grid-cols-[536px_536px] lg:gap-16 lg:px-[72px] lg:py-[72px]">
           <div className="flex w-full flex-col gap-[18px] lg:w-[536px] lg:gap-[22px]">
             <p
-              className="m-0 text-[11px] font-semibold leading-[100%] tracking-normal text-[#0052B4] uppercase lg:text-[12px] lg:leading-[12px] lg:tracking-[1px]"
+              className="m-0 text-[11px] font-semibold leading-[100%] tracking-normal text-[#0052B4] uppercase dark:text-blue-300 lg:text-[12px] lg:leading-[12px] lg:tracking-[1px]"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Portal colaborativo
             </p>
 
             <h1
-              className="m-0! w-full max-w-[520px] text-[32px]! font-bold! leading-[40px]! tracking-[-0.5px] text-[#0F172A]! lg:text-[40px]! lg:leading-[48px]! lg:tracking-[-0.8px]"
+              className="m-0! w-full max-w-[520px] text-[32px]! font-bold! leading-[40px]! tracking-[-0.5px] text-[#0F172A]! dark:!text-slate-100 lg:text-[40px]! lg:leading-[48px]! lg:tracking-[-0.8px]"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Encontre locais e serviços que funcionam para você.
             </h1>
 
             <p
-              className="m-0 w-full max-w-[520px] text-[16px] font-normal leading-[24px] text-[#475569] lg:text-[18px] lg:leading-[28px]"
+              className="m-0 w-full max-w-[520px] text-[16px] font-normal leading-[24px] text-[#475569] dark:text-slate-300 lg:text-[18px] lg:leading-[28px]"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Consulte informações claras sobre entrada, circulação, banheiros,
@@ -43,7 +43,7 @@ export default function Home() {
             <div className="flex w-full max-w-[520px] flex-col gap-[6px]">
               <label
                 htmlFor="buscar-locais"
-                className="text-[14px] font-medium leading-[20px] text-[#0F172A]"
+                className="text-[14px] font-medium leading-[20px] text-[#0F172A] dark:text-slate-100"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Buscar locais
@@ -53,7 +53,7 @@ export default function Home() {
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="pointer-events-none absolute top-1/2 left-3 h-[10px] w-[10px] -translate-y-1/2 text-[#64748B]"
+                  className="pointer-events-none absolute top-1/2 left-3 h-[10px] w-[10px] -translate-y-1/2 text-[#64748B] dark:text-slate-400"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -68,7 +68,7 @@ export default function Home() {
                   id="buscar-locais"
                   type="text"
                   placeholder="Buscar por nome, serviço ou endereço..."
-                  className="h-[44px] w-full rounded-[8px] border border-[#CBD5E1] bg-white pr-3 pl-[30px] text-[14px] leading-[20px] text-[#0F172A] placeholder:font-normal placeholder:text-[#64748B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+                  className="h-[44px] w-full rounded-[8px] border border-[#CBD5E1] bg-white pr-3 pl-[30px] text-[14px] leading-[20px] text-[#0F172A] placeholder:font-normal placeholder:text-[#64748B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus-visible:outline-blue-300"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 />
               </div>
@@ -80,7 +80,7 @@ export default function Home() {
               {/* Mobile: Saiba mais */}
               <Link
                 to="/sobre"
-                className="flex h-[44px] w-full items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] sm:hidden"
+                className="flex h-[44px] w-full items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:border-slate-600 dark:bg-slate-800 dark:text-blue-300 dark:focus-visible:outline-blue-300 sm:hidden"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Saiba mais
@@ -89,7 +89,7 @@ export default function Home() {
               {/* Desktop: Explorar locais, conforme Figma */}
               <Link
                 to="/locais"
-                className="hidden h-[44px] w-[130px] items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] sm:flex"
+                className="hidden h-[44px] w-[130px] items-center justify-center whitespace-nowrap rounded-[8px] border border-[#CBD5E1] bg-white px-4 text-[14px] font-medium leading-[20px] text-[#0052B4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC] dark:border-slate-600 dark:bg-slate-800 dark:text-blue-300 dark:focus-visible:outline-blue-300 sm:flex"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Explorar locais
@@ -106,11 +106,11 @@ export default function Home() {
       </section>
 
       {/* LOCAIS EM DESTAQUE - ROBERTÃO */}
-      <section className="w-full bg-[#f8fafc] text-left">
+      <section className="w-full bg-[#f8fafc] text-left dark:bg-slate-800">
         <div className="mx-auto w-full max-w-[1280px] px-5 py-10 lg:px-[72px] lg:py-16">
           <div className="flex items-center justify-between">
             <h2
-              className="m-0 text-[24px] !font-semibold leading-[32px] tracking-[-0.2px] !text-[#0F172A]"
+              className="m-0 text-[24px] !font-semibold leading-[32px] tracking-[-0.2px] !text-[#0F172A] dark:!text-slate-100"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Locais em destaque
@@ -118,7 +118,7 @@ export default function Home() {
 
             <Link
               to="/locais"
-              className="flex items-center gap-1 text-[14px] font-medium leading-[20px] tracking-[0px] text-[#0052B4]"
+              className="flex items-center gap-1 text-[14px] font-medium leading-[20px] tracking-[0px] text-[#0052B4] dark:text-blue-300"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Ver todos →
@@ -131,27 +131,27 @@ export default function Home() {
                 key={local.id}
                 className="[&>article]:!flex-col [&>article>div:first-child]:!h-[130px] [&>article>div:first-child]:!w-full"
               >
-              <LocalCard key={local.id} local={local} />
+                <LocalCard key={local.id} local={local} />
               </div>
             ))}
           </div>
-          
+
         </div>
       </section>
 
       {/* CTA - MADU */}
-      <section className="w-full bg-[#EFF6FF] text-left">
+      <section className="w-full bg-[#EFF6FF] text-left dark:bg-slate-800">
         <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-5 py-10 md:flex-row md:items-center md:justify-between md:gap-10 md:px-[72px] md:py-[52px]">
           <div>
             <h2
-              className="m-0! text-[24px]! font-semibold! leading-[32px]! tracking-[-0.2px] text-[#0F172A]!"
+              className="m-0! text-[24px]! font-semibold! leading-[32px]! tracking-[-0.2px] text-[#0F172A]! dark:!text-slate-100"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Ajude a manter as informações úteis
             </h2>
 
             <p
-              className="mt-1 text-[16px] font-normal leading-[24px] text-[#475569]"
+              className="mt-1 text-[16px] font-normal leading-[24px] text-[#475569] dark:text-slate-300"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Compartilhe informações sobre um local e ajude outras pessoas a
@@ -162,6 +162,6 @@ export default function Home() {
           <Button to="/cadastrar">Adicionar local</Button>
         </div>
       </section>
-    </>
+    </main>
   );
 }

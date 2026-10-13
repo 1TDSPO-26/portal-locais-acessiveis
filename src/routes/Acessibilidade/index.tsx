@@ -1,18 +1,6 @@
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from 'react';
 
-const botaoAcessibilidade =
-    "px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors";
-
-const secaoAcessibilidade =
-    "border border-slate-200 rounded-xl bg-slate-50 p-6 mb-6";
-
-const tituloSecao =
-    "font-bold text-slate-900 mb-2";
-
-const textoSecao =
-    "text-slate-600 leading-relaxed";
-
 export default function Acessibilidade() {
     const [fontScale, setFontScale] = useState(1);
 
@@ -26,16 +14,16 @@ export default function Acessibilidade() {
     }, []);
 
     return (
-        <div className="bg-white min-h-screen px-6 py-10 max-w-4xl mx-auto">
+        <div className="min-h-screen max-w-4xl mx-auto bg-white px-6 py-10 dark:bg-slate-900">
 
             {/* Agrupamento semântico dos controles para leitores de tela */}
             <div
                 role="group"
                 aria-label="Controles de tamanho do texto"
-                className="flex items-center flex-wrap gap-2 mb-8 pb-4 border-b border-slate-200"
+                className="mb-8 flex flex-wrap items-center gap-2 border-b border-slate-200 pb-4 dark:border-slate-600"
             >
                 <span
-                    className="text-slate-700 font-medium mr-2"
+                    className="mr-2 font-medium text-slate-700 dark:text-slate-300"
                     style={{ fontSize: `${1 * fontScale}rem` }}
                 >
                     Tamanho do texto:
@@ -43,7 +31,7 @@ export default function Acessibilidade() {
 
                 <button
                     onClick={decreaseText}
-                    className={botaoAcessibilidade}
+                    className="rounded bg-slate-100 px-3 py-1.5 font-medium text-slate-800 transition-colors hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
                     aria-label="Diminuir tamanho do texto"
                 >
                     A-
@@ -51,7 +39,7 @@ export default function Acessibilidade() {
 
                 <button
                     onClick={resetText}
-                    className={botaoAcessibilidade}
+                    className="rounded bg-slate-100 px-3 py-1.5 font-medium text-slate-800 transition-colors hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
                     aria-label="Tamanho original do texto"
                 >
                     A
@@ -59,7 +47,7 @@ export default function Acessibilidade() {
 
                 <button
                     onClick={increaseText}
-                    className={botaoAcessibilidade}
+                    className="rounded bg-slate-100 px-3 py-1.5 font-medium text-slate-800 transition-colors hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
                     aria-label="Aumentar tamanho do texto"
                 >
                     A+
@@ -67,22 +55,22 @@ export default function Acessibilidade() {
             </div>
 
             <h1
-                className="font-bold text-slate-900 mb-8"
+                className="mb-8 font-bold text-slate-900 dark:text-slate-100"
                 style={{ fontSize: `${1.875 * fontScale}rem` }}
             >
                 Acessibilidade
             </h1>
 
-            <section className={secaoAcessibilidade}>
+            <section className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-600 dark:bg-slate-800">
                 <h2
-                    className={tituloSecao}
+                    className="mb-2 font-bold text-slate-900 dark:text-slate-100"
                     style={{ fontSize: `${1.125 * fontScale}rem` }}
                 >
                     Nosso compromisso
                 </h2>
 
                 <p
-                    className={textoSecao}
+                    className="leading-relaxed text-slate-600 dark:text-slate-300"
                     style={{ fontSize: `${1 * fontScale}rem` }}
                 >
                     O Portal de Locais e Serviços Acessíveis existe para facilitar a
@@ -93,16 +81,16 @@ export default function Acessibilidade() {
                 </p>
             </section>
 
-            <section className={secaoAcessibilidade}>
+            <section className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-600 dark:bg-slate-800">
                 <h2
-                    className={tituloSecao}
+                    className="mb-2 font-bold text-slate-900 dark:text-slate-100"
                     style={{ fontSize: `${1.125 * fontScale}rem` }}
                 >
                     Recursos de acessibilidade do site
                 </h2>
 
                 <p
-                    className={textoSecao}
+                    className="leading-relaxed text-slate-600 dark:text-slate-300"
                     style={{ fontSize: `${1 * fontScale}rem` }}
                 >
                     Utilizamos marcação semântica, navegação por teclado, textos
@@ -112,16 +100,16 @@ export default function Acessibilidade() {
                 </p>
             </section>
 
-            <section className={secaoAcessibilidade}>
+            <section className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-600 dark:bg-slate-800">
                 <h2
-                    className={tituloSecao}
+                    className="mb-2 font-bold text-slate-900 dark:text-slate-100"
                     style={{ fontSize: `${1.125 * fontScale}rem` }}
                 >
                     Encontrou um problema?
                 </h2>
 
                 <p
-                    className={textoSecao}
+                    className="leading-relaxed text-slate-600 dark:text-slate-300"
                     style={{ fontSize: `${1 * fontScale}rem` }}
                 >
                     Se você encontrar alguma barreira de acessibilidade neste site,
@@ -129,11 +117,11 @@ export default function Acessibilidade() {
 
                     <Button
                         to="/sobre"
-                        className="text-blue-600 font-medium hover:text-white-800 underline"
+                        className="font-medium text-blue-600 underline hover:text-white-800 dark:text-blue-300"
                     >
                         Sobre
-                    </Button>{' '}
-                    para que possamos corrigir.
+                    </Button>
+                    {" "}para que possamos corrigir.
                 </p>
             </section>
         </div>

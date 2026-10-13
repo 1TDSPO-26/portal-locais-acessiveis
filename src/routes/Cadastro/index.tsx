@@ -5,10 +5,6 @@ import Observacoes from "../../components/Observacoes/Observacoes"
 import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
 import Button from "../../components/Button/Button"
 import Toast from "../../components/Toast/Toast"
-const grupoCampo = "flex flex-col gap-2"
-const labelCampo = "text-sm font-semibold text-slate-800"
-const inputCampo = "rounded-lg border px-3 py-2 text-sm text-slate-900 placeholder:text-slate-800 outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC]"
-const mensagemErro = "text-sm text-red-600"
 
 export default function Cadastro() {
 
@@ -75,23 +71,23 @@ export default function Cadastro() {
 
     return (
         <main className="mx-auto max-w-4xl px-4 py-10">
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
                 Adicionar informações de um local
             </h1>
 
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 Compartilhe o que você sabe. Se não tiver certeza sobre algum recurso,
                 deixe claro que a informação não foi confirmada.
             </p>
 
             <form
                 onSubmit={handleSubmit}
-                className="mt-8 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+                className="mt-8 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-600 dark:bg-slate-900"
             >
-                <div className={grupoCampo}>
+                <div className="flex flex-col gap-2">
                     <label
                         htmlFor="nomeLocal"
-                        className={labelCampo}
+                        className="text-sm font-semibold text-slate-800 dark:text-slate-200"
                     >
                         Nome do local
                     </label>
@@ -105,16 +101,17 @@ export default function Cadastro() {
                         onChange={(e) => setNome(e.target.value)}
                         aria-invalid={!!erros.nome}
                         aria-describedby={erros.nome ? "nomeLocal-erro" : undefined}
-                        className={`${inputCampo} ${
-                            erros.nome ? "border-red-500" : "border-slate-300"
-                        }`}
+                        className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${erros.nome
+                            ? "border-red-500"
+                            : "border-slate-300 dark:border-slate-600"
+                            }`}
                     />
 
                     {erros.nome && (
                         <p
                             id="nomeLocal-erro"
                             role="alert"
-                            className={mensagemErro}
+                            className="text-sm text-red-600 dark:text-red-400"
                         >
                             {erros.nome}
                         </p>
@@ -127,10 +124,10 @@ export default function Cadastro() {
                     error={erros.tipo}
                 />
 
-                <div className={grupoCampo}>
+                <div className="flex flex-col gap-2">
                     <label
                         htmlFor="endereco"
-                        className={labelCampo}
+                        className="text-sm font-semibold text-slate-800 dark:text-slate-200"
                     >
                         Endereço
                     </label>
@@ -144,16 +141,17 @@ export default function Cadastro() {
                         onChange={(e) => setEndereco(e.target.value)}
                         aria-invalid={!!erros.endereco}
                         aria-describedby={erros.endereco ? "endereco-erro" : undefined}
-                        className={`${inputCampo} ${
-                            erros.endereco ? "border-red-500" : "border-slate-300"
-                        }`}
+                        className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${erros.endereco
+                            ? "border-red-500"
+                            : "border-slate-300 dark:border-slate-600"
+                            }`}
                     />
 
                     {erros.endereco && (
                         <p
                             id="endereco-erro"
                             role="alert"
-                            className={mensagemErro}
+                            className="text-sm text-red-600 dark:text-red-400"
                         >
                             {erros.endereco}
                         </p>
@@ -163,11 +161,11 @@ export default function Cadastro() {
                 <fieldset
                     aria-describedby={erros.recursos ? "recursos-erro" : undefined}
                 >
-                    <legend className="text-base font-semibold text-slate-900">
+                    <legend className="text-base font-semibold text-slate-900 dark:text-slate-100">
                         Recursos de acessibilidade
                     </legend>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                         Marque apenas o que você consegue confirmar.
                     </p>
 
@@ -193,7 +191,7 @@ export default function Cadastro() {
                 </Button>
             </form>
 
-            <p className="mt-4 text-xs text-slate-400">
+            <p className="mt-4 text-xs text-slate-400 dark:text-slate-500">
                 As informações enviadas não representam certificação oficial de acessibilidade.
             </p>
 
