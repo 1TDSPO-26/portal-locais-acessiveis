@@ -4,14 +4,11 @@ import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
 import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
 import Button from "../../components/Button/Button"
-
+import Toast from "../../components/Toast/Toast"
 const grupoCampo = "flex flex-col gap-2"
-
 const labelCampo = "text-sm font-semibold text-slate-800"
-
 const inputCampo =
     "rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40"
-
 const mensagemErro = "text-sm text-red-600"
 
 export default function Cadastro() {
@@ -28,6 +25,7 @@ export default function Cadastro() {
 
     const [erros, setErros] = useState<Record<string, string>>({})
     const [modalAberto, setModalAberto] = useState<boolean>(false)
+    const [toastAberto, setToastAberto] = useState<boolean>(false)
 
     function alternaRecurso(valor: string) {
         if (recursos.includes(valor)) {
@@ -69,6 +67,7 @@ export default function Cadastro() {
         setObservacoes("")
 
         setModalAberto(false)
+        setToastAberto(true)
     }
 
     function cancelarEnvio() {
@@ -205,6 +204,12 @@ export default function Cadastro() {
                 onConfirm={confirmarEnvio}
                 title="Confirmar envio das informações?"
                 message="Revise os dados antes de continuar. Após a confirmação, as informações do local serão enviadas."
+            />
+
+            <Toast
+                message="Informações enviadas com sucesso!"
+                isOpen={toastAberto}
+                onClose={() => setToastAberto(false)}
             />
         </main>
     )
