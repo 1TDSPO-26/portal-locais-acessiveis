@@ -1,3 +1,24 @@
 @import "tailwindcss";
 
+@theme {
+  /* Marca */
+  --color-primary: #005fcc;
+  --color-primary-hover: #0052b4;
+  --color-brand-soft: #eff6ff;
 
+  /* Texto Figma */
+  --color-ink: #0f172a;
+  --color-surface: #ffffff;
+  --color-line: #e2e8f0;
+  --color-text-main: #0f172a;
+  --color-text-muted: #475569;
+
+  /* Feedback */
+  --color-success: #15803d;
+  --color-warning: #a16207;
+  --color-error: #dc2626;
+
+  /* Foco acessibilidade */
+  --color-focus: #005fcc;
+  --color-focus-inverted: #ffffff;
+}
