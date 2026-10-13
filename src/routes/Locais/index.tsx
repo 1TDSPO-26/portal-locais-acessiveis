@@ -12,7 +12,8 @@ import { useLocais } from "../../hooks/useLocais";
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
-  const { locais, offline, carregando } = useLocais();
+  // retirei locais para lint fluir ... 
+  const {  offline, carregando } = useLocais();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -41,7 +42,7 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [locais, busca, filtros]);
+  }, [busca, filtros]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
