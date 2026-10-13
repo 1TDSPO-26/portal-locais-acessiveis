@@ -1,17 +1,22 @@
+
 import { useEffect, useMemo, useState } from "react";
 
 import CampoBusca from "../../components/CampoBusca/CampoBusca";
 import FiltrosCategoria from "../../components/FiltrosCategoria/FiltrosCategoria";
 import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
+import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
 import { useLocais } from "../../hooks/useLocais";
+import type { Local } from "../../types/locais";
+import { listarLocais } from "../../services/locaisService";
+import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
 
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
-  const { locais, offline, carregando } = useLocais();
+  const { offline } = useLocais();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -19,10 +24,48 @@ export default function Locais() {
 
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState<string[]>([]);
+  const [ordenacao, setOrdenacao] = useState<CriterioOrdenacao>("nome-asc");
   const [paginaAtual, setPaginaAtual] = useState(1);
 
+  // Dados vindos da API (JSON Server)
+  const [locais, setLocais] = useState<Local[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
+  const [tentativa, setTentativa] = useState(0);
+
+  useEffect(() => {
+    // Cancela a requisição se a tela for fechada antes da resposta chegar
+    const controle = new AbortController();
+
+    listarLocais(controle.signal)
+      .then((dados) => {
+        if (controle.signal.aborted) return;
+        setLocais(dados);
+        setErro(null);
+      })
+      .catch((falha: unknown) => {
+        if (controle.signal.aborted) return;
+        setErro(
+          falha instanceof Error
+            ? falha.message
+            : "Não foi possível carregar os locais."
+        );
+      })
+      .finally(() => {
+        if (!controle.signal.aborted) setCarregando(false);
+      });
+
+    return () => controle.abort();
+  }, [tentativa]);
+
+  const tentarNovamente = () => {
+    setCarregando(true);
+    setErro(null);
+    setTentativa((valor) => valor + 1);
+  };
+
   const locaisFiltrados = useMemo(() => {
-    return locais.filter((local) => {
+    const filtrados = locais.filter((local) => {
       const termo = busca.trim().toLowerCase();
 
       const correspondeBusca =
@@ -40,7 +83,9 @@ export default function Locais() {
 
       return correspondeBusca && possuiRecursos;
     });
-  }, [locais, busca, filtros]);
+
+    return ordenarLocais(filtrados, ordenacao);
+  }, [locais, busca, filtros, ordenacao]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -58,9 +103,30 @@ export default function Locais() {
     setPaginaAtual(1);
   };
 
+  const alterarOrdenacao = (criterio: CriterioOrdenacao) => {
+    setOrdenacao(criterio);
+    setPaginaAtual(1);
+  };
+
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
     setPaginaAtual(1);
+  };
+
+  const excluirLocal = (id: Local["id"]) => {
+    const local = locais.find((local) => local.id === id);
+
+    if (!local) return;
+
+    const confirmou = window.confirm(
+      `Tem certeza que deseja excluir o local "${local.nome}"?`
+    );
+
+    if (!confirmou) return;
+
+    setLocais((locaisAtuais) =>
+      locaisAtuais.filter((local) => local.id !== id)
+    );
   };
 
   return (
@@ -98,48 +164,89 @@ export default function Locais() {
 
       <AvisoOffline offline={offline} />
 
-      <p className="mb-3 mt-5 text-start text-[11px] text-slate-500 sm:mb-4 sm:mt-0">
-        {locaisFiltrados.length}{" "}
-        {locaisFiltrados.length === 1
-          ? "local encontrado"
-          : "locais encontrados"}
-      </p>
-
       {carregando ? (
-        <p className="text-start text-sm text-slate-500">Carregando locais...</p>
-      ) : locaisDaPagina.length ? (
-        <div className="w-full overflow-hidden">
-          {locaisDaPagina.map((local, index) => (
-            <div
-              key={local.id}
-              className={`my-3 ${
-                index !== locaisDaPagina.length - 1
-              }`}
-            >
-              <LocalCard local={local} />
-            </div>
-          ))}
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500"
+        >
+          Carregando locais...
         </div>
-      ) : (
-        <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Nenhum local encontrado
+      ) : erro ? (
+        <div
+          role="alert"
+          className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-red-200 bg-red-50 px-6 text-center"
+        >
+          <h2 className="text-lg font-semibold text-red-800">
+            Não foi possível carregar os locais
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500">
-            Tente alterar sua busca ou remover algum filtro.
-          </p>
-        </div>
-      )}
+          <p className="mt-2 text-sm text-red-700">{erro}</p>
 
-      {totalPaginas > 1 && (
-        <div className="mt-6">
-          <Paginacao
-            paginaAtual={paginaAtual}
-            totalPaginas={totalPaginas}
-            onChange={setPaginaAtual}
-          />
+          <button
+            type="button"
+            onClick={tentarNovamente}
+            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+          >
+            Tentar novamente
+          </button>
         </div>
+      ) : (
+        <>
+          <div className="mb-3 mt-5 flex flex-col gap-3 sm:mb-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-between">
+            <p
+              className="text-start text-[11px] text-slate-500"
+              role="status"
+              aria-live="polite"
+            >
+              {locaisFiltrados.length}{" "}
+              {locaisFiltrados.length === 1
+                ? "local encontrado"
+                : "locais encontrados"}
+            </p>
+
+            <SeletorOrdenacao
+              value={ordenacao}
+              onChange={alterarOrdenacao}
+            />
+          </div>
+
+          {locaisDaPagina.length ? (
+            <div className="w-full overflow-hidden">
+              {locaisDaPagina.map((local) => (
+                <div
+                  key={local.id}
+                  className="my-3"
+                >
+                  <LocalCard
+                    local={local}
+                    onExcluir={() => excluirLocal(local.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Nenhum local encontrado
+              </h2>
+
+              <p className="mt-2 text-sm text-slate-500">
+                Tente alterar sua busca ou remover algum filtro.
+              </p>
+            </div>
+          )}
+
+          {totalPaginas > 1 && (
+            <div className="mt-6">
+              <Paginacao
+                paginaAtual={paginaAtual}
+                totalPaginas={totalPaginas}
+                onChange={setPaginaAtual}
+              />
+            </div>
+          )}
+        </>
       )}
     </main>
   );
