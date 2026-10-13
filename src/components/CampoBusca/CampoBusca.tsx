@@ -15,7 +15,7 @@ export default function CampoBusca({
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        className="absolute left-3 top-1/2 size-4 sm:size-3.5 -translate-y-1/2 text-slate-400"
+        className="absolute left-3 top-1/2 size-4 sm:size-3.5 -translate-y-1/2 text-slate-700"
         aria-hidden="true"
       >
         <circle cx="11" cy="11" r="8" />
@@ -24,6 +24,7 @@ export default function CampoBusca({
 
       <input
         type="text"
+        aria-label="Buscar por local ou endereço"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Buscar por local ou endereço..."

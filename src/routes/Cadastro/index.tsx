@@ -3,14 +3,18 @@ import SeletorTipoLocal from "../../components/SeletorTipoLocal/SeletorTipoLocal
 import Checkboxes from "../../components/Checkboxes/Checkboxes"
 import Observacoes from "../../components/Observacoes/Observacoes"
 import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao"
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button/Button"
 import Toast from "../../components/Toast/Toast"
+const grupoCampo = "flex flex-col gap-2"
+const labelCampo = "text-sm font-semibold text-slate-800"
+const inputCampo = "rounded-lg border px-3 py-2 text-sm text-slate-900 placeholder:text-slate-800 outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC]"
+const mensagemErro = "text-sm text-red-600"
 
 export default function Cadastro() {
 
     useEffect(() => {
-        document.title = "CADASTRO | ACESSO+";
-    }, []);
+        document.title = "CADASTRO | ACESSO+"
+    }, [])
 
     const [nome, setNome] = useState<string>("")
     const [endereco, setEndereco] = useState<string>("")
