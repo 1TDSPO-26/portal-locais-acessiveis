@@ -1,7 +1,7 @@
 // Service de locais: concentra as chamadas ao recurso /locais do JSON Server.
 // As telas usam estas funções e não precisam saber a URL nem usar fetch direto.
-import { locaisMock , type Local } from "../types/locais.ts";
-import { ApiError, apiGet } from "./api.ts";
+import { locaisMock, type Local } from "../types/locais.ts";
+import { API_URL, ApiError, apiGet } from "./api.ts";
 
 const RECURSO_LOCAIS = "/locais";
 
@@ -21,7 +21,6 @@ export async function listarLocais(signal?: AbortSignal): Promise<Local[]> {
 
 }
 
-const API_URL = typeof import.meta.env !== 'undefined' ? import.meta.env.VITE_API_URL : undefined;
 const CHAVE_CACHE = "locais_cache";
 
 export interface ResultadoLocais {
@@ -29,13 +28,7 @@ export interface ResultadoLocais {
   origem: "api" | "cache" | "local";
 }
 
-export interface NovoLocal {
-  nome: string;
-  categoria: string;
-  endereco: string;
-  descricao: string;
-  recursos: string[];
-}
+export type NovoLocal = Omit<Local, "id" | "imagemUrl">;
 
 export async function buscarLocais(): Promise<ResultadoLocais> {
   try {
