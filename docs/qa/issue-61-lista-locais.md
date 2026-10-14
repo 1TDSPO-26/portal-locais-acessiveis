@@ -8,7 +8,7 @@
 - Versão testada no navegador: develop, commit 4ca5712.
 - Branch: feature/61-qa-busca-filtros.
 - Ambiente: macOS, navegador lateral do Codex, site em http://localhost:5173/locais e JSON Server na porta 3001.
-- PR: ainda não aberto.
+- PR: https://github.com/1TDSPO-26/portal-locais-acessiveis/pull/129
 
 ## O que foi testado
 
@@ -44,7 +44,7 @@ A tela pequena foi simulada no navegador, não em aparelho físico. Foi solicita
 
 Arquivo: src/routes/Locais/Locais.test.tsx.
 
-Foram adicionados 10 testes com Vitest e Testing Library. Eles usam a tela e os componentes reais, com a resposta do serviço simulada a partir dos 7 locais de exemplo. Isso verifica os resultados na interface, mas não testa a comunicação real com o servidor. O aviso de conexão offline também é simulado; falha de API e cache não foram avaliados neste ciclo.
+Foram adicionados 10 testes com Vitest e Testing Library. Eles usam a tela e os componentes reais, com a resposta do serviço simulada a partir dos 7 locais de exemplo. Isso verifica os resultados na interface, mas não testa a comunicação real com o servidor. Os testes foram executados com o estado online simulado. Funcionamento offline, falha de API e cache não foram avaliados neste ciclo.
 
 Para executar apenas os testes relacionados a Locais:
 
@@ -64,7 +64,7 @@ Essa seleção passou com 16 testes: os 10 novos e os 6 já existentes de ordena
 
 ## Capturas
 
-As capturas devem ser anexadas ao PR. Os arquivos locais foram salvos com estes nomes:
+As 13 capturas estão anexadas na descrição do PR #129. Os arquivos foram salvos com estes nomes:
 
 - issue61-busca-nome.png
 - issue61-busca-endereco.png
