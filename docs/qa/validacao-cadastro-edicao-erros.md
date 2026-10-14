@@ -8,11 +8,13 @@
 - Issue de QA: #62 — Validar cadastro, edição e mensagens de erro
 - Data da execução inicial: 06/10/2026
 - Data do reteste: 07/10/2026
+- Data do segundo ciclo de validação: 14/10/2026
 - Branch do QA: `feature/62-validacao-cadastro-edicao-erros`
 - Versão analisada inicialmente: `develop` — commit `5c9be20`
+- Versão analisada no segundo ciclo: `develop` — commit `9bba7ce`, incorporado à branch do QA pelo commit `9afc436`
 - Ambiente: aplicação local executada no Google Chrome
 - Viewports testados: desktop e móvel com 375 × 667 pixels
-- Pull Requests relacionadas: nenhuma PR específica foi utilizada na execução inicial; a PR #104 foi utilizada no reteste do DEF-03
+- Pull Requests relacionadas: #104 (toast acessível), #114 (integração do cadastro com a API), #120 (testes automatizados do cadastro) e #121 (gerenciamento de foco nos modais)
 
 ## Objetivo
 
@@ -73,9 +75,9 @@ Este ciclo verificou:
 
 ## Automação
 
-Na versão testada inicialmente e na branch da PR #104, não foi encontrado comando ou estrutura de testes automatizados no `package.json`.
+Na execução inicial e na branch da PR #104, não foi encontrado comando ou estrutura de testes automatizados no `package.json`.
 
-Conforme a orientação recebida, não foi configurado um ambiente de automação do zero. Os cenários foram executados manualmente com passos e evidências reproduzíveis.
+Depois do merge da PR #120, o projeto passou a possuir testes automatizados com Vitest, React Testing Library e testes de API executados pelo test runner nativo do Node.js. No segundo ciclo, o comando `npm test` executou as duas suítes com sucesso.
 
 ## Validações técnicas
 
@@ -97,6 +99,14 @@ Evidências:
 - `npm run lint`: concluído sem erros.
 - `npm run build`: concluído com sucesso.
 
+### Segundo ciclo após as integrações em `develop`
+
+- `npm ci`: dependências instaladas com sucesso; o npm informou uma vulnerabilidade de alta severidade nas dependências.
+- `npm run test:unit`: 7 arquivos e 82 testes aprovados.
+- `npm run test:api`: 4 suítes e 22 testes aprovados.
+- `npm run lint`: concluído sem erros.
+- `npm run build`: concluído com sucesso.
+
 ## Registro das evidências
 
 Cada cenário executado contém:
@@ -113,22 +123,23 @@ As imagens foram armazenadas localmente na pasta:
 
 `C:\Fiap\front-end\projeto-qa\evidencias-qa-62`
 
-A pasta está fora do repositório e não altera o código do projeto. As evidências da execução inicial foram anexadas à PR #97, e as evidências do reteste da PR #104 serão adicionadas à mesma Pull Request.
+A pasta está fora do repositório e não altera o código do projeto. As evidências da execução inicial foram anexadas à PR #97. As evidências do segundo ciclo foram armazenadas em `C:\Fiap\front-end\projeto-qa\final` e serão anexadas à mesma Pull Request.
 
 ## Defeitos encontrados
 
 | ID | Severidade | Cenário relacionado | Descrição | Situação |
 | -- | ---------- | ------------------- | --------- | -------- |
-| DEF-01 | Alta | CAD-04 | O cadastro confirmado não é persistido nem apresentado na listagem de locais. | Identificado |
-| DEF-02 | Média | ERR-06 | O foco não é direcionado ao primeiro campo inválido depois do envio com erros. | Identificado |
-| DEF-03 | Baixa | CAD-03 | Nenhuma mensagem final de sucesso era apresentada depois da confirmação do envio. | Correção validada na PR #104; aguardando merge |
+| DEF-01 | Alta | CAD-04 | O cadastro confirmado não era persistido nem apresentado na listagem de locais. | Corrigido pela PR #114 e validado no segundo ciclo |
+| DEF-02 | Média | ERR-06 | O foco não é direcionado ao primeiro campo inválido depois do envio com erros. | Permanece identificado no segundo ciclo |
+| DEF-03 | Baixa | CAD-03 | Nenhuma mensagem final de sucesso era apresentada depois da confirmação do envio. | Corrigido pela PR #104, validado e integrado à `develop` |
+| DEF-04 | Alta | CAD-04 | O local criado pela API aparece na listagem e permanece após atualizar a página, mas sua página de detalhes informa “Local não encontrado”. | Identificado no segundo ciclo |
 
 ## Limitações
 
 - A funcionalidade de edição ainda não está disponível.
-- O cadastro não utiliza API ou serviço de persistência na versão testada.
+- A listagem utiliza a API, porém a página de detalhes ainda não reconhece o identificador do local recém-cadastrado.
 - Não existem regras específicas de formato nos campos disponíveis.
-- O projeto não possui estrutura configurada de testes automatizados nas versões analisadas.
+- Os testes automatizados atuais não cobrem o direcionamento do foco ao primeiro campo inválido nem a abertura dos detalhes de um local recém-cadastrado.
 - As evidências estão armazenadas fora do repositório e são anexadas à Pull Request da entrega.
 
 ## Retestes
@@ -164,6 +175,43 @@ A pasta está fora do repositório e não altera o código do projeto. As evidê
 
 A correção foi validada diretamente na PR antes do merge. Os defeitos DEF-01 e DEF-02 não foram corrigidos por esta implementação. A funcionalidade de edição continua indisponível e seus cenários permanecem bloqueados.
 
+### RT-02 — Segundo ciclo após atualização da `develop`
+
+- Data: 14/10/2026
+- Versão testada: `develop` no commit `9bba7ce`, incorporado à branch do QA pelo commit `9afc436`
+- Pull Requests consideradas: #104, #114, #120 e #121
+- Ambiente: aplicação local no Google Chrome com a API local executada na porta 3001
+
+#### Verificações realizadas
+
+- [x] Os campos obrigatórios continuaram apresentando mensagens claras quando enviados vazios.
+- [ ] O foco foi direcionado automaticamente ao primeiro campo inválido. O foco permaneceu fora do campo “Nome do local”.
+- [x] Um cadastro válido foi enviado à API e apresentado na listagem.
+- [x] O cadastro permaneceu disponível na listagem após atualizar a página e pesquisar pelo nome.
+- [x] A indisponibilidade da API apresentou mensagem de erro e manteve o modal e os dados preenchidos.
+- [ ] O detalhe do local recém-cadastrado foi carregado. A rota com o ID gerado apresentou “Local não encontrado”.
+- [ ] A edição foi validada. A versão integrada ainda não apresenta ação ou rota de edição.
+- [x] Os testes unitários e de API foram executados sem falhas.
+- [x] O lint e o build foram executados sem erros.
+
+#### Evidências
+
+- `reteste-err-foco-campos-obrigatorios.png`
+- `reteste-cadastro-confirmacao.png`
+- `reteste-cadastro-listagem-apos-envio.png`
+- `reteste-cadastro-persistencia-apos-atualizar.png`
+- `reteste-cadastro-detalhe-nao-encontrado.png`
+- `reteste-edicao-indisponivel.png`
+- `reteste-api-indisponivel-preserva-dados.png`
+- `reteste-testes-unitarios.png`
+- `reteste-testes-api.png`
+- `reteste-lint.png`
+- `reteste-build.png`
+
+#### Resultado
+
+**Reprovado.** O DEF-01 foi corrigido: o cadastro agora é enviado à API e persiste na listagem. O DEF-03 também está corrigido e integrado. Entretanto, o DEF-02 permanece, pois o foco não é direcionado ao primeiro campo inválido. Também foi identificado o DEF-04: o local persistido não pode ser aberto na página de detalhes. A edição continua indisponível, portanto seus cenários permanecem bloqueados.
+
 ## Decisão final
 
 - [ ] Aprovado
@@ -172,8 +220,6 @@ A correção foi validada diretamente na PR antes do merge. Os defeitos DEF-01 e
 - [ ] Bloqueado
 - [ ] Ainda não avaliado
 
-A versão testada permanece reprovada porque o cadastro confirmado não foi persistido e o foco não foi direcionado ao primeiro campo inválido.
+A versão atual permanece reprovada. A persistência do cadastro e a mensagem de sucesso foram corrigidas, mas o foco ainda não é direcionado ao primeiro campo inválido e um local recém-cadastrado não pode ser aberto na página de detalhes.
 
-O DEF-03 teve sua correção validada diretamente na PR #104, que ainda aguarda merge em `develop`.
-
-A funcionalidade de edição não pôde ser validada porque ainda não está disponível. Essa limitação deverá ser informada ao Tech Lead, conforme a orientação recebida.
+A funcionalidade de edição não pôde ser validada porque ainda não está disponível. Essa limitação e o novo DEF-04 deverão ser informados ao Tech Lead.
