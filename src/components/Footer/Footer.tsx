@@ -14,7 +14,7 @@ const projetoItems = [
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col gap-8 bg-[#0F172A] px-14 py-9 text-white md:flex-row md:items-start md:justify-between">
+    <footer className="flex flex-col gap-8 bg-[#0F172A] px-14 py-9 text-white md:flex-row dark:border-t dark:border-slate-700 md:items-start md:justify-between">
 
       <div className="flex max-w-88.75 flex-col gap-3">
         <div className="flex items-center gap-2 text-xl leading-7">

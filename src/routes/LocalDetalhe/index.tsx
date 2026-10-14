@@ -7,10 +7,10 @@ type Recurso = Local["recursos"][number];
 type StatusRecurso = Recurso["status"];
 
 const CORES_STATUS: Record<StatusRecurso, string> = {
-  disponivel: "text-green-600",
-  indisponivel: "text-red-600",
-  naoInformado: "text-blue-500",
-  naoSeAplica: "text-gray-400",
+  disponivel: "text-green-600 dark:text-green-400",
+  indisponivel: "text-red-600 dark:text-red-400",
+  naoInformado: "text-blue-500 dark:text-blue-300",
+  naoSeAplica: "text-gray-400 dark:text-slate-400",
 };
 
 function IconeStatus({ status }: { status: StatusRecurso }) {
@@ -18,32 +18,85 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
 
   if (status === "disponivel") {
     return (
-      <svg viewBox="0 0 20 20" fill="none" className={`h-5 w-5 shrink-0 ${cor}`} aria-hidden="true">
-        <path d="M4 10.5l4 4 8-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        className={`h-5 w-5 shrink-0 ${cor}`}
+        aria-hidden="true"
+      >
+        <path
+          d="M4 10.5l4 4 8-9"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     );
   }
 
   if (status === "indisponivel") {
     return (
-      <svg viewBox="0 0 20 20" fill="none" className={`h-5 w-5 shrink-0 ${cor}`} aria-hidden="true">
-        <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        className={`h-5 w-5 shrink-0 ${cor}`}
+        aria-hidden="true"
+      >
+        <path
+          d="M6 6l8 8M14 6l-8 8"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
 
   if (status === "naoInformado") {
     return (
-      <svg viewBox="0 0 20 20" fill="none" className={`h-5 w-5 shrink-0 ${cor}`} aria-hidden="true">
-        <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-        <text x="10" y="14" textAnchor="middle" fontSize="9" fill="currentColor">?</text>
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        className={`h-5 w-5 shrink-0 ${cor}`}
+        aria-hidden="true"
+      >
+        <circle
+          cx="10"
+          cy="10"
+          r="7.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <text
+          x="10"
+          y="14"
+          textAnchor="middle"
+          fontSize="9"
+          fill="currentColor"
+        >
+          ?
+        </text>
       </svg>
     );
   }
 
   return (
-    <svg viewBox="0 0 20 20" fill="none" className={`h-5 w-5 shrink-0 ${cor}`} aria-hidden="true">
-      <line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      className={`h-5 w-5 shrink-0 ${cor}`}
+      aria-hidden="true"
+    >
+      <line
+        x1="4"
+        y1="10"
+        x2="16"
+        y2="10"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -61,7 +114,7 @@ export default function LocalDetalhe() {
   }, [local]);
 
   const compartilharLocal = async () => {
-    const caminhoLocal = `/locais/${id}`;
+    const caminhoLocal = `/local/${id}`;
     const urlParaCopiar = `${window.location.origin}${caminhoLocal}`;
 
     try {
@@ -83,11 +136,11 @@ export default function LocalDetalhe() {
   if (!local) {
     return (
       <main className="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="text-xl font-semibold text-gray-900">
+        <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
           Local não encontrado
         </h1>
 
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
           O local que você está procurando não existe ou foi removido.
         </p>
 
@@ -146,7 +199,7 @@ export default function LocalDetalhe() {
       </nav>
 
       <header className="mb-1 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl">
           {local.nome}
         </h1>
 
@@ -163,16 +216,16 @@ export default function LocalDetalhe() {
 
         {mensagemCompartilhamento && (
           <span
-            className="text-sm text-green-600"
-            role="status"
+            className="text-sm text-green-600 dark:text-green-400"
             aria-live="polite"
+            role="status"
           >
             {mensagemCompartilhamento}
           </span>
         )}
       </header>
 
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">
         {local.cidade} · {local.endereco}
       </p>
 
@@ -185,7 +238,7 @@ export default function LocalDetalhe() {
           />
         </figure>
       ) : (
-        <div className="mb-8 flex h-64 w-full items-center justify-center rounded-lg bg-gray-100 text-sm text-gray-400 sm:h-80">
+        <div className="mb-8 flex h-64 w-full items-center justify-center rounded-lg bg-slate-100 text-sm text-slate-400 dark:bg-slate-800 dark:text-slate-400 sm:h-80">
           Sem imagem disponível
         </div>
       )}
@@ -195,12 +248,12 @@ export default function LocalDetalhe() {
           <section aria-labelledby="sobre-local">
             <h2
               id="sobre-local"
-              className="mb-2 text-lg font-semibold text-gray-900"
+              className="mb-2 text-lg font-semibold text-slate-900 dark:text-slate-100"
             >
               Sobre o local
             </h2>
 
-            <p className="leading-relaxed text-gray-600">
+            <p className="leading-relaxed text-slate-600 dark:text-slate-300">
               {local.descricao}
             </p>
           </section>
@@ -208,7 +261,7 @@ export default function LocalDetalhe() {
           <section aria-labelledby="recursos-acessibilidade">
             <h2
               id="recursos-acessibilidade"
-              className="mb-4 text-lg font-semibold text-gray-900"
+              className="mb-4 text-lg font-semibold text-slate-900 dark:text-slate-100"
             >
               Recursos de acessibilidade
             </h2>
@@ -222,11 +275,13 @@ export default function LocalDetalhe() {
                   <IconeStatus status={recurso.status} />
 
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-slate-900 dark:text-slate-100">
                       {recurso.rotulo}
                     </p>
 
-                    <p className={`text-sm ${CORES_STATUS[recurso.status]}`}>
+                    <p
+                      className={`text-sm ${CORES_STATUS[recurso.status]}`}
+                    >
                       {recurso.detalhe}
                     </p>
                   </div>
@@ -237,17 +292,17 @@ export default function LocalDetalhe() {
         </div>
 
         <aside
-          className="h-fit rounded-lg bg-gray-50 p-5"
+          className="h-fit rounded-lg bg-slate-50 p-5 dark:bg-slate-800"
           aria-labelledby="endereco-contato"
         >
           <h2
             id="endereco-contato"
-            className="mb-3 text-sm font-semibold text-gray-900"
+            className="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-100"
           >
             Endereço e contato
           </h2>
 
-          <address className="space-y-1 text-sm not-italic text-gray-600">
+          <address className="space-y-1 text-sm not-italic text-slate-600 dark:text-slate-300">
             <p>{local.endereco}</p>
             <p>{local.cidade}</p>
             <p>{local.contato || "Contato não informado"}</p>
@@ -255,8 +310,9 @@ export default function LocalDetalhe() {
         </aside>
       </div>
 
-      <div className="mt-8 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
-        As informações deste portal não representam certificação oficial de acessibilidade e não substituem avaliação técnica especializada.
+      <div className="mt-8 rounded-lg bg-blue-50 p-4 text-sm text-blue-800 dark:bg-blue-950 dark:text-blue-300">
+        As informações deste portal não representam certificação oficial de
+        acessibilidade e não substituem avaliação técnica especializada.
       </div>
     </main>
   );
