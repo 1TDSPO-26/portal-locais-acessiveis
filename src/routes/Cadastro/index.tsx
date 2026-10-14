@@ -39,6 +39,7 @@ export default function Cadastro() {
     if (!tipo) novosErros.tipo = "Selecione o tipo de local";
     if (!endereco.trim()) novosErros.endereco = "Informe o endereço";
     if (!cidade.trim()) novosErros.cidade = "Informe a cidade";
+    if (!observacoes.trim()) novosErros.observacoes = "Informe uma descrição do local";
     if (recursos.length === 0)
       novosErros.recursos = "Marque pelo menos um recurso";
 
@@ -230,7 +231,7 @@ async function confirmarEnvio() {
           </div>
         </fieldset>
 
-        <Observacoes value={observacoes} onChange={setObservacoes} />
+        <Observacoes value={observacoes} onChange={setObservacoes} error={erros.observacoes} />
 
         <Button type="submit" className="w-fit px-5 py-2.5 font-semibold">
           Enviar informações
