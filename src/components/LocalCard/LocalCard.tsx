@@ -21,8 +21,8 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
   );
 
   return (
-    <article className="flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px]">
-      <div className="w-full h-[125px] sm:h-auto sm:w-[14rem] shrink-0 bg-slate-100">
+    <article className="flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] dark:border-slate-600 dark:bg-slate-900">
+      <div className="w-full h-[125px] sm:h-auto sm:w-[14rem] shrink-0 bg-slate-100 dark:bg-slate-800">
         {local.imagemUrl ? (
           <img
             src={local.imagemUrl}
@@ -30,7 +30,7 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-slate-400">
+          <div className="flex h-full items-center justify-center text-sm text-slate-400 dark:text-slate-400">
             Imagem do local
           </div>
         )}
@@ -38,11 +38,11 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
 
       <div className="flex flex-1 justify-between gap-4 p-3 sm:p-4">
         <div className="flex-1 text-start">
-          <h2 className="text-base sm:text-lg font-semibold text-black">
+          <h2 className="text-base sm:text-lg font-semibold text-black dark:text-slate-100">
             {local.nome}
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-500">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             {local.cidade}
           </p>
 
@@ -57,14 +57,14 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
 
           <NavLink
             to={`/locais/${local.id}`}
-            className="mt-2 sm:mt-3 inline-block text-xs sm:text-sm font-medium text-blue-600 hover:underline"
+            className="mt-2 sm:mt-3 inline-block text-xs sm:text-sm font-medium text-blue-600 hover:underline dark:text-blue-300"
           >
             Ver detalhes →
           </NavLink>
         </div>
 
         <div className="flex flex-col items-end justify-between h-full min-h-[85px] shrink-0">
-          <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-600">
+          <span className="h-fit rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-600 dark:bg-blue-950 dark:text-blue-300">
             {local.categoria}
           </span>
 
@@ -73,7 +73,7 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
               <button
                 type="button"
                 onClick={onExcluir}
-                className="cursor-pointer rounded px-1.5 py-1 text-xs font-medium text-red-600 transition-colors hover:text-red-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                className="cursor-pointer rounded px-1.5 py-1 text-xs font-medium text-red-600 transition-colors hover:text-red-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 dark:text-red-400 dark:hover:text-red-300"
               >
                 Excluir
               </button>
@@ -81,9 +81,9 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
 
             <button
               type="button"
-              className={`cursor-pointer rounded-full p-1.5 transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 
-                ${favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400'}`
-              }
+              className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+                favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400 dark:text-slate-500 dark:hover:text-slate-400'
+              }`}
               onClick={(e) => {
                 e.preventDefault();
                 alternarFavorito(local.id);
@@ -104,9 +104,9 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
               </svg>
             </button>
           </div>
+          </div>
 
         </div>
-      </div>
     </article>
   );
 }
