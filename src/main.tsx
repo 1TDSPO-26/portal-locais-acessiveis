@@ -13,6 +13,7 @@ import NotFound from './routes/NotFound/index.tsx';
 import Acessibilidade from './routes/Acessibilidade/index.tsx';
 import LocalDetalhe from './routes/LocalDetalhe/index.tsx';
 
+//
 const router = createBrowserRouter([
   {
     path: "/", element: <App />, children: [
