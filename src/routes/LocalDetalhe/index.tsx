@@ -81,7 +81,6 @@ function IconeStatus({ status }: { status: StatusRecurso }) {
     );
   }
 
-  // naoSeAplica
   return (
     <svg
       viewBox="0 0 20 20"
@@ -144,6 +143,7 @@ export default function LocalDetalhe() {
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
           O local que você está procurando não existe ou foi removido.
         </p>
+
         <Link
           to="/locais"
           className="mt-6 inline-block rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
@@ -153,15 +153,50 @@ export default function LocalDetalhe() {
       </main>
     );
   }
-  
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
-      <Link
-        to="/locais"
-        className="mb-4 inline-block text-sm text-blue-600 hover:underline dark:text-blue-300"
+      <nav
+        aria-label="Navegação estrutural"
+        className="mb-6"
       >
-        ← Voltar para locais
-      </Link>
+        <ol className="flex flex-wrap items-center gap-2 text-sm">
+          <li>
+            <Link
+              to="/"
+              className="rounded-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            >
+              Início
+            </Link>
+          </li>
+
+          <li aria-hidden="true" className="text-gray-400">
+            <span>/</span>
+          </li>
+
+          <li>
+            <Link
+              to="/locais"
+              className="rounded-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            >
+              Locais
+            </Link>
+          </li>
+
+          <li aria-hidden="true" className="text-gray-400">
+            <span>/</span>
+          </li>
+
+          <li
+            aria-current="page"
+            className="min-w-0 font-medium text-gray-900"
+          >
+            <span className="block max-w-[250px] truncate sm:max-w-none">
+              {local.nome}
+            </span>
+          </li>
+        </ol>
+      </nav>
 
       <header className="mb-1 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl">
@@ -173,7 +208,8 @@ export default function LocalDetalhe() {
         <button
           type="button"
           onClick={compartilharLocal}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          aria-label={`Compartilhar o local ${local.nome}`}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
         >
           Compartilhar
         </button>
@@ -181,6 +217,7 @@ export default function LocalDetalhe() {
         {mensagemCompartilhamento && (
           <span
             className="text-sm text-green-600 dark:text-green-400"
+            aria-live="polite"
             role="status"
           >
             {mensagemCompartilhamento}
@@ -228,10 +265,15 @@ export default function LocalDetalhe() {
             >
               Recursos de acessibilidade
             </h2>
+
             <ul className="space-y-4">
               {local.recursos.map((recurso) => (
-                <li key={recurso.id} className="flex items-start gap-3">
+                <li
+                  key={recurso.id}
+                  className="flex items-start gap-3"
+                >
                   <IconeStatus status={recurso.status} />
+
                   <div>
                     <p className="font-medium text-slate-900 dark:text-slate-100">
                       {recurso.rotulo}
