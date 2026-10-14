@@ -56,7 +56,7 @@ export default function Cadastro() {
       "restaurante",
       "hospital",
       "escola",
-      "Outro",
+      "outro",
     ];
 
     const recursosValidos = [
