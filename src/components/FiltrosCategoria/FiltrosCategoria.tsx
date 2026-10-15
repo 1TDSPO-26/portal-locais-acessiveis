@@ -46,7 +46,7 @@ export default function FiltrosCategoria({
               }
             }}
             aria-label="Selecionar todos os filtros"
-            className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            className="size-3 accent-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#005FCC]"
             title={
               todosSelecionados
                 ? "Botão de desmarcar todos os filtros"
@@ -87,7 +87,7 @@ export default function FiltrosCategoria({
                 className={`cursor-pointer whitespace-nowrap rounded-full px-2.5 py-1 text-[9px] transition ${
                   ativo
                     ? "bg-blue-600 text-white"
-                    : "bg-slate-50 text-slate-500 hover:bg-slate-100"
+                    : "bg-slate-50 text-slate-500 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
                 }`}
               >
                 {filtro.rotulo}
