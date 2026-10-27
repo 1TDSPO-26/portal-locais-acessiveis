@@ -9,14 +9,17 @@ import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
 import { useLocais } from "../../hooks/useLocais";
+import { useGeolocalizacao } from "../../hooks/useGeolocalizacao";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
 import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
+import { calcularDistanciaHaversine } from "../../utils/geolocalizacao";
 
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
   const { offline } = useLocais();
+  const { coordenadas, carregando: carregandoGeo, erro: erroGeo } = useGeolocalizacao();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -84,8 +87,8 @@ export default function Locais() {
       return correspondeBusca && possuiRecursos;
     });
 
-    return ordenarLocais(filtrados, ordenacao);
-  }, [locais, busca, filtros, ordenacao]);
+    return ordenarLocais(filtrados, ordenacao, coordenadas);
+  }, [locais, busca, filtros, ordenacao, coordenadas]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -104,6 +107,11 @@ export default function Locais() {
   };
 
   const alterarOrdenacao = (criterio: CriterioOrdenacao) => {
+    // Se o usuário tentar ordenar por distância mas não tiver coordenadas, não deixa
+    if (criterio === "distancia-asc" && !coordenadas) {
+      alert("Por favor, permita o acesso à sua localização para ordenar por distância.");
+      return;
+    }
     setOrdenacao(criterio);
     setPaginaAtual(1);
   };
@@ -140,6 +148,20 @@ export default function Locais() {
           Encontre lugares e consulte informações para planejar sua visita.
         </p>
       </div>
+
+      {/* MENSAGEM DE STATUS DA GEOLOCALIZAÇÃO */}
+      {carregandoGeo && (
+        <div role="status" aria-live="polite" className="mb-4 flex items-center gap-2 rounded-md bg-blue-50 px-3 py-2 text-xs text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+          <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" strokeOpacity="0.25" /><path d="M12 2a10 10 0 0 1 10 10" /></svg>
+          Buscando sua localização...
+        </div>
+      )}
+
+      {erroGeo && (
+        <div role="alert" className="mb-4 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+          ⚠️ {erroGeo} (A ordenação por distância não estará disponível)
+        </div>
+      )}
 
       <div className="mb-5">
         <label className="mb-1 block text-start text-[11px] font-medium text-slate-700 dark:text-slate-300">
@@ -208,6 +230,7 @@ export default function Locais() {
             <SeletorOrdenacao
               value={ordenacao}
               onChange={alterarOrdenacao}
+              desabilitarDistancia={!coordenadas}
             />
           </div>
 
@@ -221,6 +244,15 @@ export default function Locais() {
                   <LocalCard
                     local={local}
                     onExcluir={() => excluirLocal(local.id)}
+                    distancia={coordenadas
+                      ? calcularDistanciaHaversine(
+                        coordenadas.latitude,
+                        coordenadas.longitude,
+                        local.latitude,
+                        local.longitude
+                      )
+                      : undefined
+                    }
                   />
                 </div>
               ))}

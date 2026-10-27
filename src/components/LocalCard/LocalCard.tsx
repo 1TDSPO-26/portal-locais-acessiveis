@@ -6,12 +6,15 @@ import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 import { useFavoritos } from "../../hooks/useFavoritos";
 
+import { formatarDistancia } from "../../utils/geolocalizacao";
+
 interface LocalCardProps {
   local: Local;
   onExcluir?: () => void;
+  distancia?: number;
 }
 
-export default function LocalCard({ local, onExcluir }: LocalCardProps) {
+export default function LocalCard({ local, onExcluir, distancia }: LocalCardProps) {
 
   const { alternarFavorito, ehFavorito } = useFavoritos();
   const favoritado = ehFavorito(local.id);
@@ -42,8 +45,13 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
             {local.nome}
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-            {local.cidade}
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <span>{local.cidade}</span>
+            {distancia !== undefined && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                📍 {formatarDistancia(distancia)}
+              </span>
+            )}
           </p>
 
           <div className="mt-3 flex flex-wrap gap-2">
@@ -81,9 +89,8 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
 
             <button
               type="button"
-              className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
-                favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400 dark:text-slate-500 dark:hover:text-slate-400'
-              }`}
+              className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${favoritado ? 'text-amber-400' : 'text-slate-300 hover:text-slate-400 dark:text-slate-500 dark:hover:text-slate-400'
+                }`}
               onClick={(e) => {
                 e.preventDefault();
                 alternarFavorito(local.id);
@@ -104,9 +111,9 @@ export default function LocalCard({ local, onExcluir }: LocalCardProps) {
               </svg>
             </button>
           </div>
-          </div>
-
         </div>
+
+      </div>
     </article>
   );
 }

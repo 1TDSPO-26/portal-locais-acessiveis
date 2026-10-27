@@ -143,6 +143,15 @@ export default function Cadastro() {
         detalhe: "Recurso informado no cadastro",
       }));
 
+      // TODO: Implementar captura de coordenadas reais no formulário de cadastro.
+      // Como esta Issue foca na exibição e ordenação por distância, estamos usando 
+      // coordenadas padrão (Centro de SP) para novos locais cadastrados até que outra issue de 
+      // cadastro geográfico seja implementada.
+      const COORDENADAS_PADRAO_SP = {
+        latitude: -23.5505,
+        longitude: -46.6333,
+      };
+
       await cadastrarLocal({
         nome: nome.trim(),
         categoria: categorias[tipo] ?? "Outro",
@@ -150,6 +159,8 @@ export default function Cadastro() {
         endereco: endereco.trim(),
         descricao: observacoes.trim(),
         recursos: recursosFormatados,
+        // Coordenadas mockadas
+        ...COORDENADAS_PADRAO_SP,
       });
 
       setNome("");
@@ -206,11 +217,10 @@ export default function Cadastro() {
             onChange={(e) => setNome(e.target.value)}
             aria-invalid={!!erros.nome}
             aria-describedby={erros.nome ? "nomeLocal-erro" : undefined}
-            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${
-              erros.nome
-                ? "border-red-500"
-                : "border-slate-300 dark:border-slate-600"
-            }`}
+            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${erros.nome
+              ? "border-red-500"
+              : "border-slate-300 dark:border-slate-600"
+              }`}
           />
 
           {erros.nome && (
@@ -247,11 +257,10 @@ export default function Cadastro() {
             onChange={(e) => setEndereco(e.target.value)}
             aria-invalid={!!erros.endereco}
             aria-describedby={erros.endereco ? "endereco-erro" : undefined}
-            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${
-              erros.endereco
-                ? "border-red-500"
-                : "border-slate-300 dark:border-slate-600"
-            }`}
+            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${erros.endereco
+              ? "border-red-500"
+              : "border-slate-300 dark:border-slate-600"
+              }`}
           />
 
           {erros.endereco && (
@@ -282,11 +291,10 @@ export default function Cadastro() {
             onChange={(e) => setCidade(e.target.value)}
             aria-invalid={!!erros.cidade}
             aria-describedby={erros.cidade ? "cidade-erro" : undefined}
-            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${
-              erros.cidade
-                ? "border-red-500"
-                : "border-slate-300 dark:border-slate-600"
-            }`}
+            className={`rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-cyan-500/40 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${erros.cidade
+              ? "border-red-500"
+              : "border-slate-300 dark:border-slate-600"
+              }`}
           />
 
           {erros.cidade && (

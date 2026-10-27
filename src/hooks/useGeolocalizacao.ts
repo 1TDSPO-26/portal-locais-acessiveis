@@ -33,8 +33,11 @@ export function useGeolocalizacao(): GeolocalizacaoState {
             return;
         }
 
+        let isMounted = true;
+
         navigator.geolocation.getCurrentPosition(
             (posicao) => {
+                if (!isMounted) return;
                 setCoordenadas({
                     latitude: posicao.coords.latitude,
                     longitude: posicao.coords.longitude,
@@ -42,6 +45,8 @@ export function useGeolocalizacao(): GeolocalizacaoState {
                 setCarregando(false);
             },
             (falha) => {
+                if (!isMounted) return;
+
                 let mensagem = "Não foi possível obter sua localização.";
 
                 if (falha.code === 1) {
@@ -58,6 +63,10 @@ export function useGeolocalizacao(): GeolocalizacaoState {
                 maximumAge: 0,
             }
         );
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     return { coordenadas, carregando, erro };
