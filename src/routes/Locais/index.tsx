@@ -13,6 +13,12 @@ import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
 import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
 
+import {
+  distanciaDoLocal,
+  formatarDistancia,
+  type Coordenadas,
+} from "../../utils/distanciaLocais";
+
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
@@ -32,6 +38,66 @@ export default function Locais() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
   const [tentativa, setTentativa] = useState(0);
+
+  const [posicaoUsuario, setPosicaoUsuario] =
+    useState<Coordenadas | null>(null);
+
+  const [carregandoLocalizacao, setCarregandoLocalizacao] =
+    useState(false);
+
+  const [mensagemLocalizacao, setMensagemLocalizacao] =
+    useState<string | null>(null);
+
+
+  const obterLocalizacao = () => {
+    if (!navigator.geolocation) {
+      setMensagemLocalizacao(
+        "Seu navegador não oferece suporte à localização."
+      );
+      setOrdenacao("nome-asc");
+      return;
+    }
+
+    setCarregandoLocalizacao(true);
+    setMensagemLocalizacao(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (posicao) => {
+        setPosicaoUsuario({
+          latitude: posicao.coords.latitude,
+          longitude: posicao.coords.longitude,
+        });
+
+        setCarregandoLocalizacao(false);
+        setMensagemLocalizacao(null);
+      },
+      (erroLocalizacao) => {
+        setCarregandoLocalizacao(false);
+        setPosicaoUsuario(null);
+        setOrdenacao("nome-asc");
+
+        if (erroLocalizacao.code === 1) {
+          setMensagemLocalizacao(
+            "Permissão de localização negada. Verifique as permissões do navegador."
+          );
+        } else if (erroLocalizacao.code === 2) {
+          setMensagemLocalizacao(
+            "Não foi possível determinar sua localização."
+          );
+        } else {
+          setMensagemLocalizacao(
+            "A localização demorou demais para responder. Tente novamente."
+          );
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
+      }
+    );
+  };
+
 
   useEffect(() => {
     // Cancela a requisição se a tela for fechada antes da resposta chegar
@@ -84,8 +150,12 @@ export default function Locais() {
       return correspondeBusca && possuiRecursos;
     });
 
-    return ordenarLocais(filtrados, ordenacao);
-  }, [locais, busca, filtros, ordenacao]);
+    return ordenarLocais(
+      filtrados,
+      ordenacao,
+      posicaoUsuario
+    );
+  }, [locais, busca, filtros, ordenacao, posicaoUsuario]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -103,10 +173,20 @@ export default function Locais() {
     setPaginaAtual(1);
   };
 
+
   const alterarOrdenacao = (criterio: CriterioOrdenacao) => {
-    setOrdenacao(criterio);
     setPaginaAtual(1);
+
+    if (criterio === "mais-proximos" && !posicaoUsuario) {
+      setOrdenacao(criterio);
+      obterLocalizacao();
+      return;
+    }
+
+    setOrdenacao(criterio);
+    setMensagemLocalizacao(null);
   };
+
 
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
@@ -209,10 +289,22 @@ export default function Locais() {
               value={ordenacao}
               onChange={alterarOrdenacao}
             />
+            {carregandoLocalizacao && (
+              <p role="status" className="text-sm text-blue-600">
+                Obtendo sua localização...
+              </p>
+            )}
+
+            {mensagemLocalizacao && (
+              <p role="alert" className="text-sm text-amber-700">
+                {mensagemLocalizacao}
+              </p>
+            )}
           </div>
 
           {locaisDaPagina.length ? (
             <div className="w-full overflow-hidden">
+
               {locaisDaPagina.map((local) => (
                 <div
                   key={local.id}
@@ -221,9 +313,21 @@ export default function Locais() {
                   <LocalCard
                     local={local}
                     onExcluir={() => excluirLocal(local.id)}
+                    distancia={
+                      posicaoUsuario
+                        ? (() => {
+                          const distancia = distanciaDoLocal(local, posicaoUsuario);
+
+                          return distancia === null
+                            ? null
+                            : formatarDistancia(distancia);
+                        })()
+                        : null
+                    }
                   />
                 </div>
               ))}
+
             </div>
           ) : (
             <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
