@@ -227,6 +227,9 @@ export default function Locais() {
             </div>
           ) : (
             <div className="flex min-h-64 flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Nenhum local encontrado
+              </h2>
               <div className="mb-4 rounded-full bg-blue-50 p-4 dark:bg-blue-950">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
