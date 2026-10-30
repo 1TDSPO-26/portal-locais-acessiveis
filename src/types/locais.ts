@@ -14,6 +14,12 @@ export interface Local {
   contato?: string;
   descricao: string;
   imagemUrl?: string;
+
+
+  // Coordenadas geográficas do estabelecimento
+  latitude?: number;
+  longitude?: number;
+
   recursos: RecursoAcessibilidade[];
 }
 
