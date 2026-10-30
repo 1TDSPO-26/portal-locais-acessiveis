@@ -7,7 +7,7 @@ import Paginacao from "../../components/Paginacao/Paginacao";
 import LocalCard from "../../components/LocalCard/LocalCard";
 import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao";
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
-
+import ErroConsulta from "../../components/ErroConsulta/ErroConsulta";
 import { useLocais } from "../../hooks/useLocais";
 import { useHistoricoBusca } from "../../hooks/useHistoricoBusca";
 import type { Local } from "../../types/locais";
@@ -34,7 +34,8 @@ export default function Locais() {
   const [locais, setLocais] = useState<Local[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-  const [tentativa, setTentativa] = useState(0);
+    const [tentativa, setTentativa] = useState(0);
+  const [tentando, setTentando] = useState(false);
 
   useEffect(() => {
     // Cancela a requisição se a tela for fechada antes da resposta chegar
@@ -55,15 +56,17 @@ export default function Locais() {
         );
       })
       .finally(() => {
-        if (!controle.signal.aborted) setCarregando(false);
+               if (controle.signal.aborted) return;
+        setCarregando(false);
+        setTentando(false);
       });
 
     return () => controle.abort();
   }, [tentativa]);
 
-  const tentarNovamente = () => {
-    setCarregando(true);
-    setErro(null);
+   const tentarNovamente = () => {
+    if (tentando) return;
+    setTentando(true);
     setTentativa((valor) => valor + 1);
   };
 
@@ -178,26 +181,14 @@ export default function Locais() {
           className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400"
         >
           Carregando locais...
-        </div>
+                  </div>
       ) : erro ? (
-        <div
-          role="alert"
-          className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-red-200 bg-red-50 px-6 text-center"
-        >
-          <h2 className="text-lg font-semibold text-red-800">
-            Não foi possível carregar os locais
-          </h2>
-
-          <p className="mt-2 text-sm text-red-700">{erro}</p>
-
-          <button
-            type="button"
-            onClick={tentarNovamente}
-            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
-          >
-            Tentar novamente
-          </button>
-        </div>
+                <ErroConsulta
+          titulo="Não foi possível carregar os locais"
+          mensagem={erro}
+          tentando={tentando}
+          onTentarNovamente={tentarNovamente}
+        />
       ) : (
         <>
           <div className="mb-3 mt-5 flex flex-col gap-3 sm:mb-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-between">
