@@ -6,12 +6,12 @@ import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 import { useFavoritos } from "../../hooks/useFavoritos";
 
-import { formatarDistancia } from "../../utils/geolocalizacao";
+import { formatarDistancia } from "../../utils/distanciaLocais";
 
 interface LocalCardProps {
   local: Local;
   onExcluir?: () => void;
-  distancia?: number;
+  distancia?: number | null;
 }
 
 export default function LocalCard({ local, onExcluir, distancia }: LocalCardProps) {
@@ -47,7 +47,7 @@ export default function LocalCard({ local, onExcluir, distancia }: LocalCardProp
 
           <p className="mt-1 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             <span>{local.cidade}</span>
-            {distancia !== undefined && (
+            {distancia != null && (
               <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                 📍 {formatarDistancia(distancia)}
               </span>

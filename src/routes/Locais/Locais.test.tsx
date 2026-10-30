@@ -106,3 +106,32 @@ describe('Locais: busca, filtros e paginação — issue 61', () => {
     expect(nomes()).toEqual(['Biblioteca Mário de Andrade', 'Estação da Luz', 'Igreja da Sé', 'Museu de Arte de São Paulo'])
   })
 })
+
+describe('Locais: histórico das últimas pesquisas — issue 140', () => {
+  it('salva a busca ao confirmar, mantém após recarregar e refaz a busca pelo histórico', async () => {
+    const user = await abrirLista()
+    await user.type(buscar(), 'biblioteca{Enter}')
+    await user.clear(buscar())
+    await user.type(buscar(), 'Paulista{Enter}')
+
+    expect(JSON.parse(localStorage.getItem('portalLocaisHistoricoBusca') ?? '[]')).toEqual(['Paulista', 'biblioteca'])
+
+    // Simula recarregar a página
+    cleanup()
+    const user2 = await abrirLista()
+    await user2.click(buscar())
+    const lista = screen.getByRole('region', { name: 'Buscas recentes' })
+    expect(within(lista).getAllByRole('listitem').map(item => item.textContent)).toEqual(['Paulista', 'biblioteca'])
+
+    await user2.click(screen.getByRole('button', { name: 'Buscar novamente por biblioteca' }))
+    expect(buscar()).toHaveValue('biblioteca')
+    expect(nomes()).toEqual(['Biblioteca Mário de Andrade'])
+
+    // O termo reutilizado volta para o topo
+    await user2.click(buscar())
+    expect(within(screen.getByRole('region', { name: 'Buscas recentes' })).getAllByRole('listitem').map(item => item.textContent)).toEqual(['biblioteca', 'Paulista'])
+
+    await user2.click(screen.getByRole('button', { name: 'Remover Paulista do histórico' }))
+    expect(JSON.parse(localStorage.getItem('portalLocaisHistoricoBusca') ?? '[]')).toEqual(['biblioteca'])
+  })
+})
