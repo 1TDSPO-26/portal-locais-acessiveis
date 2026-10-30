@@ -9,6 +9,7 @@ import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 
 import { useLocais } from "../../hooks/useLocais";
+import { useHistoricoBusca } from "../../hooks/useHistoricoBusca";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
 import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
@@ -17,6 +18,8 @@ const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
   const { offline } = useLocais();
+  const { historico, salvarBusca, removerBusca, limparHistorico } =
+    useHistoricoBusca();
 
   useEffect(() => {
     document.title = "LOCAIS | ACESSO+";
@@ -151,6 +154,10 @@ export default function Locais() {
             <CampoBusca
               value={busca}
               onChange={alterarBusca}
+              onPesquisar={salvarBusca}
+              historico={historico}
+              onRemoverHistorico={removerBusca}
+              onLimparHistorico={limparHistorico}
             />
           </div>
 
