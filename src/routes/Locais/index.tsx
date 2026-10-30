@@ -9,21 +9,18 @@ import SeletorOrdenacao from "../../components/SeletorOrdenacao/SeletorOrdenacao
 import AvisoOffline from "../../components/AvisoOffline/AvisoOffline";
 import ErroConsulta from "../../components/ErroConsulta/ErroConsulta";
 import { useLocais } from "../../hooks/useLocais";
+import { useGeolocalizacao } from "../../hooks/useGeolocalizacao";
 import { useHistoricoBusca } from "../../hooks/useHistoricoBusca";
 import type { Local } from "../../types/locais";
 import { listarLocais } from "../../services/locaisService";
 import { ordenarLocais, type CriterioOrdenacao } from "../../utils/ordenarLocais";
-
-import {
-  distanciaDoLocal,
-  formatarDistancia,
-  type Coordenadas,
-} from "../../utils/distanciaLocais";
+import { distanciaDoLocal } from "../../utils/distanciaLocais";
 
 const ITENS_POR_PAGINA = 4;
 
 export default function Locais() {
   const { offline } = useLocais();
+  const { coordenadas, carregando: carregandoGeo, erro: erroGeo } = useGeolocalizacao();
   const { historico, salvarBusca, removerBusca, limparHistorico } =
     useHistoricoBusca();
 
@@ -40,67 +37,8 @@ export default function Locais() {
   const [locais, setLocais] = useState<Local[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-    const [tentativa, setTentativa] = useState(0);
+  const [tentativa, setTentativa] = useState(0);
   const [tentando, setTentando] = useState(false);
-
-  const [posicaoUsuario, setPosicaoUsuario] =
-    useState<Coordenadas | null>(null);
-
-  const [carregandoLocalizacao, setCarregandoLocalizacao] =
-    useState(false);
-
-  const [mensagemLocalizacao, setMensagemLocalizacao] =
-    useState<string | null>(null);
-
-
-  const obterLocalizacao = () => {
-    if (!navigator.geolocation) {
-      setMensagemLocalizacao(
-        "Seu navegador não oferece suporte à localização."
-      );
-      setOrdenacao("nome-asc");
-      return;
-    }
-
-    setCarregandoLocalizacao(true);
-    setMensagemLocalizacao(null);
-
-    navigator.geolocation.getCurrentPosition(
-      (posicao) => {
-        setPosicaoUsuario({
-          latitude: posicao.coords.latitude,
-          longitude: posicao.coords.longitude,
-        });
-
-        setCarregandoLocalizacao(false);
-        setMensagemLocalizacao(null);
-      },
-      (erroLocalizacao) => {
-        setCarregandoLocalizacao(false);
-        setPosicaoUsuario(null);
-        setOrdenacao("nome-asc");
-
-        if (erroLocalizacao.code === 1) {
-          setMensagemLocalizacao(
-            "Permissão de localização negada. Verifique as permissões do navegador."
-          );
-        } else if (erroLocalizacao.code === 2) {
-          setMensagemLocalizacao(
-            "Não foi possível determinar sua localização."
-          );
-        } else {
-          setMensagemLocalizacao(
-            "A localização demorou demais para responder. Tente novamente."
-          );
-        }
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 60000,
-      }
-    );
-  };
 
 
   useEffect(() => {
@@ -122,7 +60,7 @@ export default function Locais() {
         );
       })
       .finally(() => {
-               if (controle.signal.aborted) return;
+        if (controle.signal.aborted) return;
         setCarregando(false);
         setTentando(false);
       });
@@ -130,7 +68,7 @@ export default function Locais() {
     return () => controle.abort();
   }, [tentativa]);
 
-   const tentarNovamente = () => {
+  const tentarNovamente = () => {
     if (tentando) return;
     setTentando(true);
     setTentativa((valor) => valor + 1);
@@ -156,12 +94,8 @@ export default function Locais() {
       return correspondeBusca && possuiRecursos;
     });
 
-    return ordenarLocais(
-      filtrados,
-      ordenacao,
-      posicaoUsuario
-    );
-  }, [locais, busca, filtros, ordenacao, posicaoUsuario]);
+    return ordenarLocais(filtrados, ordenacao, coordenadas);
+  }, [locais, busca, filtros, ordenacao, coordenadas]);
 
   const totalPaginas = Math.ceil(
     locaisFiltrados.length / ITENS_POR_PAGINA
@@ -179,20 +113,15 @@ export default function Locais() {
     setPaginaAtual(1);
   };
 
-
   const alterarOrdenacao = (criterio: CriterioOrdenacao) => {
-    setPaginaAtual(1);
-
-    if (criterio === "mais-proximos" && !posicaoUsuario) {
-      setOrdenacao(criterio);
-      obterLocalizacao();
+    // Se o usuário tentar ordenar por distância mas não tiver coordenadas, não deixa
+    if (criterio === "distancia-asc" && !coordenadas) {
+      alert("Por favor, permita o acesso à sua localização para ordenar por distância.");
       return;
     }
-
+    setPaginaAtual(1);
     setOrdenacao(criterio);
-    setMensagemLocalizacao(null);
   };
-
 
   const alterarFiltros = (novosFiltros: string[]) => {
     setFiltros(novosFiltros);
@@ -226,6 +155,20 @@ export default function Locais() {
           Encontre lugares e consulte informações para planejar sua visita.
         </p>
       </div>
+
+      {/* MENSAGEM DE STATUS DA GEOLOCALIZAÇÃO */}
+      {carregandoGeo && (
+        <div role="status" aria-live="polite" className="mb-4 flex items-center gap-2 rounded-md bg-blue-50 px-3 py-2 text-xs text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+          <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" strokeOpacity="0.25" /><path d="M12 2a10 10 0 0 1 10 10" /></svg>
+          Buscando sua localização...
+        </div>
+      )}
+
+      {erroGeo && (
+        <div role="status" aria-live="polite" className="mb-4 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+          ⚠️ {erroGeo} (A ordenação por distância não estará disponível)
+        </div>
+      )}
 
       <div className="mb-5">
         <label className="mb-1 block text-start text-[11px] font-medium text-slate-700 dark:text-slate-300">
@@ -261,9 +204,9 @@ export default function Locais() {
           className="flex min-h-64 items-center justify-center rounded-lg border border-slate-200 px-6 text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400"
         >
           Carregando locais...
-                  </div>
+        </div>
       ) : erro ? (
-                <ErroConsulta
+        <ErroConsulta
           titulo="Não foi possível carregar os locais"
           mensagem={erro}
           tentando={tentando}
@@ -286,18 +229,8 @@ export default function Locais() {
             <SeletorOrdenacao
               value={ordenacao}
               onChange={alterarOrdenacao}
+              desabilitarDistancia={!coordenadas}
             />
-            {carregandoLocalizacao && (
-              <p role="status" className="text-sm text-blue-600">
-                Obtendo sua localização...
-              </p>
-            )}
-
-            {mensagemLocalizacao && (
-              <p role="alert" className="text-sm text-amber-700">
-                {mensagemLocalizacao}
-              </p>
-            )}
           </div>
 
           {locaisDaPagina.length ? (
@@ -311,16 +244,9 @@ export default function Locais() {
                   <LocalCard
                     local={local}
                     onExcluir={() => excluirLocal(local.id)}
-                    distancia={
-                      posicaoUsuario
-                        ? (() => {
-                          const distancia = distanciaDoLocal(local, posicaoUsuario);
-
-                          return distancia === null
-                            ? null
-                            : formatarDistancia(distancia);
-                        })()
-                        : null
+                    distancia={coordenadas
+                      ? distanciaDoLocal(local, coordenadas) ?? undefined
+                      : undefined
                     }
                   />
                 </div>

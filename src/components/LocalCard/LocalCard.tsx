@@ -6,17 +6,15 @@ import BadgeAcessibilidade from "../BadgeAcessibilidade/BadgeAcessibilidade";
 
 import { useFavoritos } from "../../hooks/useFavoritos";
 
+import { formatarDistancia } from "../../utils/distanciaLocais";
+
 interface LocalCardProps {
   local: Local;
   onExcluir?: () => void;
-  distancia?: string | null;
+  distancia?: number | null;
 }
 
-export default function LocalCard({
-  local,
-  onExcluir,
-  distancia,
-}: LocalCardProps) {
+export default function LocalCard({ local, onExcluir, distancia }: LocalCardProps) {
 
   const { alternarFavorito, ehFavorito } = useFavoritos();
   const favoritado = ehFavorito(local.id);
@@ -47,16 +45,14 @@ export default function LocalCard({
             {local.nome}
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-            {local.cidade}
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <span>{local.cidade}</span>
+            {distancia != null && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                📍 {formatarDistancia(distancia)}
+              </span>
+            )}
           </p>
-
-          {distancia && (
-            <p className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-300">
-              {distancia} de você
-            </p>
-          )}
-
 
           <div className="mt-3 flex flex-wrap gap-2">
             {recursosDisponiveis.map((recurso) => (

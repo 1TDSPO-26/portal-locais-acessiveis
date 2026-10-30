@@ -14,12 +14,9 @@ export interface Local {
   contato?: string;
   descricao: string;
   imagemUrl?: string;
-
-
   // Coordenadas geográficas do estabelecimento
   latitude?: number;
   longitude?: number;
-
   recursos: RecursoAcessibilidade[];
 }
 
@@ -30,6 +27,8 @@ export const locaisMock: Local[] = [
     categoria: "Parque",
     cidade: "São Paulo, SP",
     endereco: "Av. Pedro Álvares Cabral, s/n",
+    latitude: -23.5863,
+    longitude: -46.6553,
     contato: "(11) 5574-5045",
     descricao:
       "Um dos principais parques urbanos de São Paulo, com áreas de lazer, cultura e convivência. Use as informações abaixo para avaliar se o local atende às suas necessidades.",
@@ -48,6 +47,8 @@ export const locaisMock: Local[] = [
     categoria: "Cultura",
     cidade: "São Paulo, SP",
     endereco: "Av. Paulista, 1578",
+    latitude: -23.5614,
+    longitude: -46.6559,
     descricao:
       "Museu com acervo de arte europeia e brasileira, em um dos endereços mais movimentados da cidade.",
     imagemUrl: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?w=800",
@@ -65,6 +66,8 @@ export const locaisMock: Local[] = [
     categoria: "Cultura",
     cidade: "São Paulo, SP",
     endereco: "Rua da Consolação, 94",
+    latitude: -23.5474,
+    longitude: -46.6421,
     contato: "(11) 3775-0002",
     descricao:
       "Biblioteca pública com espaços de leitura, estudo e exposições abertas ao público.",
@@ -83,6 +86,8 @@ export const locaisMock: Local[] = [
     categoria: "Shopping",
     cidade: "São Paulo, SP",
     endereco: "Travessa Casalbuono, 120",
+    latitude: -23.5155,
+    longitude: -46.6177,
     contato: "(11) 2224-5555",
     descricao:
       "Centro de compras com estacionamento próprio, praça de alimentação e cinema.",
@@ -101,6 +106,8 @@ export const locaisMock: Local[] = [
     categoria: "Cultura",
     cidade: "São Paulo, SP",
     endereco: "Praça da Luz, s/n",
+    latitude: -23.5351,
+    longitude: -46.6354,
     descricao:
       "Estação histórica que também abriga espaços culturais e conexões de transporte público.",
     imagemUrl: "https://images.unsplash.com/photo-1590077428593-a55bb07c4665?w=800",
@@ -118,6 +125,8 @@ export const locaisMock: Local[] = [
     categoria: "Cultura",
     cidade: "São Paulo, SP",
     endereco: "Praça da Sé, s/n",
+    latitude: -23.5513,
+    longitude: -46.6344,
     descricao:
       "Catedral no centro da cidade, aberta à visitação durante o dia.",
     recursos: [
@@ -134,6 +143,8 @@ export const locaisMock: Local[] = [
     categoria: "Serviço",
     cidade: "São Paulo, SP",
     endereco: "Rua Nossa Senhora do Bom Conselho, 1200",
+    latitude: -23.6607,
+    longitude: -46.7437,
     descricao:
       "Unidade de atendimento em saúde. As informações de acessibilidade ainda estão sendo levantadas.",
     recursos: [

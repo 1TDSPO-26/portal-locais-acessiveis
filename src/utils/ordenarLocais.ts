@@ -9,6 +9,7 @@ export type CriterioOrdenacao =
   | "nome-asc"
   | "nome-desc"
   | "mais-recursos"
+  | "distancia-asc"
   | "mais-proximos";
 
 export const OPCOES_ORDENACAO: {
@@ -18,7 +19,7 @@ export const OPCOES_ORDENACAO: {
   { valor: "nome-asc", rotulo: "Nome (A–Z)" },
   { valor: "nome-desc", rotulo: "Nome (Z–A)" },
   { valor: "mais-recursos", rotulo: "Mais recursos acessíveis" },
-  { valor: "mais-proximos", rotulo: "Mais próximos" },
+  { valor: "distancia-asc", rotulo: "Mais próximos (menor distância)" },
 ];
 
 export function contarRecursosDisponiveis(local: Local): number {
@@ -48,6 +49,7 @@ export function ordenarLocais(
           compararNomes(a, b),
       );
 
+    case "distancia-asc":
     case "mais-proximos":
       if (!usuario) {
         return copia.sort(compararNomes);

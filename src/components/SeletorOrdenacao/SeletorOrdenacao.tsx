@@ -6,11 +6,13 @@ import {
 interface SeletorOrdenacaoProps {
   value: CriterioOrdenacao;
   onChange: (criterio: CriterioOrdenacao) => void;
+  desabilitarDistancia?: boolean;
 }
 
 export default function SeletorOrdenacao({
   value,
   onChange,
+  desabilitarDistancia = false,
 }: SeletorOrdenacaoProps) {
   return (
     <div className="flex items-center gap-2">
@@ -28,7 +30,7 @@ export default function SeletorOrdenacao({
         className="h-10 rounded-md border border-slate-300 bg-white px-2 text-xs text-slate-700 outline-none transition focus-visible:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:text-[11px]"
       >
         {OPCOES_ORDENACAO.map((opcao) => (
-          <option key={opcao.valor} value={opcao.valor}>
+          <option key={opcao.valor} value={opcao.valor} disabled={opcao.valor === "distancia-asc" && desabilitarDistancia}>
             {opcao.rotulo}
           </option>
         ))}
