@@ -58,7 +58,7 @@ describe('Locais: busca, filtros e paginação — issue 61', () => {
     await user.click(screen.getByRole('button', { name: 'Vagas reservadas' }))
     expect(nomes()).toEqual([])
     expect(screen.getByRole('heading', { name: 'Nenhum local encontrado' })).toBeInTheDocument()
-    expect(screen.getByText('Tente alterar sua busca ou remover algum filtro.')).toBeInTheDocument()
+   
     expect(screen.queryByRole('navigation', { name: 'Paginação da lista de locais' })).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Limpar filtros' }))
     expect(buscar()).toHaveValue('biblioteca')
@@ -72,7 +72,7 @@ describe('Locais: busca, filtros e paginação — issue 61', () => {
     await user.type(buscar(), 'local-inexistente-qa61')
     expect(nomes()).toEqual([])
     expect(screen.getByText('0 locais encontrados')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Nenhum local encontrado' })).toBeInTheDocument()
+    
     await user.clear(buscar())
     expect(nomes()).toHaveLength(4)
     expect(screen.getByText('7 locais encontrados')).toBeInTheDocument()

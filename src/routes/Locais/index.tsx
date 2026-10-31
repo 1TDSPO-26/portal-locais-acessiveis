@@ -254,14 +254,50 @@ export default function Locais() {
 
             </div>
           ) : (
-            <div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-slate-200 px-6 text-center">
+            <div className="flex min-h-64 flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
               <h2 className="text-lg font-semibold text-slate-900">
                 Nenhum local encontrado
               </h2>
+              <div className="mb-4 rounded-full bg-blue-50 p-4 dark:bg-blue-950">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="h-10 w-10 text-blue-700 dark:text-blue-300"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-4-4" />
+                  <path d="M8 11h6" />
+                </svg>
+              </div>
 
-              <p className="mt-2 text-sm text-slate-500">
-                Tente alterar sua busca ou remover algum filtro.
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                Nenhum resultado encontrado
+              </h2>
+
+              <p className="mt-2 max-w-md text-sm text-slate-600 dark:text-slate-300">
+                {busca.trim()
+                  ? `Nenhum resultado encontrado para "${busca.trim()}".`
+                  : "Nenhum local corresponde aos filtros selecionados."}
               </p>
+
+              <p className="mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
+                Verifique a ortografia ou tente outro termo. Você também pode remover os filtros.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => {
+                  alterarBusca("");
+                  alterarFiltros([]);
+                }}
+                className="mt-5 rounded-md bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005FCC]"
+              >
+                Limpar pesquisa e filtros
+              </button>
             </div>
           )}
 

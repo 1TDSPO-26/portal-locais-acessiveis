@@ -12,6 +12,7 @@ import Sobre from './routes/Sobre/index.tsx';
 import NotFound from './routes/NotFound/index.tsx';
 import Acessibilidade from './routes/Acessibilidade/index.tsx';
 import LocalDetalhe from './routes/LocalDetalhe/index.tsx';
+import Favoritos from './routes/Locais/Favoritos/index.tsx';
 
 //
 const router = createBrowserRouter([
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/cadastrar", element: <Cadastro />, handle: { title: "CADASTRAR LOCAL | ACESSO+" } },
       { path: "/sobre", element: <Sobre />, handle: { title: "SOBRE | ACESSO+" } },
       { path: "/acessibilidade", element: <Acessibilidade />, handle: { title: "ACESSIBILIDADE | ACESSO+" } },
+      { path: "/locais/favoritos", element: <Favoritos />, handle: { title: "FAVORITOS | ACESSO+" } },
     ]
   },
   { path: "/*", element: <NotFound />, handle: { title: "PÁGINA NÃO ENCONTRADA | ACESSO+" } }
